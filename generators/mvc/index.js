@@ -6,9 +6,9 @@ const yosay = require('yosay');
 module.exports = class extends Generator {
     prompting() {
         const prompts = [{
-            when: !this.options.namespace,
+            when: !this.options.company,
             type: 'input',
-            name: 'namespace',
+            name: 'company',
             message: 'Namespace for your module (Usually a company name)?',
             validate: str => {
               return str.length > 0;
@@ -34,40 +34,43 @@ module.exports = class extends Generator {
         this.log(
             chalk.white('Creating MVC Module.')
         );
-                // TODO: Need to remove spaces and pascal case namespace and module name
 
+        // TODO: Need to remove spaces and pascal case namespace and module name
+
+        this.fs.copy(this.templatePath('App_LocalResources/*'), this.destinationPath('App_LocalResources/'));
+                
         this.fs.copyTpl(
-            this.templatePath('/Controllers/SettingsController.cs'),
-            this.destinationPath('/Controllers/SettingsController.cs'),
+            this.templatePath('Controllers/SettingsController.cs'),
+            this.destinationPath('Controllers/SettingsController.cs'),
             { 
-                title: this.props.namespace,
+                namespace: this.props.company,
                 moduleName: this.props.name
             }
         );
 
         this.fs.copyTpl(
-            this.templatePath('/Models/Settings.cs'),
-            this.destinationPath('/Models/Settings.cs'),
+            this.templatePath('Models/Settings.cs'),
+            this.destinationPath('Models/Settings.cs'),
             { 
-                title: this.props.namespace,
+                namespace: this.props.company,
                 moduleName: this.props.name
             }
         );
 
         this.fs.copyTpl(
-            this.templatePath('/Views/_ViewStart.cshtml'),
-            this.destinationPath('/Views/_ViewStart.cshtml'),
+            this.templatePath('Views/_ViewStart.cshtml'),
+            this.destinationPath('Views/_ViewStart.cshtml'),
             { 
-                title: this.props.namespace,
+                namespace: this.props.company,
                 moduleName: this.props.name
             }
         );
 
         this.fs.copyTpl(
-            this.templatePath('/Views/Settings/Settings.cshtml'),
-            this.destinationPath('/Views/Settings/Settings.cshtml'),
+            this.templatePath('Views/Settings/Settings.cshtml'),
+            this.destinationPath('Views/Settings/Settings.cshtml'),
             { 
-                title: this.props.namespace,
+                namespace: this.props.company,
                 moduleName: this.props.name
             }
         );
