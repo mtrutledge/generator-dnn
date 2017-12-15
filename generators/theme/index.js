@@ -9,7 +9,7 @@ module.exports = class extends Generator {
           when: !this.options.name,
           type: 'input',
           name: 'name',
-          message: 'What is the name of your MVC Module?'
+          message: 'What is the name of your theme?'
         }];
     
         return this.prompt(prompts).then(props => {
@@ -20,7 +20,7 @@ module.exports = class extends Generator {
 
     writing() {
         this.log(
-            chalk.white('Creating MVC Module.')
+            chalk.white('Creating Theme.')
         );
 
       this.fs.copy(
