@@ -34,7 +34,7 @@
                   <moduleControl>
                     <controlKey>
                     </controlKey>
-                    <controlSrc><%= namespace%>.Modules.<%= moduleName %>.Controllers/Index.mvc</controlSrc>
+                    <controlSrc><%= namespace%>.Modules.<%= moduleName %>.Controllers/Home/Index.mvc</controlSrc>
                     <supportsPartialRendering>False</supportsPartialRendering>
                     <controlTitle><%= moduleName %> MVC</controlTitle>
                     <controlType>View</controlType>
@@ -43,7 +43,7 @@
                   </moduleControl>
                   <moduleControl>
                     <controlKey>Edit</controlKey>
-                    <controlSrc><%= namespace%>.Modules.<%= moduleName %>.Controllers/Item/Edit.mvc</controlSrc>
+                    <controlSrc><%= namespace%>.Modules.<%= moduleName %>.Controllers/Home/Edit.mvc</controlSrc>
                     <supportsPartialRendering>False</supportsPartialRendering>
                     <controlTitle>Edit Content</controlTitle>
                     <controlType>Edit</controlType>
