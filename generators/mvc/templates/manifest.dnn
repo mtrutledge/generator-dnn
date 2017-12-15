@@ -23,7 +23,7 @@
         <component type="Module">
           <desktopModule>
             <moduleName><%= moduleName %></moduleName>
-            <foldername><%= moduleName %></foldername>
+            <foldername><%= namespace %>/<%= moduleName %></foldername>
             <businessControllerClass />
             <supportedFeatures />
             <moduleDefinitions>
