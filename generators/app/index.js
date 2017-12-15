@@ -22,6 +22,7 @@ module.exports = class extends Generator {
         {name: 'MVC Module', value: 'mvc'},
         {name: 'SPA Module', value: 'spa'},
         {name: 'Webforms Module', value: 'webforms'},
+        {name: 'Persona Bar', value: 'personabar'},
         {name: 'Theme', value: 'theme'}
       ]
     }];
