@@ -9,7 +9,10 @@ module.exports = class extends Generator {
           when: !this.options.name,
           type: 'input',
           name: 'name',
-          message: 'What is the name of your theme?'
+          message: 'What is the name of your theme?',
+          validate: str => {
+            return str.length > 0;
+          }
         }];
     
         return this.prompt(prompts).then(props => {

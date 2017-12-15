@@ -24,15 +24,6 @@ module.exports = class extends Generator {
         {name: 'Webforms Module', value: 'webforms'},
         {name: 'Theme', value: 'theme'}
       ]
-    },
-    {
-      when: !this.options.name,
-      type: 'input',
-      name: 'name',
-      message: 'What is the name of your project?',
-      validate: str => {
-        return str.length > 0;
-      }
     }];
 
     return this.prompt(prompts).then(props => {
@@ -43,12 +34,11 @@ module.exports = class extends Generator {
 
   composing() {
     const options = {
-      projType: this.props.sample,
-      name: this.props.name
+      projType: this.props.sample
     };
 
     this.composeWith(require.resolve(`../${this.props.projType}`), options);
-    this.composeWith(require.resolve('generator-fountain-gulp/generators/app'), options);
+    //this.composeWith(require.resolve('generator-fountain-gulp/generators/app'), options);
   }
 
   writing() {
