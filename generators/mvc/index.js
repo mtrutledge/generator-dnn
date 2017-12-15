@@ -21,8 +21,36 @@ module.exports = class extends Generator {
           message: 'What is the name of your MVC Module?',
           validate: str => {
             return str.length > 0;
+            }
+          },
+          {
+            when: !this.options.description,
+            type: 'input',
+            name: 'description',
+            message: 'Describe your module:',
+            validate: str => {
+              return str.length > 0;
+            }
+          },
+          {
+            when: !this.options.companyUrl,
+            type: 'input',
+            name: 'companyUrl',
+            message: 'Company Website:',
+            validate: str => {
+              return str.length > 0;
+            }
+          },
+          {
+            when: !this.options.emailAddy,
+            type: 'input',
+            name: 'emailAddy',
+            message: 'Your e-mail address:',
+            validate: str => {
+              return str.length > 0;
+            }
           }
-        }];
+        ];
     
         return this.prompt(prompts).then(props => {
           // To access props later use this.props.someAnswer;
@@ -75,8 +103,19 @@ module.exports = class extends Generator {
             }
         );
 
+        this.fs.copyTpl(
+            this.templatePath('manifest.dnn'),
+            this.destinationPath(this.props.name + '.dnn'),
+            { 
+                namespace: this.props.company,
+                moduleName: this.props.name,
+                description: this.props.description,
+                companyUrl: this.props.companyUrl,
+                emailAddy: this.props.emailAddy,
+            }
+        );
+
         this.fs.copy(this.templatePath('License.lic'), this.destinationPath('License.lic'));
-        this.fs.copy(this.templatePath('manifest.dnn'), this.destinationPath(this.props.name + '.dnn'));
         this.fs.copy(this.templatePath('ReleaseNotes.txt'), this.destinationPath('ReleaseNotes.txt'));
     }
 
