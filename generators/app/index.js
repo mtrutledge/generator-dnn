@@ -29,7 +29,10 @@ module.exports = class extends Generator {
       when: !this.options.name,
       type: 'input',
       name: 'name',
-      message: 'What is the name of your project?'
+      message: 'What is the name of your project?',
+      validate: str => {
+        return str.length > 0;
+      }
     }];
 
     return this.prompt(prompts).then(props => {
