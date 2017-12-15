@@ -13,6 +13,8 @@ npm install -g generator-dnn
 Then generate your new project:
 
 ```bash
+mkdir my-project-name
+cd my-project-name
 yo dnn
 ```
 
