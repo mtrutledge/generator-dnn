@@ -2,6 +2,7 @@
 const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const yosay = require('yosay');
+const Utils = require('../../lib/Utils');
 
 module.exports = class extends Generator {
     prompting() {
@@ -110,6 +111,20 @@ module.exports = class extends Generator {
                 namespace: this.props.company,
                 moduleName: this.props.name,
                 description: this.props.description,
+                companyUrl: this.props.companyUrl,
+                emailAddy: this.props.emailAddy,
+            }
+        );
+        
+        let projectGuid = Utils.generateGuid();
+
+        this.fs.copyTpl(
+            this.templatePath('_Project.csproj'),
+            this.destinationPath(this.props.name + '.csproj'),
+            { 
+                namespace: this.props.company,
+                moduleName: this.props.name,
+                projectGuid: projectGuid,
                 companyUrl: this.props.companyUrl,
                 emailAddy: this.props.emailAddy,
             }
