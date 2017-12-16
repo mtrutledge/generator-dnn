@@ -124,9 +124,7 @@ module.exports = class extends Generator {
             { 
                 namespace: this.props.company,
                 moduleName: this.props.name,
-                projectGuid: projectGuid,
-                companyUrl: this.props.companyUrl,
-                emailAddy: this.props.emailAddy,
+                projectGuid: projectGuid
             }
         );
 
