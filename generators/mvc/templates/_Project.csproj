@@ -100,7 +100,7 @@
     <Compile Include="Models\Settings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteConfig.cs" />
-    <Content Include="License.lic" />
+    <Content Include="License.txtß" />
     <Content Include="ReleaseNotes.txt" />
   </ItemGroup>
   <ItemGroup>
