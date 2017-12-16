@@ -128,7 +128,7 @@ module.exports = class extends Generator {
             }
         );
 
-        this.fs.copy(this.templatePath('License.lic'), this.destinationPath('License.lic'));
+        this.fs.copy(this.templatePath('License.txt'), this.destinationPath('License.txt'));
         this.fs.copy(this.templatePath('ReleaseNotes.txt'), this.destinationPath('ReleaseNotes.txt'));
     }
 
