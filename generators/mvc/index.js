@@ -66,11 +66,11 @@ module.exports = class extends Generator {
 
         // TODO: Need to remove spaces and pascal case namespace and module name
 
-        this.fs.copy(this.templatePath('App_LocalResources/*'), this.destinationPath('App_LocalResources/'));
+        this.fs.copy(this.templatePath('App_LocalResources/*'), this.destinationPath(this.props.name + '/App_LocalResources/'));
                 
         this.fs.copyTpl(
             this.templatePath('Controllers/SettingsController.cs'),
-            this.destinationPath('Controllers/SettingsController.cs'),
+            this.destinationPath(this.props.name + '/Controllers/SettingsController.cs'),
             { 
                 namespace: this.props.company,
                 moduleName: this.props.name
@@ -79,7 +79,7 @@ module.exports = class extends Generator {
 
         this.fs.copyTpl(
             this.templatePath('Models/Settings.cs'),
-            this.destinationPath('Models/Settings.cs'),
+            this.destinationPath(this.props.name + '/Models/Settings.cs'),
             { 
                 namespace: this.props.company,
                 moduleName: this.props.name
@@ -88,7 +88,7 @@ module.exports = class extends Generator {
 
         this.fs.copyTpl(
             this.templatePath('Views/_ViewStart.cshtml'),
-            this.destinationPath('Views/_ViewStart.cshtml'),
+            this.destinationPath(this.props.name + '/Views/_ViewStart.cshtml'),
             { 
                 namespace: this.props.company,
                 moduleName: this.props.name
@@ -97,7 +97,7 @@ module.exports = class extends Generator {
 
         this.fs.copyTpl(
             this.templatePath('Views/Settings/Settings.cshtml'),
-            this.destinationPath('Views/Settings/Settings.cshtml'),
+            this.destinationPath(this.props.name + '/Views/Settings/Settings.cshtml'),
             { 
                 namespace: this.props.company,
                 moduleName: this.props.name
@@ -105,7 +105,7 @@ module.exports = class extends Generator {
         );
 
         this.fs.copyTpl(
-            this.templatePath('manifest.dnn'),
+            this.templatePath(this.props.name + '/manifest.dnn'),
             this.destinationPath(this.props.name + '.dnn'),
             { 
                 namespace: this.props.company,
@@ -120,7 +120,7 @@ module.exports = class extends Generator {
 
         this.fs.copyTpl(
             this.templatePath('_Project.csproj'),
-            this.destinationPath(this.props.name + '.csproj'),
+            this.destinationPath(this.props.name + '/' + this.props.name + '.csproj'),
             { 
                 namespace: this.props.company,
                 moduleName: this.props.name,
@@ -128,8 +128,8 @@ module.exports = class extends Generator {
             }
         );
 
-        this.fs.copy(this.templatePath('License.txt'), this.destinationPath('License.txt'));
-        this.fs.copy(this.templatePath('ReleaseNotes.txt'), this.destinationPath('ReleaseNotes.txt'));
+        this.fs.copy(this.templatePath('License.txt'), this.destinationPath(this.props.name + '/License.txt'));
+        this.fs.copy(this.templatePath('ReleaseNotes.txt'), this.destinationPath(this.props.name + '/ReleaseNotes.txt'));
     }
 
   install() {
