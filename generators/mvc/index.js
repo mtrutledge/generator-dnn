@@ -123,7 +123,7 @@ module.exports = class extends Generator {
             this.destinationPath(this.props.name + '/' + this.props.name + '.csproj'),
             { 
                 namespace: this.props.company,
-                moduleName: this.props.name,
+                moduleName: this.propßs.name,
                 projectGuid: projectGuid
             }
         );
@@ -133,6 +133,6 @@ module.exports = class extends Generator {
     }
 
   install() {
-    this.installDependencies({ npm: true, bower: false, yarn: false });
+    //this.installDependencies({ npm: true, bower: false, yarn: false });
   }
 };
