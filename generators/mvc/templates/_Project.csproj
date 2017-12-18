@@ -197,7 +197,7 @@
     <Content Include="Resources\bootstrap\js\bootstrap.min.js" />
     <Content Include="Resources\module.css" />
     <Content Include="<%= moduleName %>.dnn" />
-    <Content Include="packages.json" />
+    <Content Include="package.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BuildScripts\" />
