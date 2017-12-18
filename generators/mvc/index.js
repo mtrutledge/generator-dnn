@@ -63,7 +63,6 @@ module.exports = class extends Generator {
   writing() {
     this.log(chalk.white('Creating MVC Module.'));
 
-    // TODO: Need to remove spaces and pascal case namespace and module name
     let namespace = pascalCase(this.props.company);
     let moduleName = pascalCase(this.props.name);
 

@@ -49,7 +49,7 @@ module.exports = class extends Generator {
 
   composing() {
     const options = {
-      projType: this.props.sample
+      projType: this.props.value
     };
 
     this.composeWith(require.resolve(`../${this.props.projType}`), options);
