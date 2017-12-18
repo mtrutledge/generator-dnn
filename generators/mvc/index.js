@@ -134,7 +134,7 @@ module.exports = class extends Generator {
             { 
                 namespace: namespace,
                 moduleName: moduleName,
-                curentYear = currentDate.getFullYear()
+                currentYear: currentDate.getFullYear()
             }
         );
 
@@ -153,7 +153,7 @@ module.exports = class extends Generator {
 
         this.fs.copyTpl(
             this.templatePath('_Template.sln'),
-            this.destinationPath('/' + namespace + '.sln'),
+            this.destinationPath(namespace + '.sln'),
             { 
                 moduleName: moduleName,
                 projectGuid: projectGuid,
@@ -162,12 +162,17 @@ module.exports = class extends Generator {
         );
 
         this.fs.copy(this.templatePath('gulpfile.js'), this.destinationPath(moduleName + '/gulpfile.js'));
-        this.fs.copy(this.templatePath('packages.*'), this.destinationPath(moduleName + '/'));
+        this.fs.copy(this.templatePath('packages.config'), this.destinationPath(moduleName + '/packages.config'));
+        this.fs.copy(this.templatePath('package.json'), this.destinationPath(moduleName + '/package.json'));
         this.fs.copy(this.templatePath('License.txt'), this.destinationPath(moduleName + '/License.txt'));
         this.fs.copy(this.templatePath('ReleaseNotes.txt'), this.destinationPath(moduleName + '/ReleaseNotes.txt'));
     }
 
   install() {
-    //this.installDependencies({ npm: true, bower: false, yarn: false });
+    process.chdir(this.props.name);
+    this.installDependencies({ npm: true, bower: false, yarn: false }).then(() => { 
+        this.log(chalk.white('Creating MVC Module.'));
+        process.chdir('../');
+    });
   }
 };
