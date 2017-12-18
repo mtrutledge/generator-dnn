@@ -37,7 +37,8 @@
     "pascal-case": "^2.0.1",
     "uuid-v4": "^0.1.0",
     "yeoman-generator": "^2.0.1",
-    "yosay": "^2.0.1"
+    "yosay": "^2.0.1",
+    "yo": "^2.0.0"
   },
   "jest": {
     "testEnvironment": "node"
