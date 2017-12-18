@@ -161,7 +161,15 @@ module.exports = class extends Generator {
             }
         );
 
-        this.fs.copy(this.templatePath('gulpfile.js'), this.destinationPath(moduleName + '/gulpfile.js'));
+        this.fs.copyTpl(
+            this.templatePath('gulpfile.js'),
+            this.destinationPath(moduleName + '/gulpfile.js'),
+            { 
+                namespace: namespace,
+                moduleName: moduleName
+            }
+        );
+
         this.fs.copy(this.templatePath('packages.config'), this.destinationPath(moduleName + '/packages.config'));
         this.fs.copy(this.templatePath('package.json'), this.destinationPath(moduleName + '/package.json'));
         this.fs.copy(this.templatePath('License.txt'), this.destinationPath(moduleName + '/License.txt'));
