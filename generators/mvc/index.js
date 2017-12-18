@@ -254,10 +254,10 @@ module.exports = class extends Generator {
   }
 
   install() {
-    process.chdir(this.props.name);
+    /* Process.chdir(this.props.name);
     this.installDependencies({ npm: true, bower: false, yarn: false }).then(() => {
       this.log(chalk.white('Creating MVC Module.'));
       process.chdir('../');
-    });
+    }); */
   }
 };

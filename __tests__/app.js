@@ -15,7 +15,6 @@ describe('generator-dnn:mvc', () => {
   });
 
   it('created files', () => {
-    assert(true);
-    // Assert.file(['Believe.sln', 'TestMVC/TestMVC.dnn']);
+    assert.file(['Believe.sln', 'TestMVC/TestMVC.dnn']);
   });
 });
