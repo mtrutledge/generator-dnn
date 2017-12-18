@@ -1,6 +1,6 @@
 var gulp = require('gulp'),
     msbuild = require('gulp-msbuild'),
-    minifyCss = require('gulp-minify-css'),
+    cleanCSS = require('gulp-clean-css'),
     uglify = require('gulp-uglify'),
     assemblyInfo = require('gulp-dotnet-assembly-info'),
     config = require('./package.json'),
@@ -30,7 +30,7 @@ gulp.task('assemblyInfo', function () {
 
 gulp.task('build', ['assemblyInfo'], function () {
     var outDir = path.join(__dirname, config.dnn.pathToAssemblies);
-    return gulp.src('./<% = moduleName %>.csproj')
+    return gulp.src('./<%= moduleName %>.csproj')
         .pipe(msbuild({
             toolsVersion: 14.0,
             targets: ['Clean', 'Build'],
@@ -44,11 +44,61 @@ gulp.task('build', ['assemblyInfo'], function () {
 });
 
 // TODO: Create the packageinstall and packagesource tasks
+gulp.task('packageInstall', ['build'], function() {
+    var packageName = '<%= moduleName %>_' + config.version;
+    var dirFilter = filter(fileTest);
+    return merge(
+        merge(
+          gulp.src([
+            '**\*.cshtml',
+            '**\*.ascx',
+            '**\*.asmx',
+            '**\*.css',
+            '**\*.html',
+            '**\*.htm',
+            '**\*.resx',
+            '**\*.aspx',
+            '**\*.js',
+            '**\*.txt',
+            '**\images\**'
+            ], {
+            base: '.'
+          })
+          .pipe(dirFilter),
+          gulp.src(['**/*.css'], {
+            base: '.'
+          })
+          .pipe(cleanCSS())
+          .pipe(dirFilter),
+          gulp.src(['**/js/*.js', '!**/js/*.min.js'], {
+            base: '.'
+          })
+          .pipe(uglify().on('error', gutil.log)),
+          gulp.src(['**/js/*.min.js'], {
+            base: '.'
+          })
+        )
+        .pipe(zip('Resources.zip')),
+        gulp.src(config.dnnModule.pathToSupplementaryFiles + '/*.dnn')
+        .pipe(manifest(config)),
+        gulp.src([config.dnnModule.pathToAssemblies + '/*.dll',
+          config.dnnModule.pathToScripts + '/*.SqlDataProvider',
+          config.dnnModule.pathToSupplementaryFiles + '/License.txt',
+          config.dnnModule.pathToSupplementaryFiles + '/ReleaseNotes.txt'
+        ]),
+        gulp.src(config.dnnModule.pathToSupplementaryFiles + '/ReleaseNotes.md')
+        .pipe(markdown())
+        .pipe(rename('ReleaseNotes.txt'))
+      )
+      .pipe(zip(packageName + '_Install.zip'))
+      .pipe(gulp.dest(config.dnnModule.packagesPath));
+  });
+
 gulp.task('package', ['packageInstall', 'packageSource'], function () {
     return null;
 })
 
-gulp.task('default', ['build']);
+gulp.task('default', ['build'], function() { });
 
 function fileTest(file) {
     var res = false;

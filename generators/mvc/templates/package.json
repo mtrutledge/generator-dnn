@@ -1,4 +1,41 @@
 {
+    "name": "<%= moduleName %>",
+    "version": "01.00.00",
+    "description": "<%= description %>",
+    "dnnModule": {
+        "fullName": "<%= namespace %>.<%= moduleName %>",
+        "friendlyName": "<%= moduleName %> Module",
+        "packageName": "<%= namespace %>_<%= moduleName %>",
+        "owner": {
+        "name": "<%= moduleName %>",
+        "organization": "<%= namespace %>",
+        "url": "<%= companyUrl %>.org",
+        "email": "<%= emailAddy %>"
+        },
+    "module": {
+        "packageName": "<%= namespace %>_<%= moduleName %>",
+        "folderName": "<%= namespace %>/<%= moduleName %>",
+        "azureCompatible": "true",
+        "iconFile": "DesktopModules\\<%= namespace %>\\<%= moduleName %>\\<%= moduleName.toLowerCase() %>.png"
+        },
+    "tempPath": "./package",
+    "packagesPath": "./_Packages",
+    "pathToAssemblies": "./bin",
+    "pathToScripts": "./Providers/DataProviders/SqlDataProvider",
+    "pathToSupplementaryFiles": "./",
+    "excludeFilter": [
+        "node_modules",
+        "bin",
+        "obj",
+        "_ReSharper",
+        "packages",
+        ".git"
+        ]
+    },
+    "scripts": {
+        "build": "gulp",
+        "pack": "gulp package"
+    },
     "devDependencies": {
         "@types/node": "^7.0.13",
         "babel-preset-es2015": "^6.22.0",
@@ -10,7 +47,7 @@
         "gulp-filter": "^5.0.0",
         "gulp-less": "^3.3.0",
         "gulp-markdown": "^1.2.0",
-        "gulp-minify-css": "^1.2.4",
+        "gulp-clean-css": "^3.9.0",
         "gulp-msbuild": "^0.4.3",
         "gulp-rename": "^1.2.2",
         "gulp-uglify": "^2.0.1",
