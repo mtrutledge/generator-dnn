@@ -5,6 +5,13 @@ const uuid = require('uuid-v4');
 const pascalCase = require('pascal-case');
 
 module.exports = class extends Generator {
+  constructor(args, opts) {
+    super(args, opts);
+
+    // This method adds support for a `--test` flag
+    this.option('test');
+  }
+
   prompting() {
     const prompts = [
       {
@@ -254,10 +261,12 @@ module.exports = class extends Generator {
   }
 
   install() {
-    /* Process.chdir(this.props.name);
-    this.installDependencies({ npm: true, bower: false, yarn: false }).then(() => {
-      this.log(chalk.white('Creating MVC Module.'));
-      process.chdir('../');
-    }); */
+    if (!this.options.test) {
+      process.chdir(this.props.name);
+      this.installDependencies({ npm: true, bower: false, yarn: false }).then(() => {
+        this.log(chalk.white('Creating MVC Module.'));
+        process.chdir('../');
+      });
+    }
   }
 };

@@ -5,13 +5,16 @@ const helpers = require('yeoman-test');
 
 describe('generator-dnn:mvc', () => {
   beforeAll(() => {
-    return helpers.run(path.join(__dirname, '../generators/mvc')).withPrompts({
-      company: 'Believe',
-      name: 'TestMVC',
-      description: 'Test Build Module',
-      companyUrl: 'www.believekids.com',
-      emailAddy: 'mtrutledge@gmail.com'
-    });
+    return helpers
+      .run(path.join(__dirname, '../generators/mvc'))
+      .withArguments(['--test'])
+      .withPrompts({
+        company: 'Believe',
+        name: 'TestMVC',
+        description: 'Test Build Module',
+        companyUrl: 'www.believekids.com',
+        emailAddy: 'mtrutledge@gmail.com'
+      });
   });
 
   it('created files', () => {
