@@ -11,10 +11,10 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace><%= namespace %>.<%= moduleName %></RootNamespace>
+    <RootNamespace><%= namespace %></RootNamespace>
     <AssemblyName><%= moduleName %></AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <UseIISExpress>True</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -23,6 +23,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -173,49 +174,47 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\FeatureController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Models\Settings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BuildScripts\MSBuild.Community.Tasks.dll" />
     <Content Include="gulpfile.js" />
     <Content Include="License.txt" />
     <Content Include="ReleaseNotes.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BuildScripts\ModulePackage.targets" />
-    <Content Include="BuildScripts\MSBuild.Community.Tasks.Targets" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="App_LocalResources\Settings.resx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_LocalResources\Item.resx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="manifest.dnn" />
+    <Content Include="Resources\bootstrap\css\bootstrap.css" />
+    <Content Include="Resources\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Resources\bootstrap\img\glyphicons-halflings-white.png" />
+    <Content Include="Resources\bootstrap\img\glyphicons-halflings.png" />
+    <Content Include="Resources\bootstrap\js\bootstrap.js" />
+    <Content Include="Resources\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Resources\module.css" />
+    <Content Include="<%= moduleName %>.dnn" />
     <Content Include="packages.json" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Components\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
-    <Folder Include="Providers\" />
-    <Folder Include="Resources\" />
-    <Folder Include="Views\" />
+    <Folder Include="BuildScripts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="web.config" />
+    <Content Include="Providers\DataProviders\SqlDataProvider\01.00.00.SqlDataProvider" />
+    <Content Include="Providers\DataProviders\SqlDataProvider\Uninstall.SqlDataProvider" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="web.Debug.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
-    <None Include="web.Release.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
+    <Content Include="Views\Home\Edit.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Settings\Settings.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -226,9 +225,18 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ProjectExtensions>
     <VisualStudio>
-      <FlavorProperties GUID="{<%= projectGuid %>}">
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:50512/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

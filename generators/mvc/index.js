@@ -2,7 +2,8 @@
 const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const yosay = require('yosay');
-const Utils = require('../../lib/Utils');
+const uuid = require('uuid-v4');
+const pascalCase = require('pascal-case')
 
 module.exports = class extends Generator {
     prompting() {
@@ -65,71 +66,105 @@ module.exports = class extends Generator {
         );
 
         // TODO: Need to remove spaces and pascal case namespace and module name
+        let namespace = pascalCase(this.props.company);
+        let moduleName = pascalCase(this.props.name);
 
-        this.fs.copy(this.templatePath('App_LocalResources/*'), this.destinationPath(this.props.name + '/App_LocalResources/'));
-                
+        this.fs.copy(this.templatePath('App_LocalResources/**'), this.destinationPath(moduleName + '/App_LocalResources/'));
+        this.fs.copy(this.templatePath('Components/**'), this.destinationPath(moduleName + '/Components/'));
+        this.fs.copy(this.templatePath('Controllers/**'), this.destinationPath(moduleName + '/Controllers/'));
+        this.fs.copy(this.templatePath('Models/**'), this.destinationPath(moduleName + '/Models/'));
+        this.fs.copy(this.templatePath('Providers/**'), this.destinationPath(moduleName + '/Providers/'));
+        this.fs.copy(this.templatePath('Resources/**'), this.destinationPath(moduleName + '/Resources/'));
+        this.fs.copy(this.templatePath('Views/**'), this.destinationPath(moduleName + '/Views/'));
+        this.fs.copy(this.templatePath('Properties/**'), this.destinationPath(moduleName + '/Properties/'));
+
         this.fs.copyTpl(
             this.templatePath('Controllers/SettingsController.cs'),
-            this.destinationPath(this.props.name + '/Controllers/SettingsController.cs'),
+            this.destinationPath(moduleName + '/Controllers/SettingsController.cs'),
             { 
-                namespace: this.props.company,
-                moduleName: this.props.name
+                namespace: namespace,
+                moduleName: moduleName
             }
         );
 
         this.fs.copyTpl(
             this.templatePath('Models/Settings.cs'),
-            this.destinationPath(this.props.name + '/Models/Settings.cs'),
+            this.destinationPath(moduleName + '/Models/Settings.cs'),
             { 
-                namespace: this.props.company,
-                moduleName: this.props.name
+                namespace: namespace,
+                moduleName: moduleName
             }
         );
 
         this.fs.copyTpl(
             this.templatePath('Views/_ViewStart.cshtml'),
-            this.destinationPath(this.props.name + '/Views/_ViewStart.cshtml'),
+            this.destinationPath(moduleName + '/Views/_ViewStart.cshtml'),
             { 
-                namespace: this.props.company,
-                moduleName: this.props.name
+                namespace: namespace,
+                moduleName: moduleName
             }
         );
 
         this.fs.copyTpl(
             this.templatePath('Views/Settings/Settings.cshtml'),
-            this.destinationPath(this.props.name + '/Views/Settings/Settings.cshtml'),
+            this.destinationPath(moduleName + '/Views/Settings/Settings.cshtml'),
             { 
-                namespace: this.props.company,
-                moduleName: this.props.name
+                namespace: namespace,
+                moduleName: moduleName
             }
         );
 
         this.fs.copyTpl(
-            this.templatePath(this.props.name + '/manifest.dnn'),
-            this.destinationPath(this.props.name + '.dnn'),
+            this.templatePath('manifest.dnn'),
+            this.destinationPath(moduleName + '/' + moduleName + '.dnn'),
             { 
-                namespace: this.props.company,
-                moduleName: this.props.name,
+                namespace: namespace,
+                moduleName: moduleName,
                 description: this.props.description,
                 companyUrl: this.props.companyUrl,
                 emailAddy: this.props.emailAddy,
             }
         );
-        
-        let projectGuid = Utils.generateGuid();
+
+        let currentDate = new Date();
+
+        this.fs.copyTpl(
+            this.templatePath('Properties/AssemblyInfo.cs'),
+            this.destinationPath(moduleName + '/Properties/AssemblyInfo.cs'),
+            { 
+                namespace: namespace,
+                moduleName: moduleName,
+                curentYear = currentDate.getFullYear()
+            }
+        );
+
+        let projectGuid = uuid();
+        let solutionGuid = uuid();
 
         this.fs.copyTpl(
             this.templatePath('_Project.csproj'),
-            this.destinationPath(this.props.name + '/' + this.props.name + '.csproj'),
+            this.destinationPath(moduleName + '/' + moduleName + '.csproj'),
             { 
-                namespace: this.props.company,
-                moduleName: this.propßs.name,
+                namespace: namespace,
+                moduleName: moduleName,
                 projectGuid: projectGuid
             }
         );
 
-        this.fs.copy(this.templatePath('License.txt'), this.destinationPath(this.props.name + '/License.txt'));
-        this.fs.copy(this.templatePath('ReleaseNotes.txt'), this.destinationPath(this.props.name + '/ReleaseNotes.txt'));
+        this.fs.copyTpl(
+            this.templatePath('_Template.sln'),
+            this.destinationPath('/' + namespace + '.sln'),
+            { 
+                moduleName: moduleName,
+                projectGuid: projectGuid,
+                solutionGuid: solutionGuid,
+            }
+        );
+
+        this.fs.copy(this.templatePath('gulpfile.js'), this.destinationPath(moduleName + '/gulpfile.js'));
+        this.fs.copy(this.templatePath('packages.*'), this.destinationPath(moduleName + '/'));
+        this.fs.copy(this.templatePath('License.txt'), this.destinationPath(moduleName + '/License.txt'));
+        this.fs.copy(this.templatePath('ReleaseNotes.txt'), this.destinationPath(moduleName + '/ReleaseNotes.txt'));
     }
 
   install() {
