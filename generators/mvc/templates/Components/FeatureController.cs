@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Services.Search;
 
-namespace Dnn.Modules.DnnMvcModule.Components
+namespace <%= namespace%>.Modules.<%= moduleName %>.Components
 {
 
     /// -----------------------------------------------------------------------------

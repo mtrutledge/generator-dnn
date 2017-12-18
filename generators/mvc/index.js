@@ -79,8 +79,26 @@ module.exports = class extends Generator {
         this.fs.copy(this.templatePath('Properties/**'), this.destinationPath(moduleName + '/Properties/'));
 
         this.fs.copyTpl(
+            this.templatePath('Components/FeatureController.cs'),
+            this.destinationPath(moduleName + '/Components/FeatureController.cs'),
+            { 
+                namespace: namespace,
+                moduleName: moduleName
+            }
+        );
+
+        this.fs.copyTpl(
             this.templatePath('Controllers/SettingsController.cs'),
             this.destinationPath(moduleName + '/Controllers/SettingsController.cs'),
+            { 
+                namespace: namespace,
+                moduleName: moduleName
+            }
+        );
+
+        this.fs.copyTpl(
+            this.templatePath('Controllers/HomeController.cs'),
+            this.destinationPath(moduleName + '/Controllers/HomeController.cs'),
             { 
                 namespace: namespace,
                 moduleName: moduleName
@@ -108,6 +126,24 @@ module.exports = class extends Generator {
         this.fs.copyTpl(
             this.templatePath('Views/Settings/Settings.cshtml'),
             this.destinationPath(moduleName + '/Views/Settings/Settings.cshtml'),
+            { 
+                namespace: namespace,
+                moduleName: moduleName
+            }
+        );
+
+        this.fs.copyTpl(
+            this.templatePath('Views/Home/Edit.cshtml'),
+            this.destinationPath(moduleName + '/Views/Home/Edit.cshtml'),
+            { 
+                namespace: namespace,
+                moduleName: moduleName
+            }
+        );
+
+        this.fs.copyTpl(
+            this.templatePath('Views/Home/Index.cshtml'),
+            this.destinationPath(moduleName + '/Views/Home/Index.cshtml'),
             { 
                 namespace: namespace,
                 moduleName: moduleName
