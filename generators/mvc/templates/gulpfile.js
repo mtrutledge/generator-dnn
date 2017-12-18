@@ -43,9 +43,8 @@ gulp.task('build', ['assemblyInfo'], function () {
         }));
 });
 
-// TODO: Create the packageinstall and packagesource tasks
 gulp.task('packageInstall', ['build'], function() {
-    var packageName = '<%= moduleName %>_' + config.version;
+    var packageName = config.dnnModule.fullName + '_' + config.version;
     var dirFilter = filter(fileTest);
     return merge(
         merge(
@@ -92,7 +91,47 @@ gulp.task('packageInstall', ['build'], function() {
       )
       .pipe(zip(packageName + '_Install.zip'))
       .pipe(gulp.dest(config.dnnModule.packagesPath));
-  });
+});
+
+gulp.task('packageSource', ['build'], function() {
+    var packageName = config.dnnModule.fullName + '_' + config.version;
+    var dirFilter = filter(fileTest);
+    return merge(
+        gulp.src(['**\*.cshtml',
+            '**\*.ascx',
+            '**\*.asmx',
+            '**\*.css',
+            '**\*.xsl',
+            '**\*.html',
+            '**\*.htm',
+            '**\*.resx',
+            '**\*.xml"',
+            '**\*.aspx',
+            '**\*.js',
+            '**\*.txt"',
+            '**\images\**',
+            '**\*.cs',
+            '**\*.cs.designer',
+            '**\*.csproj',
+            '**\*.targets',
+            '**\*.sln',
+            config.dnnModule.pathToSupplementaryFiles + '**/*.*'
+        ], {
+          base: '.'
+        })
+        .pipe(dirFilter)
+        .pipe(zip('Resources.zip')),
+        gulp.src(config.dnnModule.pathToSupplementaryFiles + '/*.dnn')
+        .pipe(manifest(config)),
+        gulp.src([config.dnnModule.pathToAssemblies + '/*.dll',
+          config.dnnModule.pathToScripts + '/*.SqlDataProvider',
+          config.dnnModule.pathToSupplementaryFiles + '/License.txt',
+          config.dnnModule.pathToSupplementaryFiles + '/ReleaseNotes.txt'
+        ])
+      )
+      .pipe(zip(packageName + '_Source.zip'))
+      .pipe(gulp.dest(config.dnnModule.packagesPath));
+});
 
 gulp.task('package', ['packageInstall', 'packageSource'], function () {
     return null;

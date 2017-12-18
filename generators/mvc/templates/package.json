@@ -34,7 +34,7 @@
     },
     "scripts": {
         "build": "gulp",
-        "pack": "gulp package"
+        "dnn-pack": "gulp package"
     },
     "devDependencies": {
         "@types/node": "^7.0.13",
