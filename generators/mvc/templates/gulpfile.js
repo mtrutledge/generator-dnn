@@ -43,82 +43,12 @@ gulp.task('build', ['assemblyInfo'], function () {
         }));
 });
 
-gulp.task('packageInstall', ['build'], function () {
-    var packageName = config.dnn.fullName + '_' + config.version;
-    var dirFilter = filter(fileTest);
-    var resources = merge(
-            gulp.src([
-                '*.html',
-                'App_LocalResources/*.resx',
-                'fonts/*.*',
-                'scripts/**/*.min.js'
-            ], {
-                    base: '.'
-                }),
-            gulp.src(['css/UserAccess.css'], {
-                base: '.'
-            })
-                .pipe(minifyCss()),
-            gulp.src(['scripts/**/*.js', '!scripts/**/*.min.js'], {
-                base: '.'
-            })
-                .pipe(uglify().on('error', gutil.log))
-        )
-            .pipe(zip('Resources.zip'));
-    return merge(
-        resources,
-        manifest(config, './_Installation/Connect.UserAccess.dnn')
-         .pipe(rename('Connect.UserAccess.dnn')),
-        gulp.src([config.dnn.pathToAssemblies + '/*.dll',
-        config.dnn.pathToScripts + '/*.SqlDataProvider',
-        config.dnn.pathToSupplementaryFiles + '/License.txt',
-        config.dnn.pathToSupplementaryFiles + '/ReleaseNotes.txt'
-        ]),
-        gulp.src(config.dnn.pathToSupplementaryFiles + '/ReleaseNotes.md')
-            .pipe(markdown())
-            .pipe(rename('ReleaseNotes.txt'))
-    )
-        .pipe(zip(packageName + '_Install.zip'))
-        .pipe(gulp.dest(config.dnn.packagesPath));
-
-});
-
-gulp.task('packageSource', ['build'], function () {
-    var packageName = config.dnn.fullName + '_' + config.version;
-    var dirFilter = filter(fileTest);
-    return merge(
-        gulp.src(['**/*.html',
-            '**/*.css',
-            'js/**/*.js',
-            '**/*.??proj',
-            '**/*.sln',
-            '**/*.json',
-            '**/*.cs',
-            '**/*.vb',
-            '**/*.resx',
-            config.dnn.pathToSupplementaryFiles + '**/*.*'
-        ], {
-                base: '.'
-            })
-            .pipe(dirFilter)
-            .pipe(zip('Resources.zip')),
-        gulp.src(config.dnn.pathToSupplementaryFiles + '/*.dnn')
-            .pipe(manifest(config)),
-        gulp.src([config.dnn.pathToAssemblies + '/*.dll',
-        config.dnn.pathToScripts + '/*.SqlDataProvider',
-        config.dnn.pathToSupplementaryFiles + '/License.txt',
-        config.dnn.pathToSupplementaryFiles + '/ReleaseNotes.txt'
-        ])
-    )
-        .pipe(zip(packageName + '_Source.zip'))
-        .pipe(gulp.dest(config.dnn.packagesPath));
-})
-
+// TODO: Create the packageinstall and packagesource tasks
 gulp.task('package', ['packageInstall', 'packageSource'], function () {
     return null;
 })
 
-gulp.task('default', ['package']);
+gulp.task('default', ['build']);
 
 function fileTest(file) {
     var res = false;
