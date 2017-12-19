@@ -1,5 +1,6 @@
 var gulp = require('gulp'),
     msbuild = require('gulp-msbuild'),
+    nugetRestore = require('gulp-nuget-restore'),    
     cleanCSS = require('gulp-clean-css'),
     uglify = require('gulp-uglify'),
     assemblyInfo = require('gulp-dotnet-assembly-info'),
@@ -9,8 +10,13 @@ var gulp = require('gulp'),
     merge = require('merge2'),
     markdown = require('gulp-markdown'),
     rename = require('gulp-rename'),
-    manifest = require('gulp-dnn-manifest'),
     path = require('path')
+
+gulp.task('nuget', function () {
+    return gulp
+    .src('./packages.config')
+    .pipe(nugetRestore());
+});
 
 gulp.task('assemblyInfo', function () {
     return gulp
@@ -28,7 +34,7 @@ gulp.task('assemblyInfo', function () {
         .pipe(gulp.dest('.'));
 });
 
-gulp.task('build', ['assemblyInfo'], function () {
+gulp.task('build', ['nuget', 'assemblyInfo'], function () {
     var outDir = path.join(__dirname, config.dnn.pathToAssemblies);
     return gulp.src('./<%= moduleName %>.csproj')
         .pipe(msbuild({
@@ -78,8 +84,6 @@ gulp.task('packageInstall', ['build'], function() {
           })
         )
         .pipe(zip('Resources.zip')),
-        gulp.src(config.dnnModule.pathToSupplementaryFiles + '/*.dnn')
-        .pipe(manifest(config)),
         gulp.src([config.dnnModule.pathToAssemblies + '/*.dll',
           config.dnnModule.pathToScripts + '/*.SqlDataProvider',
           config.dnnModule.pathToSupplementaryFiles + '/License.txt',
@@ -121,8 +125,6 @@ gulp.task('packageSource', ['build'], function() {
         })
         .pipe(dirFilter)
         .pipe(zip('Resources.zip')),
-        gulp.src(config.dnnModule.pathToSupplementaryFiles + '/*.dnn')
-        .pipe(manifest(config)),
         gulp.src([config.dnnModule.pathToAssemblies + '/*.dll',
           config.dnnModule.pathToScripts + '/*.SqlDataProvider',
           config.dnnModule.pathToSupplementaryFiles + '/License.txt',
