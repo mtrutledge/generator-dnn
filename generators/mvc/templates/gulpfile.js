@@ -22,20 +22,20 @@ gulp.task('assemblyInfo', function () {
     return gulp
         .src(['**/AssemblyInfo.cs', '!node_modules/**'])
         .pipe(assemblyInfo({
-            title: config.dnn.friendlyName,
+            title: config.dnnModule.friendlyName,
             description: config.description,
             version: config.version,
             fileVersion: config.version,
-            company: config.dnn.owner.organization,
+            company: config.dnnModule.owner.organization,
             copyright: function (value) {
-                return 'Copyright ' + new Date().getFullYear() + ' by ' + config.dnn.owner.organization;
+                return 'Copyright ' + new Date().getFullYear() + ' by ' + config.dnnModule.owner.organization;
             }
         }))
         .pipe(gulp.dest('.'));
 });
 
 gulp.task('build', ['nuget', 'assemblyInfo'], function () {
-    var outDir = path.join(__dirname, config.dnn.pathToAssemblies);
+    var outDir = path.join(__dirname, config.dnnModule.pathToAssemblies);
     return gulp.src('./<%= moduleName %>.csproj')
         .pipe(msbuild({
             toolsVersion: 14.0,
@@ -143,8 +143,8 @@ gulp.task('default', ['build'], function() { });
 
 function fileTest(file) {
     var res = false;
-    for (var i = config.dnn.excludeFilter.length - 1; i >= 0; i--) {
-        res = res | file.relative.startsWith(config.dnn.excludeFilter[i]);
+    for (var i = config.dnnModule.excludeFilter.length - 1; i >= 0; i--) {
+        res = res | file.relative.startsWith(config.dnnModule.excludeFilter[i]);
     };
     return !res;
 }

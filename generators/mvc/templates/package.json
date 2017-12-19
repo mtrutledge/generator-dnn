@@ -2,7 +2,7 @@
   "name": "<%= moduleName %>",
   "version": "01.00.00",
   "description": "<%= description %>",
-  "dnn": {
+  "dnnModule": {
     "fullName": "<%= namespace %>.<%= moduleName %>",
     "friendlyName": "<%= moduleName %> Module",
     "packageName": "<%= namespace %>_<%= moduleName %>",
