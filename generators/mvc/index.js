@@ -250,13 +250,30 @@ module.exports = class extends Generator {
       this.templatePath('packages.config'),
       this.destinationPath(moduleName + '/packages.config')
     );
+
     this.fs.copy(
       this.templatePath('License.txt'),
       this.destinationPath(moduleName + '/License.txt')
     );
+
     this.fs.copy(
       this.templatePath('ReleaseNotes.txt'),
       this.destinationPath(moduleName + '/ReleaseNotes.txt')
+    );
+
+    this.fs.copy(
+      this.templatePath('web.config'),
+      this.destinationPath(moduleName + '/web.config')
+    );
+
+    this.fs.copy(
+      this.templatePath('web.Debug.config'),
+      this.destinationPath(moduleName + '/web.Debug.config')
+    );
+
+    this.fs.copy(
+      this.templatePath('web.Release.config'),
+      this.destinationPath(moduleName + '/web.Release.config')
     );
   }
 
