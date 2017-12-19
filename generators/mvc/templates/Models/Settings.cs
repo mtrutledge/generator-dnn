@@ -9,7 +9,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace <%= namespace %>.Modules.<%= moduleName %>.Models.Models
+namespace <%= namespace %>.Modules.<%= moduleName %>.Models
 {
     public class Settings
     {

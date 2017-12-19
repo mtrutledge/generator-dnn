@@ -15,7 +15,7 @@ var gulp = require('gulp'),
 gulp.task('nuget', function () {
     return gulp
     .src('./packages.config')
-    .pipe(nugetRestore());
+    .pipe(nugetRestore({additionalArgs: ["-PackagesDirectory", "../packages"]}));
 });
 
 gulp.task('assemblyInfo', function () {
