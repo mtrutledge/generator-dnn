@@ -10,16 +10,37 @@
         <url><%= companyUrl %></url>
         <email><![CDATA[<a href="mailto:<%= emailAddy %>"><%= emailAddy %></a>]]></email>
       </owner>
-      <license src="License.lic">
+      <license src="License.txt">
       </license>
       <releaseNotes src="ReleaseNotes.txt">
       </releaseNotes>
       <dependencies>
-        <!--Example dependencies-->
-        <!--<dependency type="CoreVersion">05.04.01</dependency>-->
-        <!--<dependency type="package">SomeOtherPackage</dependency>-->
+        <dependency type="CoreVersion">08.00.01</dependency>
       </dependencies>
       <components>
+        <component type="Script">
+          <scripts>
+            <basePath>DesktopModules\MVC\<%= moduleName %></basePath>
+            <script type="Install">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>01.00.00.SqlDataProvider</name>
+              <version>01.00.00</version>
+            </script>
+            <script type="UnInstall">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>Uninstall.SqlDataProvider</name>
+              <version>01.00.00</version>
+            </script>
+          </scripts>
+        </component>
+        <component type="ResourceFile">
+          <resourceFiles>
+            <basePath>DesktopModules/MVC/<%= moduleName %></basePath>
+            <resourceFile>
+              <name>Resources.zip</name>
+            </resourceFile>
+          </resourceFiles>
+        </component>
         <component type="Module">
           <desktopModule>
             <moduleName><%= moduleName %></moduleName>
