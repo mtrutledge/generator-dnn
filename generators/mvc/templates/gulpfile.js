@@ -85,7 +85,7 @@ gulp.task('packageInstall', ['build'], function() {
           })
         )
         .pipe(zip('Resources.zip')),
-        gulp.src([config.dnnModule.pathToAssemblies + '/*.dll',
+        gulp.src([config.dnnModule.pathToAssemblies + '/<%= moduleName %>.dll',
           config.dnnModule.pathToScripts + '/*.SqlDataProvider',
           config.dnnModule.pathToSupplementaryFiles + '/License.txt',
           config.dnnModule.pathToSupplementaryFiles + '/ReleaseNotes.txt'
@@ -126,7 +126,7 @@ gulp.task('packageSource', ['build'], function() {
         })
         .pipe(dirFilter)
         .pipe(zip('Resources.zip')),
-        gulp.src([config.dnnModule.pathToAssemblies + '/*.dll',
+        gulp.src([config.dnnModule.pathToAssemblies + '/<%= moduleName %>.dll',
           config.dnnModule.pathToScripts + '/*.SqlDataProvider',
           config.dnnModule.pathToSupplementaryFiles + '/License.txt',
           config.dnnModule.pathToSupplementaryFiles + '/ReleaseNotes.txt'
