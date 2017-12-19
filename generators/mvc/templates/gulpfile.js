@@ -10,6 +10,7 @@ var gulp = require('gulp'),
     merge = require('merge2'),
     markdown = require('gulp-markdown'),
     rename = require('gulp-rename'),
+    gutil = require('gulp-util'),
     path = require('path')
 
 gulp.task('nuget', function () {
