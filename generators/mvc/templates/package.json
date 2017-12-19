@@ -25,6 +25,7 @@
     "pathToScripts": "./Providers/DataProviders/SqlDataProvider",
     "pathToSupplementaryFiles": "./",
     "excludeFilter": [
+      "gulpfile.js",
       "node_modules",
       "bin",
       "obj",
