@@ -7,7 +7,7 @@ describe('generator-dnn:mvc', () => {
   beforeAll(() => {
     return helpers
       .run(path.join(__dirname, '../generators/mvc'))
-      .withArguments(['--test'])
+      .withArguments(['--noinstall'])
       .withPrompts({
         company: 'Believe',
         name: 'TestMVC',

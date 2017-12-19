@@ -9,7 +9,7 @@ module.exports = class extends Generator {
     super(args, opts);
 
     // This method adds support for a `--test` flag
-    this.option('test');
+    this.option('noinstall');
   }
 
   prompting() {
@@ -278,7 +278,7 @@ module.exports = class extends Generator {
   }
 
   install() {
-    if (!this.options.test) {
+    if (!this.options.noinstall) {
       process.chdir(this.props.name);
       this.installDependencies({ npm: true, bower: false, yarn: false }).then(() => {
         this.log(chalk.white('Creating MVC Module.'));
