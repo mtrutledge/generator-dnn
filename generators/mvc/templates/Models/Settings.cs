@@ -13,21 +13,7 @@ namespace <%= namespace %>.Modules.<%= moduleName %>.Models
 {
     public class Settings
     {
-        public string CurrencyCulture { get; set; }
-
-        public IEnumerable<CultureSelection> CurrencyCultureOptions = 
-            new List<CultureSelection>
-            {
-                new CultureSelection { Code = "en-US", Name = "US Dollars"},
-                new CultureSelection { Code = "en-GB", Name = "UK Pounds"},
-                new CultureSelection { Code = "de-DE", Name = "German Euro"},
-                new CultureSelection { Code = "ja-JP", Name = "Japanese Yen"}
-            };
-    }
-
-    public class CultureSelection
-    {
-        public string Code { get; set; }
-        public string Name { get; set; }
+        public bool Setting1 { get; set; }
+        public DateTime Setting2 { get; set; }
     }
 }
