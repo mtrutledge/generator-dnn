@@ -8,16 +8,9 @@
     "email": "mtrutledge@gmail.com",
     "url": "https://github.com/mtrutledge"
   },
-  "files": [
-    "generators"
-  ],
+  "files": ["generators"],
   "main": "generators/index.js",
-  "keywords": [
-    "yeoman-generator",
-    "dnn",
-    "dotnetnuke",
-    "evoq"
-  ],
+  "keywords": ["yeoman-generator", "dnn", "dotnetnuke", "evoq"],
   "devDependencies": {
     "yeoman-test": "^1.7.0",
     "yeoman-assert": "^3.1.0",
@@ -45,25 +38,15 @@
   },
   "scripts": {
     "prepare": "nsp check",
-    "pretest": "eslint .",
     "precommit": "lint-staged",
     "test": "jest"
   },
   "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
-    ],
-    "*.json": [
-      "prettier --write",
-      "git add"
-    ]
+    "*.js": ["eslint --fix", "git add"],
+    "*.json": ["prettier --write", "git add"]
   },
   "eslintConfig": {
-    "extends": [
-      "xo",
-      "prettier"
-    ],
+    "extends": ["xo", "prettier"],
     "env": {
       "jest": true,
       "node": true
@@ -77,9 +60,7 @@
         }
       ]
     },
-    "plugins": [
-      "prettier"
-    ]
+    "plugins": ["prettier"]
   },
   "repository": "mtrutledge/generator-dnn",
   "license": "MIT"
