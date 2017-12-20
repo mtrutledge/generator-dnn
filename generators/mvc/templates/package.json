@@ -1,0 +1,55 @@
+{
+  "name": "<%= moduleName %>",
+  "version": "01.00.00",
+  "description": "<%= description %>",
+  "dnnModule": {
+    "fullName": "<%= namespace %>.<%= moduleName %>",
+    "friendlyName": "<%= moduleName %> Module",
+    "packageName": "<%= namespace %>_<%= moduleName %>",
+    "owner": {
+      "name": "<%= moduleName %>",
+      "organization": "<%= namespace %>",
+      "url": "<%= companyUrl %>.org",
+      "email": "<%= emailAddy %>"
+    },
+    "module": {
+      "packageName": "<%= namespace %>_<%= moduleName %>",
+      "folderName": "<%= namespace %>/<%= moduleName %>",
+      "azureCompatible": "true",
+      "iconFile":
+        "DesktopModules\\<%= namespace %>\\<%= moduleName %>\\Resources\\img\\extension.png"
+    },
+    "tempPath": "./package",
+    "packagesPath": "./_Packages",
+    "pathToAssemblies": "./bin",
+    "pathToScripts": "./Providers/DataProviders/SqlDataProvider",
+    "pathToPublish": "./bin/_PublishedWebsites/<%= moduleName %>",
+    "pathToSupplementaryFiles": "./",
+    "excludeFilter": [
+      "gulpfile.js",
+      "web.config",
+      "{bin, bin/**}",
+      "{Providers, Providers/**}"
+    ]
+  },
+  "scripts": {
+    "build": "gulp",
+    "dnn-pack": "gulp package"
+  },
+  "devDependencies": {
+    "@types/node": "^7.0.13",
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.9.0",
+    "gulp-dotnet-assembly-info": "^0.1.12",
+    "gulp-filter": "^5.0.1",
+    "gulp-markdown": "^1.2.0",
+    "gulp-msbuild": "^0.5.4",
+    "gulp-nuget-restore": "^0.6.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^3.0.0",
+    "gulp-util": "^3.0.8",
+    "gulp-zip": "^4.0.0",
+    "merge2": "^1.2.0",
+    "path": "^0.12.7"
+  }
+}
