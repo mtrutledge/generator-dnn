@@ -109,6 +109,7 @@
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Models\Settings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RouteConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="gulpfile.js" />
