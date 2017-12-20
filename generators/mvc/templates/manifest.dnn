@@ -4,6 +4,7 @@
     <package name="<%= moduleName %>" type="Module" version="1.0.0.0">
       <friendlyName><%= moduleName %></friendlyName>
       <description><%= description %></description>
+      <iconFile>~/DesktopModules/MVC/<%= namespace %>/<%= moduleName %>/Resources/img/extension.png</iconFile>
       <owner>
         <name><%= namespace %></name>
         <organization><%= namespace %></organization>
@@ -20,7 +21,7 @@
       <components>
         <component type="Script">
           <scripts>
-            <basePath>DesktopModules\MVC\<%= moduleName %></basePath>
+            <basePath>DesktopModules\MVC\<%= namespace %>\<%= moduleName %></basePath>
             <script type="Install">
               <path>Providers\DataProviders\SqlDataProvider</path>
               <name>01.00.00.SqlDataProvider</name>
@@ -35,7 +36,7 @@
         </component>
         <component type="ResourceFile">
           <resourceFiles>
-            <basePath>DesktopModules/MVC/<%= moduleName %></basePath>
+            <basePath>DesktopModules/MVC/<%= namespace %>/<%= moduleName %></basePath>
             <resourceFile>
               <name>Resources.zip</name>
             </resourceFile>
@@ -44,7 +45,7 @@
         <component type="Module">
           <desktopModule>
             <moduleName><%= moduleName %></moduleName>
-            <foldername><%= moduleName %></foldername>
+            <foldername><%= namespace %>/<%= moduleName %></foldername>
             <businessControllerClass />
             <supportedFeatures />
             <moduleDefinitions>
@@ -94,7 +95,7 @@
           <assemblies>
             <assembly>
               <path>bin</path>
-              <name><%= moduleName %>.dll</name>
+              <name><%= namespace %>.<%= moduleName %>.dll</name>
             </assembly>
           </assemblies>
         </component>
