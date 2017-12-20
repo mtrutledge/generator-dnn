@@ -39,7 +39,9 @@
   "scripts": {
     "prepare": "nsp check",
     "precommit": "lint-staged",
-    "test": "jest"
+    "test": "jest",
+    "preversion": "npm test",
+    "postversion": "git push && git push --tags"
   },
   "lint-staged": {
     "*.js": ["eslint --fix", "git add"],
