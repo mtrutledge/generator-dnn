@@ -257,8 +257,8 @@ module.exports = class extends Generator {
     );
 
     this.fs.copy(
-      this.templatePath('ReleaseNotes.txt'),
-      this.destinationPath(moduleName + '/ReleaseNotes.txt')
+      this.templatePath('ReleaseNotes.md'),
+      this.destinationPath(moduleName + '/ReleaseNotes.md')
     );
 
     this.fs.copy(
