@@ -184,7 +184,7 @@ module.exports = class extends Generator {
 
     this.fs.copyTpl(
       this.templatePath('RouteConfig.cs'),
-      this.destinationPath(moduleName + 'RouteConfig.cs'),
+      this.destinationPath(moduleName + '/RouteConfig.cs'),
       {
         namespace: namespace,
         moduleName: moduleName
