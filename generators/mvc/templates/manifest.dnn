@@ -44,7 +44,7 @@
         <component type="Module">
           <desktopModule>
             <moduleName><%= moduleName %></moduleName>
-            <foldername><%= namespace %>/<%= moduleName %></foldername>
+            <foldername><%= moduleName %></foldername>
             <businessControllerClass />
             <supportedFeatures />
             <moduleDefinitions>

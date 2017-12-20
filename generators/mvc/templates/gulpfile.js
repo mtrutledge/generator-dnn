@@ -38,6 +38,11 @@ gulp.task('assemblyInfo', function () {
 gulp.task('build', ['nuget', 'assemblyInfo'], function () {
     var outDir = path.join(__dirname, config.dnnModule.pathToAssemblies);
 
+    gulp.src(config.dnnModule.pathToSupplementaryFiles + '/License.md')
+    .pipe(markdown())
+    .pipe(rename('License.txt'))
+    .pipe(gulp.dest('./'));
+
     gulp.src(config.dnnModule.pathToSupplementaryFiles + '/ReleaseNotes.md')
     .pipe(markdown())
     .pipe(rename('ReleaseNotes.txt'))
