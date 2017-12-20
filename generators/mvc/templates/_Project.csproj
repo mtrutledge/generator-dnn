@@ -113,7 +113,11 @@
   <ItemGroup>
     <Content Include="gulpfile.js" />
     <Content Include="License.txt" />
-    <Content Include="ReleaseNotes.txt" />
+    <Content Include="ReleaseNotes.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BuildScripts\ModulePackage.targets" />
+    <Content Include="BuildScripts\MSBuild.Community.Tasks.Targets" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_LocalResources\Settings.resx" />
@@ -177,4 +181,6 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="_BuildScripts\ModulePackage.Targets" />
+  <Target Name="AfterBuild" DependsOnTargets="PackageModule"></Target>
 </Project>

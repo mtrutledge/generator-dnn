@@ -43,11 +43,58 @@ gulp.task('build', ['nuget', 'assemblyInfo'], function () {
             targets: ['Clean', 'Build'],
             errorOnFail: true,
             stdout: true,
+			verbosity: 'minimal',
             properties: {
+				DeployOnBuild: false,
                 Configuration: 'Release',
                 OutputPath: outDir
             }
         }));
+});
+
+gulp.task('package-test', function() {
+    var packageName = config.dnnModule.fullName + '_' + config.version;
+
+    var jsFilter = filter(['**/js/*.js', '!**/js/*.min.js'], { restore: true });
+    var cssFilter = filter(['**/*.css'], { restore: true });
+
+    return merge(
+        merge(
+        gulp.src([
+        config.dnnModule.pathToPublish + '/**/{*.png,*.gif,*.svn,*.jpg}',
+        config.dnnModule.pathToPublish + '/**/*.cshtml',
+        config.dnnModule.pathToPublish + '/**/{*.aspx,*.ascx,*.asmx}',
+        config.dnnModule.pathToPublish + '/**/*.css',
+        config.dnnModule.pathToPublish + '/**/{*,htm,*.html}',
+        config.dnnModule.pathToPublish + '/**/*.resx',
+        config.dnnModule.pathToPublish + '/**/*.js',
+        config.dnnModule.pathToPublish + '/**/*.txt',
+        '!' + config.dnnModule.pathToPublish + '/**/web.config',
+        '!' + config.dnnModule.pathToPublish + '/**/gulpfile.js',
+        '!' + config.dnnModule.pathToPublish + '/**/{bin,bin/**}',
+        '!' + config.dnnModule.pathToPublish + '/**/{Providers,Providers/**}'
+    ])
+    .pipe(cssFilter)
+    .pipe(cleanCSS())
+    .pipe(cssFilter.restore)
+    .pipe(jsFilter)
+    .pipe(uglify().on('error', gutil.log))
+    .pipe(jsFilter.restore)
+    )
+    .pipe(zip('Resources.zip')),//.pipe(gulp.dest(config.dnnModule.packagesPath)),
+
+    gulp.src([
+        config.dnnModule.pathToPublish + '/**/<%= moduleName %>.dll',
+        config.dnnModule.pathToPublish + '/Providers/**/*.SqlDataProvider',
+        config.dnnModule.pathToPublish + '/License.txt',
+        config.dnnModule.pathToPublish + '/ReleaseNotes.txt'
+    ]),
+    gulp.src(config.dnnModule.pathToSupplementaryFiles + '/ReleaseNotes.md')
+    .pipe(markdown())
+    .pipe(rename('ReleaseNotes.txt'))
+    )
+    .pipe(zip(packageName + '_Install.zip'))
+    .pipe(gulp.dest(config.dnnModule.packagesPath));
 });
 
 gulp.task('packageInstall', ['build'], function() {
@@ -56,17 +103,17 @@ gulp.task('packageInstall', ['build'], function() {
     return merge(
         merge(
           gulp.src([
-            '**\*.cshtml',
-            '**\*.ascx',
-            '**\*.asmx',
-            '**\*.css',
-            '**\*.html',
-            '**\*.htm',
-            '**\*.resx',
-            '**\*.aspx',
-            '**\*.js',
-            '**\*.txt',
-            '**\images\**'
+            '**/*.cshtml',
+            '**/*.ascx',
+            '**/*.asmx',
+            '**/*.css',
+            '**/*.html',
+            '**/*.htm',
+            '**/*.resx',
+            '**/*.aspx',
+            '**/*.js',
+            '**/*.txt',
+            '**/images/**'
             ], {
             base: '.'
           })
@@ -102,24 +149,24 @@ gulp.task('packageSource', ['build'], function() {
     var packageName = config.dnnModule.fullName + '_' + config.version;
     var dirFilter = filter(fileTest);
     return merge(
-        gulp.src(['**\*.cshtml',
-            '**\*.ascx',
-            '**\*.asmx',
-            '**\*.css',
-            '**\*.xsl',
-            '**\*.html',
-            '**\*.htm',
-            '**\*.resx',
-            '**\*.xml"',
-            '**\*.aspx',
-            '**\*.js',
-            '**\*.txt"',
-            '**\images\**',
-            '**\*.cs',
-            '**\*.cs.designer',
-            '**\*.csproj',
-            '**\*.targets',
-            '**\*.sln',
+        gulp.src(['**/*.cshtml',
+            '**/*.ascx',
+            '**/*.asmx',
+            '**/*.css',
+            '**/*.xsl',
+            '**/*.html',
+            '**/*.htm',
+            '**/*.resx',
+            '**/*.xml"',
+            '**/*.aspx',
+            '**/*.js',
+            '**/*.txt"',
+            '**/images/**',
+            '**/*.cs',
+            '**/*.cs.designer',
+            '**/*.csproj',
+            '**/*.targets',
+            '**/*.sln',
             config.dnnModule.pathToSupplementaryFiles + '**/*.*'
         ], {
           base: '.'
@@ -140,7 +187,9 @@ gulp.task('package', ['packageInstall', 'packageSource'], function () {
     return null;
 })
 
-gulp.task('default', ['build'], function() { });
+gulp.task('default', ['build'], function() { 
+    return null;
+});
 
 function fileTest(file) {
     var res = false;
