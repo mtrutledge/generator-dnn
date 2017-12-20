@@ -78,6 +78,10 @@ module.exports = class extends Generator {
       this.destinationPath(moduleName + '/App_LocalResources/')
     );
     this.fs.copy(
+      this.templatePath('_BuildScripts/**'),
+      this.destinationPath(moduleName + '/_BuildScripts/')
+    );
+    this.fs.copy(
       this.templatePath('Components/**'),
       this.destinationPath(moduleName + '/Components/')
     );

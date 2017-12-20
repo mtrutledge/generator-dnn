@@ -98,6 +98,7 @@
             </assembly>
           </assemblies>
         </component>
+      </components>
     </package>
   </packages>
 </dotnetnuke>

@@ -37,6 +37,12 @@ gulp.task('assemblyInfo', function () {
 
 gulp.task('build', ['nuget', 'assemblyInfo'], function () {
     var outDir = path.join(__dirname, config.dnnModule.pathToAssemblies);
+
+    gulp.src(config.dnnModule.pathToSupplementaryFiles + '/ReleaseNotes.md')
+    .pipe(markdown())
+    .pipe(rename('ReleaseNotes.txt'))
+    .pipe(gulp.dest('./'));
+
     return gulp.src('./<%= moduleName %>.csproj')
         .pipe(msbuild({
             toolsVersion: 14.0,

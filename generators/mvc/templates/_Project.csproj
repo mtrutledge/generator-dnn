@@ -116,8 +116,8 @@
     <Content Include="ReleaseNotes.md" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BuildScripts\ModulePackage.targets" />
-    <Content Include="BuildScripts\MSBuild.Community.Tasks.Targets" />
+    <Content Include="_BuildScripts\ModulePackage.targets" />
+    <Content Include="_BuildScripts\MSBuild.Community.Tasks.Targets" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_LocalResources\Settings.resx" />
@@ -133,7 +133,7 @@
     <Content Include="<%= moduleName %>.dnn" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="BuildScripts\" />
+    <Folder Include="_BuildScripts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Providers\DataProviders\SqlDataProvider\01.00.00.SqlDataProvider" />
@@ -181,6 +181,11 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <Extension>zip</Extension>
+    <DNNFileName><%= moduleName %></DNNFileName>
+    <PackageName><%= moduleName %></PackageName>
+  </PropertyGroup>
   <Import Project="_BuildScripts\ModulePackage.Targets" />
   <Target Name="AfterBuild" DependsOnTargets="PackageModule"></Target>
 </Project>
