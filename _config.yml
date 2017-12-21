@@ -18,7 +18,7 @@ color:
 # Footer settings
 footer:
   copyright: Matt Rutledge
-  location: Location
+  location: Platform
   social: Around the Web
   credits: Credits
 
@@ -33,8 +33,8 @@ social:
 
 # Postal address (add as many lines as necessary)
 address:
-  - line: 3481 Melrose Place
-  - line: Beverly Hills, CA 90210
+  - line: DNN / Evoq
+  - line: Node.js, Yeoman, C#, .NET
 
 # Credits content
 credits: 'Freelancer is a free to use, open source Bootstrap theme created by <a href="http://startbootstrap.com">Start Bootstrap</a>.'
