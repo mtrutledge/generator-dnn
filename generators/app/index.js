@@ -23,11 +23,6 @@ module.exports = class extends Generator {
             disabled: chalk.gray('Coming Soon')
           },
           {
-            name: chalk.gray('Webforms Module'),
-            value: 'webforms',
-            disabled: chalk.gray('Coming Soon')
-          },
-          {
             name: chalk.gray('Persona Bar'),
             value: 'personabar',
             disabled: chalk.gray('Coming Soon')
