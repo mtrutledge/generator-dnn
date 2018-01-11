@@ -17,11 +17,7 @@ module.exports = class extends Generator {
         message: 'What type of project would you like to scaffold?',
         choices: [
           { name: 'MVC Module', value: 'mvc' },
-          {
-            name: chalk.gray('Spa Module'),
-            value: 'spa',
-            disabled: chalk.gray('Coming Soon')
-          },
+          { name: 'SPA Module', value: 'spa' },
           {
             name: chalk.gray('Persona Bar'),
             value: 'personabar',
