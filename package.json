@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "chalk": "^2.1.0",
+    "dotnet-solution": "^0.2.0",
     "pascal-case": "^2.0.1",
     "uuid-v4": "^0.1.0",
     "yeoman-generator": "^2.0.1",
