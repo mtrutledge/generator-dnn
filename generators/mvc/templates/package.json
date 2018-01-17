@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@types/node": "^7.0.13",
+    "event-stream": "^3.3.4",
     "gulp": "^3.9.1",
     "gulp-clean-css": "^3.9.0",
     "gulp-dotnet-assembly-info": "^0.1.12",
@@ -49,7 +50,6 @@
     "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
     "gulp-zip": "^4.0.0",
-    "merge2": "^1.2.0",
     "path": "^0.12.7"
   }
 }

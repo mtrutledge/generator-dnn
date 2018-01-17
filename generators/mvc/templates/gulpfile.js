@@ -7,11 +7,11 @@ var gulp = require('gulp'),
     config = require('./package.json'),
     zip = require('gulp-zip'),
     filter = require('gulp-filter'),
-    merge = require('merge2'),
     markdown = require('gulp-markdown'),
     rename = require('gulp-rename'),
     gutil = require('gulp-util'),
-    path = require('path')
+    path = require('path'),
+    es = require('event-stream');
 
 gulp.task('nuget', function () {
     return gulp
@@ -38,16 +38,6 @@ gulp.task('assemblyInfo', function () {
 gulp.task('build', ['nuget', 'assemblyInfo'], function () {
     var outDir = path.join(__dirname, config.dnnModule.pathToAssemblies);
 
-    gulp.src(config.dnnModule.pathToSupplementaryFiles + '/License.md')
-    .pipe(markdown())
-    .pipe(rename('License.txt'))
-    .pipe(gulp.dest('./'));
-
-    gulp.src(config.dnnModule.pathToSupplementaryFiles + '/ReleaseNotes.md')
-    .pipe(markdown())
-    .pipe(rename('ReleaseNotes.txt'))
-    .pipe(gulp.dest('./'));
-
     return gulp.src('./<%= moduleName %>.csproj')
         .pipe(msbuild({
             toolsVersion: 14.0,
@@ -63,94 +53,47 @@ gulp.task('build', ['nuget', 'assemblyInfo'], function () {
         }));
 });
 
-gulp.task('package-test', function() {
+gulp.task('packageInstall', ['build'], function(){
     var packageName = config.dnnModule.fullName + '_' + config.version;
 
-    var jsFilter = filter(['**/js/*.js', '!**/js/*.min.js'], { restore: true });
-    var cssFilter = filter(['**/*.css'], { restore: true });
+	var resourceZip = gulp.src(['**/*.cshtml'
+				, '**/*.ascx'
+				, '**/*.asmx'
+				, '**/*.css'
+				, '**/*.html'
+				, '**/*.htm' 
+				, '**/*.resx'
+				, '**/*.aspx'
+				, '**/*.js'
+				, '**/*.txt'
+				, '**/*.png'
+				, '**/*.gif'
+				, '**/*.jpg'
+				, '**/*.svg'
+				, '!' + '/**/web.config',
+				, '!' + '/**/gulpfile.js',
+				, '!' + '/**/{bin,bin/**}',
+				, '!' + '/**/{obj,obj/**}',
+				, '!' + '/**/{packages,packages/**}'
+				, '!' + '/**/{node_modules,node_modules/**}'
+				, '!' + '/**/{_PublishedWebsites,_PublishedWebsites/**}'], {
+            base: '.'
+          }).pipe(zip('Resources.zip'));
 
-    return merge(
-        merge(
-        gulp.src([
-        config.dnnModule.pathToPublish + '/**/{*.png,*.gif,*.svn,*.jpg}',
-        config.dnnModule.pathToPublish + '/**/*.cshtml',
-        config.dnnModule.pathToPublish + '/**/{*.aspx,*.ascx,*.asmx}',
-        config.dnnModule.pathToPublish + '/**/*.css',
-        config.dnnModule.pathToPublish + '/**/{*,htm,*.html}',
-        config.dnnModule.pathToPublish + '/**/*.resx',
-        config.dnnModule.pathToPublish + '/**/*.js',
-        config.dnnModule.pathToPublish + '/**/*.txt',
-        '!' + config.dnnModule.pathToPublish + '/**/web.config',
-        '!' + config.dnnModule.pathToPublish + '/**/gulpfile.js',
-        '!' + config.dnnModule.pathToPublish + '/**/{bin,bin/**}',
-        '!' + config.dnnModule.pathToPublish + '/**/{Providers,Providers/**}'
-    ])
-    .pipe(cssFilter)
-    .pipe(cleanCSS())
-    .pipe(cssFilter.restore)
-    .pipe(jsFilter)
-    .pipe(uglify().on('error', gutil.log))
-    .pipe(jsFilter.restore)
-    )
-    .pipe(zip('Resources.zip')),//.pipe(gulp.dest(config.dnnModule.packagesPath)),
-
-    gulp.src([
-        config.dnnModule.pathToPublish + '/**/<%= moduleName %>.dll',
-        config.dnnModule.pathToPublish + '/Providers/**/*.SqlDataProvider',
-        config.dnnModule.pathToPublish + '/License.txt',
-        config.dnnModule.pathToPublish + '/ReleaseNotes.txt'
-    ]),
-    gulp.src(config.dnnModule.pathToSupplementaryFiles + '/ReleaseNotes.md')
-    .pipe(markdown())
-    .pipe(rename('ReleaseNotes.txt'))
-    )
-    .pipe(zip(packageName + '_Install.zip'))
-    .pipe(gulp.dest(config.dnnModule.packagesPath));
-});
-
-gulp.task('packageInstall', ['build'], function() {
-    var packageName = config.dnnModule.fullName + '_' + config.version;
-    var dirFilter = filter(fileTest);
-    return merge(
-        merge(
-          gulp.src([
-            '**/*.cshtml',
-            '**/*.ascx',
-            '**/*.asmx',
-            '**/*.css',
-            '**/*.html',
-            '**/*.htm',
-            '**/*.resx',
-            '**/*.aspx',
-            '**/*.js',
-            '**/*.txt',
-            '**/images/**'
-            ], {
-            base: '.'
-          })
-          .pipe(dirFilter),
-          gulp.src(['**/*.css'], {
-            base: '.'
-          })
-          .pipe(cleanCSS())
-          .pipe(dirFilter),
-          gulp.src(['**/js/*.js', '!**/js/*.min.js'], {
-            base: '.'
-          })
-          .pipe(uglify().on('error', gutil.log)),
-          gulp.src(['**/js/*.min.js'], {
-            base: '.'
-          })
-        )
-        .pipe(zip('Resources.zip')),
-        gulp.src([config.dnnModule.pathToAssemblies + '/<%= moduleName %>.dll',
-          config.dnnModule.pathToScripts + '/*.SqlDataProvider',
-          config.dnnModule.pathToSupplementaryFiles + '/License.txt',
-          config.dnnModule.pathToSupplementaryFiles + '/ReleaseNotes.txt'
-        ]),
+		  return es.merge(
+        gulp.src(['**/<%= namespace%>.<%= moduleName %>.dll'
+			, '**/<%= moduleName %>.dnn'
+			, '**/*.SqlDataProvider'
+			, '!' + '/**/{obj,obj/**}',
+			, '!' + '/**/{_PublishedWebsites,_PublishedWebsites/**}'
+		]),
+        gulp.src(config.dnnModule.pathToSupplementaryFiles + '/License.md')
+        .pipe(markdown())
+        .pipe(rename('License.txt')),
         gulp.src(config.dnnModule.pathToSupplementaryFiles + '/ReleaseNotes.md')
         .pipe(markdown())
-        .pipe(rename('ReleaseNotes.txt'))
+        .pipe(rename('ReleaseNotes.txt')),
+		resourceZip
       )
       .pipe(zip(packageName + '_Install.zip'))
       .pipe(gulp.dest(config.dnnModule.packagesPath));
@@ -158,37 +101,34 @@ gulp.task('packageInstall', ['build'], function() {
 
 gulp.task('packageSource', ['build'], function() {
     var packageName = config.dnnModule.fullName + '_' + config.version;
-    var dirFilter = filter(fileTest);
-    return merge(
-        gulp.src(['**/*.cshtml',
-            '**/*.ascx',
-            '**/*.asmx',
-            '**/*.css',
-            '**/*.xsl',
-            '**/*.html',
-            '**/*.htm',
-            '**/*.resx',
-            '**/*.xml"',
-            '**/*.aspx',
-            '**/*.js',
-            '**/*.txt"',
-            '**/images/**',
-            '**/*.cs',
-            '**/*.cs.designer',
-            '**/*.csproj',
-            '**/*.targets',
-            '**/*.sln',
-            config.dnnModule.pathToSupplementaryFiles + '**/*.*'
-        ], {
+
+    var resourceZip = gulp.src(['**/*.*'
+            , '!' + '/**/{License.txt,ReleaseNotes.txt, *-lock.json}',
+            , '!' + '/**/{_Packages,_Packages/**}',
+            , '!' + '/**/{bin,bin/**}',
+            , '!' + '/**/{obj,obj/**}',
+            , '!' + '/**/{packages,packages/**}'
+            , '!' + '/**/{node_modules,node_modules/**}'
+            , '!' + '/**/{_PublishedWebsites,_PublishedWebsites/**}'
+            ], {
           base: '.'
         })
-        .pipe(dirFilter)
-        .pipe(zip('Resources.zip')),
-        gulp.src([config.dnnModule.pathToAssemblies + '/<%= moduleName %>.dll',
-          config.dnnModule.pathToScripts + '/*.SqlDataProvider',
-          config.dnnModule.pathToSupplementaryFiles + '/License.txt',
-          config.dnnModule.pathToSupplementaryFiles + '/ReleaseNotes.txt'
-        ])
+        .pipe(zip('Resources.zip'));
+		
+		return es.merge(
+		gulp.src(['**/<%= namespace %>.<%= moduleName %>.dll'
+			, '**/<%= moduleName %>.dnn'
+			, '**/*.SqlDataProvider'
+			, '!' + '/**/{obj,obj/**}',
+			, '!' + '/**/{_PublishedWebsites,_PublishedWebsites/**}'
+		]),
+        gulp.src(config.dnnModule.pathToSupplementaryFiles + '/License.md')
+        .pipe(markdown())
+        .pipe(rename('License.txt')),
+        gulp.src(config.dnnModule.pathToSupplementaryFiles + '/ReleaseNotes.md')
+        .pipe(markdown())
+        .pipe(rename('ReleaseNotes.txt')),
+		resourceZip
       )
       .pipe(zip(packageName + '_Source.zip'))
       .pipe(gulp.dest(config.dnnModule.packagesPath));
@@ -198,7 +138,7 @@ gulp.task('package', ['packageInstall', 'packageSource'], function () {
     return null;
 })
 
-gulp.task('default', ['build'], function() { 
+gulp.task('default', ['build', 'package'], function() { 
     return null;
 });
 
