@@ -111,6 +111,15 @@ module.exports = class extends Generator {
     );
 
     this.fs.copyTpl(
+      this.templatePath('../../gulp/*.js'),
+      this.destinationPath(moduleName + '/gulp/'),
+      {
+        namespace: namespace,
+        moduleName: moduleName
+      }
+    );
+
+    this.fs.copyTpl(
       this.templatePath('Components/FeatureController.cs'),
       this.destinationPath(moduleName + '/Components/FeatureController.cs'),
       {
@@ -294,7 +303,7 @@ module.exports = class extends Generator {
     if (!this.options.noinstall) {
       process.chdir(this.props.name);
       this.installDependencies({ npm: true, bower: false, yarn: false }).then(() => {
-        this.log(chalk.white('Creating MVC Module.'));
+        this.log(chalk.white('Installing MVC Module Dependencies.'));
         process.chdir('../');
       });
     }
