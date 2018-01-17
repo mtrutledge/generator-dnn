@@ -181,11 +181,4 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <PropertyGroup>
-    <Extension>zip</Extension>
-    <DNNFileName><%= moduleName %></DNNFileName>
-    <PackageName><%= moduleName %></PackageName>
-  </PropertyGroup>
-  <Import Project="_BuildScripts\ModulePackage.Targets" />
-  <Target Name="AfterBuild" DependsOnTargets="PackageModule"></Target>
 </Project>
