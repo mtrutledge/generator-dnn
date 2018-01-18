@@ -329,7 +329,7 @@ module.exports = class extends Generator {
     if (!this.options.noinstall) {
       process.chdir(this.props.name);
       this.installDependencies({ npm: true, bower: false, yarn: false }).then(() => {
-        this.log(chalk.white('Installing SPA Module Dependencies.'));
+        this.log(chalk.white('Installed SPA Module Dependencies.'));
         process.chdir('../');
       });
     }
