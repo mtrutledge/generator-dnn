@@ -34,7 +34,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config config/webpack.config.js"
+    "build": "gulp",
+    "build-client": "gulp build-client"
   },
   "devDependencies": {
     "@types/react": "^16.0.34",
@@ -60,7 +61,8 @@
     "gulp-util": "^3.0.8",
     "gulp-zip": "^4.0.0",
     "merge2": "^1.2.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "require-dir": "^0.3.2"
   },
   "dependencies": {
     "react": "^16.2.0",

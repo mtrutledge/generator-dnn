@@ -19,6 +19,7 @@ module.exports = class extends Generator {
         type: 'input',
         name: 'company',
         message: 'Namespace for your module (Usually a company name)?',
+        store: true,
         validate: str => {
           return str.length > 0;
         }
@@ -28,6 +29,7 @@ module.exports = class extends Generator {
         type: 'input',
         name: 'name',
         message: 'What is the name of your MVC Module?',
+        default: this.appname,
         validate: str => {
           return str.length > 0;
         }
@@ -46,6 +48,7 @@ module.exports = class extends Generator {
         type: 'input',
         name: 'companyUrl',
         message: 'Company Website:',
+        store: true,
         validate: str => {
           return str.length > 0;
         }
@@ -55,6 +58,7 @@ module.exports = class extends Generator {
         type: 'input',
         name: 'emailAddy',
         message: 'Your e-mail address:',
+        store: true,
         validate: str => {
           return str.length > 0;
         }

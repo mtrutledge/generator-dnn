@@ -8,7 +8,7 @@ module.exports = {
     entry: [
       'app.tsx'
     ],
-    // Output the bundled JS to dist/app.js
+    // Output the bundled JS to Resources/js/app.js
     output: {
         filename: 'app.js',
         path: path.resolve('Resources/js')

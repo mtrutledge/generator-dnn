@@ -3,6 +3,7 @@ const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const uuid = require('uuid-v4');
 const pascalCase = require('pascal-case');
+const sln = require('dotnet-solution');
 
 module.exports = class extends Generator {
   prompting() {
@@ -12,6 +13,7 @@ module.exports = class extends Generator {
         type: 'input',
         name: 'company',
         message: 'Namespace for your module (Usually a company name)?',
+        store: true,
         validate: str => {
           return str.length > 0;
         }
@@ -20,7 +22,8 @@ module.exports = class extends Generator {
         when: !this.options.name,
         type: 'input',
         name: 'name',
-        message: 'What is the name of your MVC Module?',
+        message: 'What is the name of your SPA Module?',
+        default: this.appname,
         validate: str => {
           return str.length > 0;
         }
@@ -39,6 +42,7 @@ module.exports = class extends Generator {
         type: 'input',
         name: 'companyUrl',
         message: 'Company Website:',
+        store: true,
         validate: str => {
           return str.length > 0;
         }
@@ -48,6 +52,7 @@ module.exports = class extends Generator {
         type: 'input',
         name: 'emailAddy',
         message: 'Your e-mail address:',
+        store: true,
         validate: str => {
           return str.length > 0;
         }
@@ -56,6 +61,13 @@ module.exports = class extends Generator {
 
     return this.prompt(prompts).then(props => {
       // To access props later use this.props.someAnswer;
+      props.currentDate = new Date();
+      props.projectGuid = uuid();
+      props.solutionGuid = uuid();
+
+      props.namespace = pascalCase(props.company);
+      props.moduleName = pascalCase(props.name);
+
       this.props = props;
     });
   }
@@ -63,8 +75,10 @@ module.exports = class extends Generator {
   writing() {
     this.log(chalk.white('Creating SPA Module.'));
 
-    let namespace = pascalCase(this.props.company);
-    let moduleName = pascalCase(this.props.name);
+    let namespace = this.props.company;
+    let moduleName = this.props.name;
+    let currentDate = this.props.currentDate;
+    let projectGuid = this.props.projectGuid;
 
     this.fs.copy(
       this.templatePath('App_LocalResources/**'),
@@ -92,10 +106,6 @@ module.exports = class extends Generator {
       this.destinationPath(moduleName + '/Resources/')
     );
     this.fs.copy(
-      this.templatePath('Views/**'),
-      this.destinationPath(moduleName + '/Views/')
-    );
-    this.fs.copy(
       this.templatePath('Properties/**'),
       this.destinationPath(moduleName + '/Properties/')
     );
@@ -121,6 +131,15 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('Controllers/DataController.cs'),
       this.destinationPath(moduleName + '/Controllers/DataController.cs'),
+      {
+        namespace: namespace,
+        moduleName: moduleName
+      }
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('src/**'),
+      this.destinationPath(moduleName + '/src/'),
       {
         namespace: namespace,
         moduleName: moduleName
@@ -175,8 +194,6 @@ module.exports = class extends Generator {
       }
     );
 
-    let currentDate = new Date();
-
     this.fs.copyTpl(
       this.templatePath('Properties/AssemblyInfo.cs'),
       this.destinationPath(moduleName + '/Properties/AssemblyInfo.cs'),
@@ -187,9 +204,6 @@ module.exports = class extends Generator {
       }
     );
 
-    let projectGuid = uuid();
-    let solutionGuid = uuid();
-
     this.fs.copyTpl(
       this.templatePath('_Project.csproj'),
       this.destinationPath(moduleName + '/' + moduleName + '.csproj'),
@@ -197,17 +211,6 @@ module.exports = class extends Generator {
         namespace: namespace,
         moduleName: moduleName,
         projectGuid: projectGuid
-      }
-    );
-
-    // TODO: Replace this with calls to dotnet-solution package
-    this.fs.copyTpl(
-      this.templatePath('_Template.sln'),
-      this.destinationPath(namespace + '.sln'),
-      {
-        moduleName: moduleName,
-        projectGuid: projectGuid,
-        solutionGuid: solutionGuid
       }
     );
 
@@ -261,6 +264,65 @@ module.exports = class extends Generator {
       this.templatePath('web.Release.config'),
       this.destinationPath(moduleName + '/web.Release.config')
     );
+
+    this._writeSolution();
+  }
+
+  _createSolutionFromTemplate() {
+    let namespace = this.props.company;
+    let moduleName = this.props.name;
+    let projectGuid = this.props.projectGuid;
+    let solutionGuid = this.props.solutionGuid;
+
+    this.fs.copyTpl(
+      this.templatePath('_Template.sln'),
+      this.destinationPath(namespace + '.sln'),
+      {
+        moduleName: moduleName,
+        projectGuid: projectGuid,
+        solutionGuid: solutionGuid
+      }
+    );
+  }
+
+  _addProjectToSolution() {
+    let namespace = this.props.company;
+    let moduleName = this.props.name;
+    let projectGuid = this.props.projectGuid;
+    let slnFileName = this.destinationPath(namespace + '.sln');
+
+    // Create a reader, and build a solution from the lines
+    const reader = new sln.SolutionReader();
+    const sourceLines = this.fs
+      .read(slnFileName)
+      .toString()
+      .split(/\r?\n/);
+    const solution = reader.fromLines(sourceLines);
+
+    solution.addProject({
+      id: projectGuid, // This is the same id as in the csproj
+      name: moduleName,
+      path: moduleName + '\\' + moduleName + '.csproj', // Relative to the solution location
+      parent: moduleName // The name or id of a folder to parent it to
+    });
+
+    // Create a writer and write back to the same file
+    const writer = new sln.SolutionWriter();
+    const lines = writer.write(solution);
+    this.fs.write(slnFileName, lines.join('\r\n'));
+  }
+
+  _writeSolution() {
+    let namespace = this.props.company;
+    let slnFileName = this.destinationPath(namespace + '.sln');
+    if (this.fs.exists(slnFileName)) {
+      this.log(chalk.white('Existing sln file found. Adding project.'));
+      this._addProjectToSolution();
+    } else {
+      // File does not exist
+      this.log(chalk.white('No sln file found. Creating new sln file.'));
+      this._createSolutionFromTemplate();
+    }
   }
 
   install() {
