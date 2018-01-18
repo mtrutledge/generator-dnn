@@ -329,7 +329,10 @@ module.exports = class extends Generator {
     if (!this.options.noinstall) {
       process.chdir(this.props.name);
       this.installDependencies({ npm: true, bower: false, yarn: false }).then(() => {
-        this.log(chalk.white('Installed SPA Module Dependencies.'));
+        this.log(chalk.white('Installed SPA Module npm Dependencies.'));
+        this.log(chalk.white('Running NuGet.'));
+        this.spawnCommand('grunt', ['nuget']);
+        this.log(chalk.white('All Ready!'));
         process.chdir('../');
       });
     }
