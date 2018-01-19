@@ -8,7 +8,7 @@
     "noImplicitAny": false,
     "sourceMap": true,
     "outDir": "ts-build",
-    "jsx": "preserve"
+    "jsx": "react"
   },
   "exclude": ["node_modules"]
 }

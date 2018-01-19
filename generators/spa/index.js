@@ -84,6 +84,7 @@ module.exports = class extends Generator {
       this.templatePath('App_LocalResources/**'),
       this.destinationPath(moduleName + '/App_LocalResources/')
     );
+
     this.fs.copy(
       this.templatePath('_BuildScripts/**'),
       this.destinationPath(moduleName + '/_BuildScripts/')
@@ -96,7 +97,10 @@ module.exports = class extends Generator {
       this.templatePath('Controllers/**'),
       this.destinationPath(moduleName + '/Controllers/')
     );
-
+    this.fs.copy(
+      this.templatePath('config/**'),
+      this.destinationPath(moduleName + '/config/')
+    );
     this.fs.copy(
       this.templatePath('Providers/**'),
       this.destinationPath(moduleName + '/Providers/')
@@ -104,6 +108,10 @@ module.exports = class extends Generator {
     this.fs.copy(
       this.templatePath('Resources/**'),
       this.destinationPath(moduleName + '/Resources/')
+    );
+    this.fs.copy(
+      this.templatePath('tsconfig.json'),
+      this.destinationPath(moduleName + '/tsconfig.json')
     );
     this.fs.copy(
       this.templatePath('Properties/**'),
