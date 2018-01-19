@@ -1,10 +1,11 @@
 var gulp = require('gulp');
+var webpack = require('webpack');
 
-require('require-dir')('./gulp'); 
+require('require-dir')('./_BuildScripts/gulp'); 
 
 gulp.task('build-client', function(cb){
 
-    webpack( require('./config/webpack.config.js'), function(err, stats) {
+    webpack( require('./_BuildScripts/webpack.config.js'), function(err, stats) {
 		if(err) throw new gutil.PluginError("webpack:build", err);
 		cb();
     });

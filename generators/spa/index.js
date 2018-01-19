@@ -98,10 +98,6 @@ module.exports = class extends Generator {
       this.destinationPath(moduleName + '/Controllers/')
     );
     this.fs.copy(
-      this.templatePath('config/**'),
-      this.destinationPath(moduleName + '/config/')
-    );
-    this.fs.copy(
       this.templatePath('Providers/**'),
       this.destinationPath(moduleName + '/Providers/')
     );
@@ -120,7 +116,7 @@ module.exports = class extends Generator {
 
     this.fs.copyTpl(
       this.templatePath('../../gulp/*.js'),
-      this.destinationPath(moduleName + '/gulp/'),
+      this.destinationPath(moduleName + '/_BuildScripts/gulp/'),
       {
         namespace: namespace,
         moduleName: moduleName
@@ -241,6 +237,11 @@ module.exports = class extends Generator {
         namespace: namespace,
         moduleName: moduleName
       }
+    );
+
+    this.fs.copy(
+      this.templatePath('.babelrc'),
+      this.destinationPath(moduleName + '/.babelrc')
     );
 
     this.fs.copy(

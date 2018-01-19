@@ -1,5 +1,5 @@
 var gulp = require('gulp');
-var config = require('../package.json');
+var config = require('../../package.json');
 var zip = require('gulp-zip');
 var markdown = require('gulp-markdown');
 var rename = require('gulp-rename');

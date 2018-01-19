@@ -7,18 +7,19 @@
 */
 using DotNetNuke.Security;
 using DotNetNuke.Web.Api;
-using DotNetNuke.Web.Mvc.Framework.ActionFilters;
-using System.Web.Mvc;
 using System.Collections.Generic;
+using <%= namespace%>.Modules.<%= moduleName %>.Components;
+using System.Net.Http;
+using System.Net;
+
 
 namespace <%= namespace%>.Modules.<%= moduleName %>.Controllers
 {
     [SupportedModules(FeatureController.MODULENAME)]
     [DnnModuleAuthorize(AccessLevel = SecurityAccessLevel.View)]
-    [DnnHandleError]
     public class DataController : DnnApiController
     {
-        /// <summary>
+        /// <summary>s
         /// 
         /// </summary>
         /// <returns></returns>

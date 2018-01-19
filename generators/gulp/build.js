@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var msbuild = require('gulp-msbuild');
 var nugetRestore = require('gulp-nuget-restore');
 var assemblyInfo = require('gulp-dotnet-assembly-info');
-var config = require('../package.json');
+var config = require('../../package.json');
 var path = require('path');
 
 gulp.task('nuget', function() {

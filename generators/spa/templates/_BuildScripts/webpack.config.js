@@ -5,12 +5,14 @@ var WebpackNotifierPlugin = require('webpack-notifier');
 module.exports = {
     devtool: 'eval',
     // This will be our app's entry point (webpack will look for it in the 'src' directory due to the modulesDirectory setting below). Feel free to change as desired.
-    entry: [
-      'app.tsx'
-    ],
+    entry: {
+      app: 'app.tsx',
+      edit: 'edit.tsx',
+      settings: 'settings.tsx'
+    },
     // Output the bundled JS to Resources/js/app.js
     output: {
-        filename: 'app.js',
+        filename: '[name].js',
         path: path.resolve('Resources/js')
     },
     resolve: {
