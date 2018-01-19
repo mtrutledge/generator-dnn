@@ -3,7 +3,6 @@ var msbuild = require('gulp-msbuild');
 var nugetRestore = require('gulp-nuget-restore');
 var assemblyInfo = require('gulp-dotnet-assembly-info');
 var config = require('../../package.json');
-var path = require('path');
 
 gulp.task('nuget', function() {
   return gulp
@@ -35,8 +34,6 @@ gulp.task('assemblyInfo', function() {
 });
 
 gulp.task('build', ['nuget', 'assemblyInfo'], function() {
-  var outDir = path.join(__dirname, config.dnnModule.pathToAssemblies);
-
   return gulp.src('./<%= moduleName %>.csproj').pipe(
     msbuild({
       toolsVersion: 14.0,
@@ -46,8 +43,7 @@ gulp.task('build', ['nuget', 'assemblyInfo'], function() {
       verbosity: 'minimal',
       properties: {
         DeployOnBuild: false,
-        Configuration: 'Release',
-        OutputPath: outDir
+        Configuration: 'Release'
       }
     })
   );
