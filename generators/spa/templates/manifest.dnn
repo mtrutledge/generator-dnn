@@ -75,7 +75,7 @@
                     <supportsPopUps>True</supportsPopUps>
                   </moduleControl>
                   <moduleControl>
-                    <controlKey>Settings</controlKey>
+                    <controlKey>QuickSettings</controlKey>
                     <controlSrc>DesktopModules/<%= namespace%>/<%= moduleName %>/Settings.html</controlSrc>
                     <supportsPartialRendering>False</supportsPartialRendering>
                     <controlTitle><%= moduleName %> Settings</controlTitle>
