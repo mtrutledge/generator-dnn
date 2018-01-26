@@ -116,7 +116,7 @@ module.exports = class extends Generator {
 
     this.fs.copyTpl(
       this.templatePath('../../gulp/*.js'),
-      this.destinationPath(moduleName + '/gulp/'),
+      this.destinationPath(moduleName + '/_BuildScripts/gulp/'),
       {
         namespace: namespace,
         moduleName: moduleName
