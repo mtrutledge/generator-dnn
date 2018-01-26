@@ -343,9 +343,12 @@ module.exports = class extends Generator {
         this.log(chalk.white('Installed SPA Module npm Dependencies.'));
         this.log(chalk.white('Running NuGet.'));
         this.spawnCommand('gulp', ['nuget']);
-        this.log(chalk.white('All Ready!'));
         process.chdir('../');
       });
     }
+  }
+
+  end() {
+    this.log(chalk.white('All Ready!'));
   }
 };

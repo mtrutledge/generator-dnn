@@ -361,9 +361,15 @@ module.exports = class extends Generator {
     if (!this.options.noinstall) {
       process.chdir(this.props.name);
       this.installDependencies({ npm: true, bower: false, yarn: false }).then(() => {
-        this.log(chalk.white('Installing MVC Module Dependencies.'));
+        this.log(chalk.white('Installed MVC Module npm Dependencies.'));
+        this.log(chalk.white('Running NuGet.'));
+        this.spawnCommand('gulp', ['nuget']);
         process.chdir('../');
       });
     }
+  }
+
+  end() {
+    this.log(chalk.white('All Ready!'));
   }
 };
