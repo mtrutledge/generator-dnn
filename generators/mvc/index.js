@@ -294,6 +294,8 @@ module.exports = class extends Generator {
       this.templatePath('web.Release.config'),
       this.destinationPath(moduleName + '/web.Release.config')
     );
+
+    this._writeSolution();
   }
 
   _createSolutionFromTemplate() {
@@ -312,8 +314,6 @@ module.exports = class extends Generator {
         solutionGuid: solutionGuid
       }
     );
-
-    this._writeSolution();
   }
 
   _addProjectToSolution() {
