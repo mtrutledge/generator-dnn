@@ -278,6 +278,7 @@ module.exports = class extends Generator {
   }
 
   _createSolutionFromTemplate() {
+    this.log(chalk.white('Creating sln from template.'));
     let namespace = this.props.company;
     let moduleName = this.props.name;
     let projectGuid = this.props.projectGuid;
@@ -295,6 +296,7 @@ module.exports = class extends Generator {
   }
 
   _addProjectToSolution() {
+    this.log(chalk.white('Adding project to existing sln.'));
     let namespace = this.props.company;
     let moduleName = this.props.name;
     let projectGuid = this.props.projectGuid;
@@ -325,11 +327,11 @@ module.exports = class extends Generator {
     let namespace = this.props.company;
     let slnFileName = this.destinationPath(namespace + '.sln');
     if (this.fs.exists(slnFileName)) {
-      this.log(chalk.white('Existing sln file found. Adding project.'));
+      this.log(chalk.white('Existing sln file found.'));
       this._addProjectToSolution();
     } else {
       // File does not exist
-      this.log(chalk.white('No sln file found. Creating new sln file.'));
+      this.log(chalk.white('No sln file found.'));
       this._createSolutionFromTemplate();
     }
   }
