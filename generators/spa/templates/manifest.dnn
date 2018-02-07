@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dotnetnuke type="Package" version="6.0">
+  <packages>
+    <package name="<%= moduleName %>" type="Module" version="1.0.0.0">
+      <friendlyName><%= moduleName %></friendlyName>
+      <description><%= description %></description>
+      <iconFile>~/DesktopModules/<%= namespace %>/<%= moduleName %>/Resources/img/extension.png</iconFile>
+      <owner>
+        <name><%= namespace %></name>
+        <organization><%= namespace %></organization>
+        <url><%= companyUrl %></url>
+        <email><![CDATA[<a href="mailto:<%= emailAddy %>"><%= emailAddy %></a>]]></email>
+      </owner>
+      <license src="License.txt">
+      </license>
+      <releaseNotes src="ReleaseNotes.txt">
+      </releaseNotes>
+      <dependencies>
+        <dependency type="CoreVersion">08.00.01</dependency>
+      </dependencies>
+      <components>
+        <component type="Script">
+          <scripts>
+            <basePath>DesktopModules\<%= namespace %>\<%= moduleName %></basePath>
+            <script type="Install">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>01.00.00.SqlDataProvider</name>
+              <version>01.00.00</version>
+            </script>
+            <script type="UnInstall">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>Uninstall.SqlDataProvider</name>
+              <version>01.00.00</version>
+            </script>
+          </scripts>
+        </component>
+        <component type="ResourceFile">
+          <resourceFiles>
+            <basePath>DesktopModules/<%= namespace %>/<%= moduleName %></basePath>
+            <resourceFile>
+              <name>Resources.zip</name>
+            </resourceFile>
+          </resourceFiles>
+        </component>
+        <component type="Module">
+          <desktopModule>
+            <moduleName><%= moduleName %></moduleName>
+            <foldername><%= namespace %>/<%= moduleName %></foldername>
+            <businessControllerClass />
+            <supportedFeatures />
+            <moduleDefinitions>
+              <moduleDefinition>
+                <friendlyName><%= moduleName %></friendlyName>
+                <defaultCacheTime>60</defaultCacheTime>
+                <moduleControls>
+                  <moduleControl>
+                    <controlKey>
+                    </controlKey>
+                    <controlSrc>DesktopModules/<%= namespace%>/<%= moduleName %>/View.html</controlSrc>
+                    <supportsPartialRendering>False</supportsPartialRendering>
+                    <controlTitle><%= moduleName %> SPA</controlTitle>
+                    <controlType>View</controlType>
+                    <iconFile />
+                    <helpUrl />
+                  </moduleControl>
+                  <moduleControl>
+                    <controlKey>Edit</controlKey>
+                    <controlSrc>DesktopModules/<%= namespace%>/<%= moduleName %>/Edit.html</controlSrc>
+                    <supportsPartialRendering>False</supportsPartialRendering>
+                    <controlTitle>Add/Edit Menu Item</controlTitle>
+                    <controlType>Edit</controlType>
+                    <iconFile />
+                    <helpUrl />
+                    <viewOrder>0</viewOrder>
+                    <supportsPopUps>True</supportsPopUps>
+                  </moduleControl>
+                  <moduleControl>
+                    <controlKey>QuickSettings</controlKey>
+                    <controlSrc>DesktopModules/<%= namespace%>/<%= moduleName %>/Settings.html</controlSrc>
+                    <supportsPartialRendering>False</supportsPartialRendering>
+                    <controlTitle><%= moduleName %> Settings</controlTitle>
+                    <controlType>Edit</controlType>
+                    <iconFile />
+                    <helpUrl />
+                    <viewOrder>0</viewOrder>
+                  </moduleControl>
+                </moduleControls>
+                <permissions>
+                </permissions>
+              </moduleDefinition>
+            </moduleDefinitions>
+          </desktopModule>
+        </component>
+        <component type="Assembly">
+          <assemblies>
+            <assembly>
+              <path>bin</path>
+              <name><%= namespace %>.<%= moduleName %>.dll</name>
+            </assembly>
+          </assemblies>
+        </component>
+      </components>
+    </package>
+  </packages>
+</dotnetnuke>

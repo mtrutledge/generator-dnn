@@ -6,15 +6,15 @@
 ' DEALINGS IN THE SOFTWARE.
 ' 
 */
-using DotNetNuke.Web.Mvc.Routing;
+using DotNetNuke.Web.Api;
 
 namespace <%= namespace%>.Modules.<%= moduleName %>
 {
-    public class RouteConfig : IMvcRouteMapper
+    public class RouteConfig : IServiceRouteMapper
     {
         public void RegisterRoutes(IMapRoute mapRouteManager)
         {
-            mapRouteManager.MapRoute("<%= namespace%>.Modules.<%= moduleName %>", "<%= namespace%>.Modules.<%= moduleName %>", "{controller}/{action}", new[]
+            mapRouteManager.MapHttpRoute("<%= namespace%>.Modules.<%= moduleName %>", "<%= namespace%>.Modules.<%= moduleName %>", "{controller}/{action}", new[]
             {"<%= namespace%>.Modules.<%= moduleName %>.Controllers"});
         }
     }
