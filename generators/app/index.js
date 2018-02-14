@@ -7,9 +7,37 @@ module.exports = class extends Generator {
   prompting() {
     // Have Yeoman greet the user.
     this.log(yosay('Welcome to the ' + chalk.red('DNN') + ' project generator!'));
-    this.log(chalk.white('This scaffolds the project in your current directory.'));
+    this.log(chalk.white('This scaffolds DNN Module projects for you.'));
+
+    // Check to see if they are currently in the root of a DNN installation directory
+    let insideDnnEnv = this.fs.exists('./DotNetNuke.log4net.config');
 
     const prompts = [
+      {
+        when: !this.options.devEnvChoice,
+        type: 'list',
+        name: 'devEnvChoice',
+        message:
+          'Do you prefer developing your modules inside a DNN instance or outside a DNN instance?',
+        choices: [
+          { name: 'Inside DNN', value: 'insideDnn' },
+          { name: 'Outside DNN', value: 'outsideDnn' }
+        ],
+        store: true
+      },
+      {
+        when: function(response) {
+          return !insideDnnEnv && response.devEnvChoice === 'insideDnn';
+        },
+        type: 'input',
+        name: 'dnnRoot',
+        message: 'What is the root directory of your DNN instance?',
+        default: 'C:\\inetpub\\wwwroot\\DNN',
+        store: true,
+        validate: str => {
+          return str.length > 0;
+        }
+      },
       {
         when: !this.options.projType,
         type: 'list',
