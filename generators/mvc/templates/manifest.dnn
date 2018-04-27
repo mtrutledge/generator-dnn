@@ -51,7 +51,7 @@
             <moduleDefinitions>
               <moduleDefinition>
                 <friendlyName><%= moduleName %></friendlyName>
-                <defaultCacheTime>60</defaultCacheTime>
+                <defaultCacheTime>0</defaultCacheTime>
                 <moduleControls>
                   <moduleControl>
                     <controlKey>
