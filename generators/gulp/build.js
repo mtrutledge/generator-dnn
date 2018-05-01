@@ -36,7 +36,7 @@ gulp.task('assemblyInfo', function() {
 gulp.task('build', ['nuget', 'assemblyInfo'], function() {
   return gulp.src('./<%= moduleName %>.csproj').pipe(
     msbuild({
-      toolsVersion: 14.0,
+      toolsVersion: 'auto',
       targets: ['Clean', 'Build'],
       errorOnFail: true,
       stdout: true,
