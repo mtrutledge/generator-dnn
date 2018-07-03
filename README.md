@@ -18,6 +18,8 @@ cd my-project-name
 yo dnn
 ```
 
+[More verbose instructions on how to use this.](http://www.dnnsoftware.com/community-blog/cid/155574/create-a-dnn-module-in-less-than-2-minutes)
+
 ## Getting To Know Yeoman
 
  * Yeoman has a heart of gold.
