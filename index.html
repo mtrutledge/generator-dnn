@@ -2,12 +2,12 @@
 <html lang="en">
   <head>
         <meta charset="utf-8">
-        <title>generator-dnn | code lab</title>
+        <title>generator-dnn [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="Yeoman generator to scaffold DNN Moudles, Skins, and Persona Bar projects">
         <meta name="keywords" content="yeoman, gulp, dnn, dotnetnuke, scaffold, skin, theme, module" />
         <meta name="author" content="Rutledge Matt">
-        <link rel="canonical" href="http://localhost:4000/codelab.html">
+        <link rel="canonical" href="http://localhost:4000/">
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
     
         <!-- Custom CSS & Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
@@ -51,63 +51,62 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
-
-    <main role="main" class="container">
-      <section class="starter-template">
-          <section id="codelab">
-	<div class="container">
-		<h3 id="installation">Installation</h3>
-
-		<p>First, install <a href="http://yeoman.io">Yeoman</a> and generator-dnn using <a href="https://www.npmjs.com/">npm</a> (we assume you have pre-installed <a href="https://nodejs.org/">node.js</a>).</p>
-
-		<div class="language-bash">
-			<pre><code>npm install <span class="nt">-g</span> yo<br/>npm install <span class="nt">-g</span> generator-dnn</code></pre>
-		</div>
-
-        <p>You will also want to install gulp.js</p>
-        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install <span class="nt">-g</span> gulp</code></pre></div>        
-
-    <h1>Generate Your First Module</h1>
-    <p>Let's create a SPA module using the generator.</p>
-    <p>Open a command line. Create a directory where your modules will be stored. Go into the directory and generate your module.</p>
-    <div class="language-bash">
-        <pre><code>mkdir mytest<br/><span class="nb">cd </span>mytest<br/>yo dnn</code></pre>
+    <!-- Header -->
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="intro-text">
+                    <span class="name">generator-dnn</span>
+                    <hr class="star-light">
+                    <span class="skills">Yeoman generator to scaffold DNN Modules and Themes</span>
+                </div>
+            </div>
+        </div>
     </div>
+</header>
 
-    <p>You will be prompted with a few questions.<br />
-    <img src="https://www.believekids.com/Portals/2/images/blog/generator-dnn/Initial_Gen.png" alt="Initial Yeoman Questions" /></p>
+    <main role="main" class="container main-content">
+        <div class="starter-template">
+          <h1 id="generator-dnn---">generator-dnn <a href="https://npmjs.org/package/generator-dnn"><img src="https://badge.fury.io/js/generator-dnn.svg" alt="NPM version" /></a> <a href="https://travis-ci.org/mtrutledge/generator-dnn"><img src="https://travis-ci.org/mtrutledge/generator-dnn.svg?branch=master" alt="Build Status" /></a> <a href="https://david-dm.org/mtrutledge/generator-dnn"><img src="https://david-dm.org/mtrutledge/generator-dnn.svg?theme=shields.io" alt="Dependency Status" /></a></h1>
+<blockquote>
+  <p>Scaffolds DNN Modules, Persona Bar, Skin projects</p>
+</blockquote>
 
-    <p>Select the SPA Module option. Answer the rest of the questions that the generator asks you. After answering the rest of the questions the generator will create the directory structure and then download any related packages necessary.<br />
-    <img src="https://www.believekids.com/Portals/2/images/blog/generator-dnn/SecondQ.png" alt="Rest of Yeoman Questions" /></p>
+<h2 id="installation">Installation</h2>
+<p>This is a quick start tutorial for using yo dnn. For a more in depth setup take a look at the <a href="codelab">code lab</a>.</a></p>
+<p>First, install <a href="http://yeoman.io">Yeoman</a> and generator-dnn using <a href="https://www.npmjs.com/">npm</a> (we assume you have pre-installed <a href="https://nodejs.org/">node.js</a>).</p>
 
-    <p>What you end up with is a solution file in the directory you are currently in with a sub-directory containing your module.</p>
-    <p>One thing you won't see is a <code>License.txt</code> or <code>ReleaseNotes.txt</code> files. Instead, you see License.md and ReleaseNotes.md. This allows you to use <code>markdown</code> 
-        to create your License and Release Notes (It also allows GitHub to render your content nicely).  When you build the module using the command line it will automatically convert the markdown to HTML and generate the proper text files for the install package.
-    </p>
-    <p>From here you can develop your module through any code editor you wish. Once you are ready to install and run through some tests you can run the build to generate the proper installers.</p>
-    <p>Let's run the build! If you named your module mytest like in the example you can go to this directory and use npm to build your packages. This solution uses some Gulp.js scripts and MS Build to build your module.<br>
-    Simply type
-    <div class="language-bash">
-        <pre><code>npm run build</code></pre>
-    </div>
-    </p><p><img src="https://www.believekids.com/Portals/2/Images/blog/generator-dnn/FinalBuild.png" style="max-width: 100%;" alt="Build Output" /></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install <span class="nt">-g</span> yo
+npm install <span class="nt">-g</span> generator-dnn
+</code></pre></div>
 
-    <p>After the module is built the DNN install packages will be created under the _Packages directory. You can now load your module into DNN through the Host Extensions installer.<br />
-    <img src="https://www.believekids.com/Portals/2/images/blog/generator-dnn/Packages.png" alt="Packages" /></p>
+<p>You will also want to install gulp.js</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install <span class="nt">-g</span> gulp</code></pre></div>
+</div>
 
-    <p>That's it! generating the structure and start project for your DNN modules has never been simpler.</p>
+<p>Then generate your new project:</p>
 
-</div> <!-- End Container-->
-	<div class="container">
-		<h2>Troubleshooting</h2>
-		<p>Most issues can be found by running</p>
-		<div class="language-bash">
-			<pre><code>yo doctor</code></pre>
-		</div>
-		<p>The <code>doctor</code> command will diagnose and provide steps to resolve the most common issues.</p>
-	</div>
-</section>
-      </section>      
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir my-project-name
+<span class="nb">cd </span>my-project-name
+yo dnn
+</code></pre></div></div>
+
+<h2 id="getting-to-know-yeoman">Getting To Know Yeoman</h2>
+
+<ul>
+  <li>Yeoman has a heart of gold.</li>
+  <li>Yeoman is a person with feelings and opinions, but is very easy to work with.</li>
+  <li>Yeoman can be too opinionated at times but is easily convinced not to be.</li>
+  <li>Feel free to <a href="http://yeoman.io/">learn more about Yeoman</a>.</li>
+</ul>
+
+<h2 id="license">License</h2>
+
+<p>MIT © <a href="">Matt Rutledge</a></p>
+
+
+      </div>      
     </main><!-- /.container -->
       
         <!-- Footer -->
@@ -172,8 +171,8 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-        if($('.nav a[href="codelab"]').length > 0)
-            $('.nav a[href="codelab"]').parent().addClass('active');
+        if($('.nav a[href=""]').length > 0)
+            $('.nav a[href=""]').parent().addClass('active');
     });
 </script>
   </body>
