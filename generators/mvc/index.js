@@ -72,8 +72,10 @@ module.exports = class extends Generator {
       props.projectGuid = uuid();
       props.solutionGuid = uuid();
 
+      var tempName = this._.dasherize(props.name);
+      tempName = tempName.replace(/-/gi, ' ');
       props.namespace = pascalCase(props.company);
-      props.moduleName = pascalCase(props.name);
+      props.moduleName = pascalCase(tempName);
 
       this.props = props;
     });
