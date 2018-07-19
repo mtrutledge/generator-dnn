@@ -116,6 +116,8 @@
     <Content Include="ReleaseNotes.md" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="_BuildScripts\gulp\build.js" />
+    <Content Include="_BuildScripts\gulp\dnn-package.js" />
     <Content Include="_BuildScripts\ModulePackage.targets" />
     <Content Include="_BuildScripts\MSBuild.Community.Tasks.Targets" />
   </ItemGroup>
@@ -147,6 +149,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="package.json" />
+    <Content Include="License.md" />
     <None Include="packages.config" />
     <Content Include="web.config" />
     <None Include="web.Debug.config">
