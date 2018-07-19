@@ -116,6 +116,8 @@
     <Content Include="ReleaseNotes.md" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="_BuildScripts\gulp\build.js" />
+    <Content Include="_BuildScripts\gulp\dnn-package.js" />
     <Content Include="_BuildScripts\ModulePackage.targets" />
     <Content Include="_BuildScripts\MSBuild.Community.Tasks.Targets" />
   </ItemGroup>
