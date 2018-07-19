@@ -1,0 +1,21 @@
+---
+layout: bootstrap
+title: generator-dnn | FAQ
+---
+<section id="codelab">
+	<div class="container">
+
+        <h1>Frequently Asked Questions</h3>   
+        <section>
+            {% for post in site.posts %} 
+                {% if post.path contains 'faq' %} 
+                <div class="row">
+                    <div class="col-xs-12"><a href="{{site.baseurl}}{{ post.url }}"><h4>{{ post.title }}</h4></a></div>
+                    <div class="col-xs-12">{{ post.excerpt }}</div>
+                </div>
+                <hr />
+                {% endif %}
+            {% endfor %}
+        </section>
+    </div>
+</section>
