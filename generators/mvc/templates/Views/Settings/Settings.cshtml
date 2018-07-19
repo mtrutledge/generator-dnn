@@ -1,4 +1,4 @@
-﻿@model <%= namespace %>.Modules.<%= moduleName %>.Models.Settings
+﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<<%= namespace %>.Modules.<%= moduleName %>.Models.Settings>
 
 @using System.Web.Mvc
 @using System.Web.Mvc.Html
@@ -8,11 +8,16 @@
 <fieldset>
     <div class="dnnFormItem">
         <div class="dnnLabel" style="position: relative;">
-            @Html.LabelFor(m => Model.CurrencyCulture, Dnn.LocalizeString("lblCurrencyCulture"), new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(m => Model.Setting1, Dnn.LocalizeString("lblSetting1"), new { @class = "col-md-2 control-label" })
         </div>
-        @Html.DropDownListFor(m => Model.CurrencyCulture, 
-            new SelectList(Model.CurrencyCultureOptions, "Code", "Name", Model.CurrencyCultureOptions.First()))
+        @Html.DropDownListFor(m => Model.Setting1,
+            new SelectList(new[] { true, false }))
     </div>
-
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position: relative;">
+            @Html.LabelFor(m => Model.Setting2, Dnn.LocalizeString("lblSetting2"), new { @class = "col-md-2 control-label" })
+        </div>
+        @Html.TextBoxFor(m => Model.Setting2)
+    </div>
 </fieldset>
 
