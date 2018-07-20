@@ -65,10 +65,10 @@ module.exports = class extends Generator {
       props.projectGuid = uuid();
       props.solutionGuid = uuid();
 
-      var tempName = this._.dasherize(props.name);
-      tempName = tempName.replace(/-/gi, ' ');
+      // Var tempName = this._.dasherize(props.name);
+      // tempName = tempName.replace(/-/gi, ' ');
       props.namespace = pascalCase(props.company);
-      props.moduleName = pascalCase(tempName);
+      props.moduleName = pascalCase(props.name);
 
       this.props = props;
     });
@@ -78,7 +78,7 @@ module.exports = class extends Generator {
     this.log(chalk.white('Creating SPA Module.'));
 
     let namespace = this.props.company;
-    let moduleName = this.props.name;
+    let moduleName = this.props.moduleName;
     let currentDate = this.props.currentDate;
     let projectGuid = this.props.projectGuid;
 
@@ -194,6 +194,7 @@ module.exports = class extends Generator {
       {
         namespace: namespace,
         moduleName: moduleName,
+        moduleFriendlyName: this.props.name,
         description: this.props.description,
         companyUrl: this.props.companyUrl,
         emailAddy: this.props.emailAddy
@@ -282,7 +283,7 @@ module.exports = class extends Generator {
   _createSolutionFromTemplate() {
     this.log(chalk.white('Creating sln from template.'));
     let namespace = this.props.company;
-    let moduleName = this.props.name;
+    let moduleName = this.props.moduleName;
     let projectGuid = this.props.projectGuid;
     let solutionGuid = this.props.solutionGuid;
 
@@ -300,7 +301,7 @@ module.exports = class extends Generator {
   _addProjectToSolution() {
     this.log(chalk.white('Adding project to existing sln.'));
     let namespace = this.props.company;
-    let moduleName = this.props.name;
+    let moduleName = this.props.moduleName;
     let projectGuid = this.props.projectGuid;
     let slnFileName = this.destinationPath(namespace + '.sln');
 
@@ -340,7 +341,7 @@ module.exports = class extends Generator {
 
   install() {
     if (!this.options.noinstall) {
-      process.chdir(this.props.name);
+      process.chdir(this.props.moduleName);
       this.installDependencies({ npm: true, bower: false, yarn: false }).then(() => {
         this.log(chalk.white('Installed SPA Module npm Dependencies.'));
         this.log(chalk.white('Running NuGet.'));
