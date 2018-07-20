@@ -1,0 +1,23 @@
+---
+layout: bootstrap
+title: Can I add multiple modules?
+date: 2018-07-18 11:10:39
+categories: faq
+excerpt: Gives instructions on how to add a new module alongside an existing module.
+---
+<section id="codelab">
+	<div class="container">
+
+        <h1>{{page.title}}</h3>   
+        <p>First lets make some assumptions about your directory structure. Say you have a directory structure like this:</p>
+        <div class="language-bash">
+            <pre><code>my-project-dir<br/>...my-project.sln<br/>...Module1<br/>......Module1.dnn (etc, rest of files)</code>
+            </pre>
+        </div>
+        <p>You can go into your <code>my-project</code> directory and run <code>yo dnn</code> again. After you answer the questions and it starts to create the module you will be prompted if you want to overwrite your SLN file. Say <strong>YES</strong></p>
+        <p>This will keep everything that existed in the SLN file before and will add the new module project to the file.</p>
+        <h2>What if I want to add a module to my existing csproj?</h2>
+        <p>To add a module to your already scaffolded module you just need to add your files and update the DNN manifest file to include the new module files.</p>
+        <p><a href="{{ site.url }}/faq"><i class="fa fa-chevron-left"></i> Back to FAQ</a></p>
+    </div>
+</section>
