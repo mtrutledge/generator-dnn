@@ -26,7 +26,9 @@ module.exports = class extends Generator {
           {
             name: chalk.gray('Theme'),
             value: 'theme',
-            disabled: chalk.gray('Coming Soon')
+            disabled: chalk.gray(
+              'For the best starter DNN theme use nvQuickTheme (https://www.nvquicktheme.com)'
+            )
           }
         ]
       }
