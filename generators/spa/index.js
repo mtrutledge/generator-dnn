@@ -64,9 +64,6 @@ module.exports = class extends Generator {
       props.currentDate = new Date();
       props.projectGuid = uuid();
       props.solutionGuid = uuid();
-
-      // Var tempName = this._.dasherize(props.name);
-      // tempName = tempName.replace(/-/gi, ' ');
       props.namespace = pascalCase(props.company);
       props.moduleName = pascalCase(props.name);
 
