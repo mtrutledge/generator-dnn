@@ -17,10 +17,7 @@ module.exports = class extends Generator {
         message: 'What type of project would you like to scaffold?',
         choices: [
           { name: 'MVC Module', value: 'mvc' },
-          {
-            name: 'SPA Module (Currently ReactJS with TypeScript components)',
-            value: 'spa'
-          },
+          { name: 'SPA Module', value: 'spa' },
           {
             name: chalk.gray('Persona Bar'),
             value: 'personabar',
@@ -29,7 +26,9 @@ module.exports = class extends Generator {
           {
             name: chalk.gray('Theme'),
             value: 'theme',
-            disabled: chalk.gray('Coming Soon')
+            disabled: chalk.gray(
+              'For the best starter DNN theme use nvQuickTheme (https://www.nvquicktheme.com)'
+            )
           }
         ]
       }
