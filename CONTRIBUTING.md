@@ -1,8 +1,6 @@
 # How to contribute
 
-*Simple contribution guidelines to make open source happy and organized*
-
-Resist being a lazy developer, we can get through this together.
+*We have tried to make this as simple as possible. The most important part is when you want to test locally you need to create a link using `npm link` in your local generator-dnn directory.*
 
 ## Project organization
 
