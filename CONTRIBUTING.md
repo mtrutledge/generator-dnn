@@ -7,8 +7,9 @@ Resist being a lazy developer, we can get through this together.
 ## Project organization
 
 * Branch `master` is always stable and release-ready.
-* Feature branches should be created for adding new features.
-* Bug fix branches should be created for fixing bugs.
+* Branch `development` contains the next versions features and bugs merged from pull requests.
+* Feature branches should be created for adding new features and branched off of `development`.
+* Bug fix branches should be created for fixing bugs and branched off of `development`.
 
 ## Opening a new issue
 
@@ -25,15 +26,15 @@ Resist being a lazy developer, we can get through this together.
 ## Submitting a pull request
 
 1. Find an issue to work on, or create a new one. *Avoid duplicates, please check existing issues!*
-2. Fork the repo, or make sure you are synced with the latest changes on `develop`.
+2. Fork the repo, or make sure you are synced with the latest changes on `development`.
 3. Create a new branch with a sweet name: `git checkout -b issue_<##>_<description>`.
 4. Do some programming.
 5. Write [unit tests](http://nshipster.com/unit-testing) when applicable.
 6. Keep your code nice and clean by adhering to the coding standards & guidelines below.
 7. Don't break unit tests or functionality.
 8. Update the documentation header comments if needed.
-9. **Rebase on `develop` branch and resolve any conflicts _before submitting a pull request!_**
-10. Submit a pull request to the `develop` branch.
+9. **Rebase on `development` branch and resolve any conflicts _before submitting a pull request!_**
+10. Submit a pull request to the `development` branch.
 
 **You should submit one pull request per feature!** The smaller the PR, the better your chances are of getting merged. Enormous PRs will likely take enormous amounts of time to review, or they will be rejected.
 
