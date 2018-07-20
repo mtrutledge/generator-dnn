@@ -5,7 +5,12 @@ date: 2018-07-19 12:10:39
 categories: faq
 excerpt: Tells you how you can contribute to the generator-dnn project.
 ---
-# How to contribute
+<section id="codelab">
+	<div class="container">
+    </div>
+</section>
+
+## {{ page.title }}
 
 *We have tried to make this as simple as possible. The most important part is when you want to test locally you need to create a link using `npm link` in your local generator-dnn directory.*
 
