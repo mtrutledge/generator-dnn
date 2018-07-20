@@ -3,7 +3,7 @@ theme: jekyll-theme-cayman
 # Site settings
 title: generator-dnn
 email: mtrutledge@gmail.com
-url: https://github.com/mtrutledge/generator-dnn
+url: https://mtrutledge.github.com/generator-dnn
 description: "Yeoman generator to scaffold DNN Moudles, Skins, and Persona Bar projects"
 keywords: "yeoman, gulp, dnn, dotnetnuke, scaffold, skin, theme, module"
 meta_author: Rutledge Matt
