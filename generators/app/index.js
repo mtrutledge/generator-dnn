@@ -18,11 +18,7 @@ module.exports = class extends Generator {
         choices: [
           { name: 'MVC Module', value: 'mvc' },
           { name: 'SPA Module', value: 'spa' },
-          {
-            name: chalk.gray('Persona Bar'),
-            value: 'personabar',
-            disabled: chalk.gray('Coming Soon')
-          },
+          { name: 'Persona Bar', value: 'personabar' },
           {
             name: chalk.gray('Theme'),
             value: 'theme',
