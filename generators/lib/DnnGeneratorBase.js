@@ -84,6 +84,17 @@ export default class DnnGeneratorBase extends Generator {
     }
   }
 
+  _copyCommon(namespace, moduleName) {
+    this.fs.copyTpl(
+      this.templatePath('../../gulp/*.js'),
+      this.destinationPath(moduleName + '/_BuildScripts/gulp/'),
+      {
+        namespace: namespace,
+        moduleName: moduleName
+      }
+    );
+  }
+
   _defaultInstall() {
     if (!this.options.noinstall) {
       process.chdir(this.props.moduleName);
