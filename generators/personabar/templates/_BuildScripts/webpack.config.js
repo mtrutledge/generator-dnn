@@ -1,24 +1,10 @@
 ﻿var webpack = require('webpack');
 var path = require('path');
 var WebpackNotifierPlugin = require('webpack-notifier');
-//const webpackExternals = require("dnn-webpack-externals");
-//const packageJson = require("./package.json");
+const webpackExternals = require("dnn-webpack-externals");
 
 var moduleCompanyName = "<%= namespace %>"; 
 var moduleProjName = "<%= moduleName %>"; 
-
-//const isProduction = process.env.NODE_ENV === "production";
-const path = require("path");
-const languages = {
-    "en": null
-    // TODO: create locallizaton files per language 
-    // "de": require("./localizations/de.json"),
-    // "es": require("./localizations/es.json"),
-    // "fr": require("./localizations/fr.json"),
-    // "it": require("./localizations/it.json"),
-    // "nl": require("./localizations/nl.json")
-};
-//
 
 module.exports = {
     devtool: 'eval',

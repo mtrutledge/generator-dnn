@@ -1,12 +1,14 @@
-﻿import * as React from "react";
+import * as React from "react";
 import * as ReactDOM from "react-dom";
-import Hello from "./components/Hello";
+import { Provider } from "react-redux";
+import configureStore from "./store/configureStore";
+import Root from "./containers/Root";
+
+let store = configureStore();
 
 ReactDOM.render(
-	<div className="row">
-		<div className="col-xs-12">
-			<Hello name="I am a react module!" />
-		</div>
-	</div>,
-  document.getElementById("<%= namespace.toLowerCase() %><%= moduleName %>")
+    <Provider store={store}>
+        <Root />
+    </Provider>,
+	document.getElementById("<%= moduleName %>-container")
 );
