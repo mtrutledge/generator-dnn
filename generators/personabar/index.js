@@ -70,6 +70,20 @@ module.exports = class extends DnnGeneratorBase {
 
   writing() {
     this.log(chalk.white('Creating Persona Bar Module.'));
+
+    let namespace = this.props.namespace;
+    let moduleName = this.props.moduleName;
+
+    this._copyCommon(namespace, moduleName);
+
+    this.fs.copyTpl(this.templatePath('**/**'), this.destinationPath(moduleName + '/'), {
+      namespace: namespace,
+      moduleName: moduleName,
+      moduleFriendlyName: this.props.name,
+      description: this.props.description,
+      companyUrl: this.props.companyUrl,
+      emailAddy: this.props.emailAddy
+    });
   }
 
   install() {
