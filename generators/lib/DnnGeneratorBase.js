@@ -1,10 +1,11 @@
-import { Generator } from 'yeoman-generator';
-import { chalk } from 'chalk';
-import { uuid } from 'uuid-v4';
-import { pascalCase } from 'pascal-case';
-import { sln } from 'dotnet-solution';
+'use strict';
+const Generator = require('yeoman-generator');
+const chalk = require('chalk');
+const uuid = require('uuid-v4');
+const pascalCase = require('pascal-case');
+const sln = require('dotnet-solution');
 
-export default class DnnGeneratorBase extends Generator {
+module.exports = class DnnGeneratorBase extends Generator {
   constructor(args, opts) {
     super(args, opts);
 
@@ -106,4 +107,4 @@ export default class DnnGeneratorBase extends Generator {
       });
     }
   }
-}
+};

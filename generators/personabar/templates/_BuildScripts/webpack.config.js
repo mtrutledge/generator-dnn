@@ -4,7 +4,7 @@ var WebpackNotifierPlugin = require('webpack-notifier');
 //const webpackExternals = require("dnn-webpack-externals");
 //const packageJson = require("./package.json");
 
-var moduleCompanyName = "<%= namespace%>"; 
+var moduleCompanyName = "<%= namespace %>"; 
 var moduleProjName = "<%= moduleName %>"; 
 
 //const isProduction = process.env.NODE_ENV === "production";
