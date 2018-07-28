@@ -71,7 +71,6 @@ module.exports = class extends Generator {
       props.currentDate = new Date();
       props.projectGuid = uuid();
       props.solutionGuid = uuid();
-
       props.namespace = pascalCase(props.company);
       props.moduleName = pascalCase(props.name);
 
@@ -218,6 +217,7 @@ module.exports = class extends Generator {
       {
         namespace: namespace,
         moduleName: moduleName,
+        moduleFriendlyName: this.props.name,
         description: this.props.description,
         companyUrl: this.props.companyUrl,
         emailAddy: this.props.emailAddy
@@ -301,7 +301,7 @@ module.exports = class extends Generator {
   _createSolutionFromTemplate() {
     this.log(chalk.white('Creating sln from template.'));
     let namespace = this.props.company;
-    let moduleName = this.props.name;
+    let moduleName = this.props.moduleName;
     let projectGuid = this.props.projectGuid;
     let solutionGuid = this.props.solutionGuid;
 
@@ -319,7 +319,7 @@ module.exports = class extends Generator {
   _addProjectToSolution() {
     this.log(chalk.white('Adding project to existing sln.'));
     let namespace = this.props.company;
-    let moduleName = this.props.name;
+    let moduleName = this.props.moduleName;
     let projectGuid = this.props.projectGuid;
     let slnFileName = this.destinationPath(namespace + '.sln');
 
@@ -347,6 +347,11 @@ module.exports = class extends Generator {
   _writeSolution() {
     let namespace = this.props.company;
     let slnFileName = this.destinationPath(namespace + '.sln');
+    this.log(
+      chalk.white(
+        'Looking for sln [' + slnFileName + ']. Result: ' + this.fs.exists(slnFileName)
+      )
+    );
     if (this.fs.exists(slnFileName)) {
       this.log(chalk.white('Existing sln file found.'));
       this._addProjectToSolution();
@@ -359,7 +364,7 @@ module.exports = class extends Generator {
 
   install() {
     if (!this.options.noinstall) {
-      process.chdir(this.props.name);
+      process.chdir(this.props.moduleName);
       this.installDependencies({ npm: true, bower: false, yarn: false }).then(() => {
         this.log(chalk.white('Installed MVC Module npm Dependencies.'));
         this.log(chalk.white('Running NuGet.'));

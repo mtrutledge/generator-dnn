@@ -9,6 +9,25 @@ module.exports = class extends Generator {
   prompting() {
     const prompts = [
       {
+        when: !this.options.spaType,
+        type: 'list',
+        name: 'spaType',
+        message: 'What language do you want your SPA Module to use?',
+        choices: [
+          { name: 'ReactJS', value: 'ReactJS' },
+          {
+            name: chalk.gray('Angular'),
+            value: 'angular',
+            disabled: chalk.gray('Coming Soon')
+          },
+          {
+            name: chalk.gray('VueJS'),
+            value: 'VueJS',
+            disabled: chalk.gray('Coming Soon')
+          }
+        ]
+      },
+      {
         when: !this.options.company,
         type: 'input',
         name: 'company',
@@ -64,7 +83,6 @@ module.exports = class extends Generator {
       props.currentDate = new Date();
       props.projectGuid = uuid();
       props.solutionGuid = uuid();
-
       props.namespace = pascalCase(props.company);
       props.moduleName = pascalCase(props.name);
 
@@ -76,41 +94,41 @@ module.exports = class extends Generator {
     this.log(chalk.white('Creating SPA Module.'));
 
     let namespace = this.props.company;
-    let moduleName = this.props.name;
+    let moduleName = this.props.moduleName;
     let currentDate = this.props.currentDate;
     let projectGuid = this.props.projectGuid;
 
     this.fs.copy(
-      this.templatePath('App_LocalResources/**'),
+      this.templatePath(this.props.spaType + '/App_LocalResources/**'),
       this.destinationPath(moduleName + '/App_LocalResources/')
     );
 
     this.fs.copy(
-      this.templatePath('_BuildScripts/**'),
+      this.templatePath(this.props.spaType + '/_BuildScripts/**'),
       this.destinationPath(moduleName + '/_BuildScripts/')
     );
     this.fs.copy(
-      this.templatePath('Components/**'),
+      this.templatePath(this.props.spaType + '/Components/**'),
       this.destinationPath(moduleName + '/Components/')
     );
     this.fs.copy(
-      this.templatePath('Controllers/**'),
+      this.templatePath(this.props.spaType + '/Controllers/**'),
       this.destinationPath(moduleName + '/Controllers/')
     );
     this.fs.copy(
-      this.templatePath('Providers/**'),
+      this.templatePath(this.props.spaType + '/Providers/**'),
       this.destinationPath(moduleName + '/Providers/')
     );
     this.fs.copy(
-      this.templatePath('Resources/**'),
+      this.templatePath(this.props.spaType + '/Resources/**'),
       this.destinationPath(moduleName + '/Resources/')
     );
     this.fs.copy(
-      this.templatePath('tsconfig.json'),
+      this.templatePath(this.props.spaType + '/tsconfig.json'),
       this.destinationPath(moduleName + '/tsconfig.json')
     );
     this.fs.copy(
-      this.templatePath('Properties/**'),
+      this.templatePath(this.props.spaType + '/Properties/**'),
       this.destinationPath(moduleName + '/Properties/')
     );
 
@@ -124,7 +142,7 @@ module.exports = class extends Generator {
     );
 
     this.fs.copyTpl(
-      this.templatePath('Components/FeatureController.cs'),
+      this.templatePath(this.props.spaType + '/Components/FeatureController.cs'),
       this.destinationPath(moduleName + '/Components/FeatureController.cs'),
       {
         namespace: namespace,
@@ -133,7 +151,7 @@ module.exports = class extends Generator {
     );
 
     this.fs.copyTpl(
-      this.templatePath('Controllers/DataController.cs'),
+      this.templatePath(this.props.spaType + '/Controllers/DataController.cs'),
       this.destinationPath(moduleName + '/Controllers/DataController.cs'),
       {
         namespace: namespace,
@@ -142,7 +160,7 @@ module.exports = class extends Generator {
     );
 
     this.fs.copyTpl(
-      this.templatePath('src/**'),
+      this.templatePath(this.props.spaType + '/src/**'),
       this.destinationPath(moduleName + '/src/'),
       {
         namespace: namespace,
@@ -151,7 +169,7 @@ module.exports = class extends Generator {
     );
 
     this.fs.copyTpl(
-      this.templatePath('RouteConfig.cs'),
+      this.templatePath(this.props.spaType + '/RouteConfig.cs'),
       this.destinationPath(moduleName + '/RouteConfig.cs'),
       {
         namespace: namespace,
@@ -160,7 +178,7 @@ module.exports = class extends Generator {
     );
 
     this.fs.copyTpl(
-      this.templatePath('Edit.html'),
+      this.templatePath(this.props.spaType + '/Edit.html'),
       this.destinationPath(moduleName + '/Edit.html'),
       {
         namespace: namespace,
@@ -169,7 +187,7 @@ module.exports = class extends Generator {
     );
 
     this.fs.copyTpl(
-      this.templatePath('Settings.html'),
+      this.templatePath(this.props.spaType + '/Settings.html'),
       this.destinationPath(moduleName + '/Settings.html'),
       {
         namespace: namespace,
@@ -178,7 +196,7 @@ module.exports = class extends Generator {
     );
 
     this.fs.copyTpl(
-      this.templatePath('View.html'),
+      this.templatePath(this.props.spaType + '/View.html'),
       this.destinationPath(moduleName + '/View.html'),
       {
         namespace: namespace,
@@ -187,11 +205,12 @@ module.exports = class extends Generator {
     );
 
     this.fs.copyTpl(
-      this.templatePath('manifest.dnn'),
+      this.templatePath(this.props.spaType + '/manifest.dnn'),
       this.destinationPath(moduleName + '/' + moduleName + '.dnn'),
       {
         namespace: namespace,
         moduleName: moduleName,
+        moduleFriendlyName: this.props.name,
         description: this.props.description,
         companyUrl: this.props.companyUrl,
         emailAddy: this.props.emailAddy
@@ -199,7 +218,7 @@ module.exports = class extends Generator {
     );
 
     this.fs.copyTpl(
-      this.templatePath('Properties/AssemblyInfo.cs'),
+      this.templatePath(this.props.spaType + '/Properties/AssemblyInfo.cs'),
       this.destinationPath(moduleName + '/Properties/AssemblyInfo.cs'),
       {
         namespace: namespace,
@@ -209,7 +228,7 @@ module.exports = class extends Generator {
     );
 
     this.fs.copyTpl(
-      this.templatePath('_Project.csproj'),
+      this.templatePath(this.props.spaType + '/_Project.csproj'),
       this.destinationPath(moduleName + '/' + moduleName + '.csproj'),
       {
         namespace: namespace,
@@ -219,7 +238,7 @@ module.exports = class extends Generator {
     );
 
     this.fs.copyTpl(
-      this.templatePath('package.json'),
+      this.templatePath(this.props.spaType + '/package.json'),
       this.destinationPath(moduleName + '/package.json'),
       {
         namespace: namespace,
@@ -231,7 +250,7 @@ module.exports = class extends Generator {
     );
 
     this.fs.copyTpl(
-      this.templatePath('gulpfile.js'),
+      this.templatePath(this.props.spaType + '/gulpfile.js'),
       this.destinationPath(moduleName + '/gulpfile.js'),
       {
         namespace: namespace,
@@ -240,37 +259,37 @@ module.exports = class extends Generator {
     );
 
     this.fs.copy(
-      this.templatePath('.babelrc'),
+      this.templatePath(this.props.spaType + '/.babelrc'),
       this.destinationPath(moduleName + '/.babelrc')
     );
 
     this.fs.copy(
-      this.templatePath('packages.config'),
+      this.templatePath(this.props.spaType + '/packages.config'),
       this.destinationPath(moduleName + '/packages.config')
     );
 
     this.fs.copy(
-      this.templatePath('License.md'),
+      this.templatePath(this.props.spaType + '/License.md'),
       this.destinationPath(moduleName + '/License.md')
     );
 
     this.fs.copy(
-      this.templatePath('ReleaseNotes.md'),
+      this.templatePath(this.props.spaType + '/ReleaseNotes.md'),
       this.destinationPath(moduleName + '/ReleaseNotes.md')
     );
 
     this.fs.copy(
-      this.templatePath('web.config'),
+      this.templatePath(this.props.spaType + '/web.config'),
       this.destinationPath(moduleName + '/web.config')
     );
 
     this.fs.copy(
-      this.templatePath('web.Debug.config'),
+      this.templatePath(this.props.spaType + '/web.Debug.config'),
       this.destinationPath(moduleName + '/web.Debug.config')
     );
 
     this.fs.copy(
-      this.templatePath('web.Release.config'),
+      this.templatePath(this.props.spaType + '/web.Release.config'),
       this.destinationPath(moduleName + '/web.Release.config')
     );
 
@@ -280,12 +299,12 @@ module.exports = class extends Generator {
   _createSolutionFromTemplate() {
     this.log(chalk.white('Creating sln from template.'));
     let namespace = this.props.company;
-    let moduleName = this.props.name;
+    let moduleName = this.props.moduleName;
     let projectGuid = this.props.projectGuid;
     let solutionGuid = this.props.solutionGuid;
 
     this.fs.copyTpl(
-      this.templatePath('_Template.sln'),
+      this.templatePath(this.props.spaType + '/_Template.sln'),
       this.destinationPath(namespace + '.sln'),
       {
         moduleName: moduleName,
@@ -298,7 +317,7 @@ module.exports = class extends Generator {
   _addProjectToSolution() {
     this.log(chalk.white('Adding project to existing sln.'));
     let namespace = this.props.company;
-    let moduleName = this.props.name;
+    let moduleName = this.props.moduleName;
     let projectGuid = this.props.projectGuid;
     let slnFileName = this.destinationPath(namespace + '.sln');
 
@@ -338,7 +357,7 @@ module.exports = class extends Generator {
 
   install() {
     if (!this.options.noinstall) {
-      process.chdir(this.props.name);
+      process.chdir(this.props.moduleName);
       this.installDependencies({ npm: true, bower: false, yarn: false }).then(() => {
         this.log(chalk.white('Installed SPA Module npm Dependencies.'));
         this.log(chalk.white('Running NuGet.'));
