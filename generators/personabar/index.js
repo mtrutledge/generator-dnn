@@ -53,6 +53,16 @@ module.exports = class extends DnnGeneratorBase {
         validate: str => {
           return str.length > 0;
         }
+      },
+      {
+        when: !this.options.parentMenu,
+        type: 'list',
+        name: 'parentMenu',
+        message: 'What menu will your Persona Bar Module show in?',
+        choices: [
+          { name: 'Content', value: 'Content' },
+          { name: 'Settings', value: 'Settings' }
+        ]
       }
     ];
 
@@ -128,7 +138,8 @@ module.exports = class extends DnnGeneratorBase {
         emailAddy: this.props.emailAddy,
         currentYear: currentDate.getFullYear(),
         solutionGuid: solutionGuid,
-        projectGuid: projectGuid
+        projectGuid: projectGuid,
+        parentMenu: this.props.parentMenu
       }
     );
 
@@ -136,6 +147,7 @@ module.exports = class extends DnnGeneratorBase {
       [
         this.templatePath('src/**'),
         this.templatePath('Properties/AssemblyInfo.cs'),
+        this.templatePath('MenuControllers/**'),
         this.templatePath('_Project.csproj'),
         this.templatePath('package.json'),
         this.templatePath('gulpfile.js')
@@ -158,9 +170,9 @@ module.exports = class extends DnnGeneratorBase {
   }
 
   install() {
-    this.spawnCommandSync('npm', [
-      'config set registry https://www.myget.org/F/dnn-software-public/npm/'
-    ]);
+    this.spawnCommandSync(
+      'npm config set registry https://www.myget.org/F/dnn-software-public/npm/'
+    );
     this._defaultInstall();
   }
 };

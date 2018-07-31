@@ -1,24 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dotnetnuke type="Package" version="6.0">
   <packages>
-    <package name="<%= moduleName %>" type="Module" version="1.0.0.0">
+    <package name="<%= moduleName %>" type="PersonaBar" version="1.0.0.0">
       <friendlyName><%= moduleName %></friendlyName>
       <description><%= description %></description>
-      <iconFile>~/DesktopModules/<%= namespace %>/<%= moduleName %>/Resources/img/extension.png</iconFile>
+      <iconFile>~/Images/icon-personabarapp-32px.png</iconFile>
       <owner>
         <name><%= namespace %></name>
         <organization><%= namespace %></organization>
         <url><%= companyUrl %></url>
         <email><![CDATA[<a href="mailto:<%= emailAddy %>"><%= emailAddy %></a>]]></email>
       </owner>
-      <license src="License.txt">
-      </license>
-      <releaseNotes src="ReleaseNotes.txt">
-      </releaseNotes>
+      <license src="License.txt"></license>
+      <releaseNotes src="ReleaseNotes.txt"></releaseNotes>
+      <azureCompatible>true</azureCompatible>
       <dependencies>
-        <dependency type="CoreVersion">08.00.01</dependency>
+        <dependency type="CoreVersion">08.00.00</dependency>
+        <dependency type="ManagedPackage" version="01.00.00">Dnn.PersonaBar.UI</dependency>
       </dependencies>
       <components>
+        <component type="PersonaBarMenu">
+          <menu>
+            <identifier><%= namespace %>.<%= moduleName %></identifier>
+            <moduleName><%= moduleName %></moduleName>
+            <controller><%= namespace %>.<%= moduleName %>.PersonaBar.MenuControllers.AdminMenuController, <%= namespace %>.<%= moduleName %>.PersonaBar</controller>
+            <resourceKey>nav_MenuText</resourceKey>
+            <path><%= moduleName %></path>
+            <mobileSupport>true</mobileSupport>
+            <parent><%= parentMenu %></parent>
+            <order>2</order>
+          </menu>
+        </component>
         <component type="Script">
           <scripts>
             <basePath>DesktopModules\<%= namespace %>\<%= moduleName %></basePath>
@@ -36,68 +48,11 @@
         </component>
         <component type="ResourceFile">
           <resourceFiles>
-            <basePath>DesktopModules/<%= namespace %>/<%= moduleName %></basePath>
+            <basePath>DesktopModules/Admin/Dnn.PersonaBar/Modules/<%= namespace %>.<%= moduleName %></basePath>
             <resourceFile>
-              <name>Resources.zip</name>
+              <name>ResourcesPB.zip</name>
             </resourceFile>
           </resourceFiles>
-        </component>
-        <component type="Module">
-          <desktopModule>
-            <moduleName><%= moduleName %></moduleName>
-            <foldername><%= namespace %>/<%= moduleName %></foldername>
-            <businessControllerClass />
-            <supportedFeatures />
-            <moduleDefinitions>
-              <moduleDefinition>
-                <friendlyName><%= moduleFriendlyName %></friendlyName>
-                <defaultCacheTime>0</defaultCacheTime>
-                <moduleControls>
-                  <moduleControl>
-                    <controlKey>
-                    </controlKey>
-                    <controlSrc>DesktopModules/<%= namespace%>/<%= moduleName %>/View.html</controlSrc>
-                    <supportsPartialRendering>False</supportsPartialRendering>
-                    <controlTitle><%= moduleName %> SPA</controlTitle>
-                    <controlType>View</controlType>
-                    <iconFile />
-                    <helpUrl />
-                  </moduleControl>
-                  <moduleControl>
-                    <controlKey>Edit</controlKey>
-                    <controlSrc>DesktopModules/<%= namespace%>/<%= moduleName %>/Edit.html</controlSrc>
-                    <supportsPartialRendering>False</supportsPartialRendering>
-                    <controlTitle>Add/Edit Menu Item</controlTitle>
-                    <controlType>Edit</controlType>
-                    <iconFile />
-                    <helpUrl />
-                    <viewOrder>0</viewOrder>
-                    <supportsPopUps>True</supportsPopUps>
-                  </moduleControl>
-                  <moduleControl>
-                    <controlKey>QuickSettings</controlKey>
-                    <controlSrc>DesktopModules/<%= namespace%>/<%= moduleName %>/Settings.html</controlSrc>
-                    <supportsPartialRendering>False</supportsPartialRendering>
-                    <controlTitle><%= moduleName %> Settings</controlTitle>
-                    <controlType>Edit</controlType>
-                    <iconFile />
-                    <helpUrl />
-                    <viewOrder>0</viewOrder>
-                  </moduleControl>
-                </moduleControls>
-                <permissions>
-                </permissions>
-              </moduleDefinition>
-            </moduleDefinitions>
-          </desktopModule>
-        </component>
-        <component type="Assembly">
-          <assemblies>
-            <assembly>
-              <path>bin</path>
-              <name><%= namespace %>.<%= moduleName %>.dll</name>
-            </assembly>
-          </assemblies>
         </component>
       </components>
     </package>
