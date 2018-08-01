@@ -50,7 +50,7 @@
           <resourceFiles>
             <basePath>DesktopModules/Admin/Dnn.PersonaBar/Modules/<%= namespace %>.<%= moduleName %></basePath>
             <resourceFile>
-              <name>ResourcesPB.zip</name>
+              <name>Resources.zip</name>
             </resourceFile>
           </resourceFiles>
         </component>
