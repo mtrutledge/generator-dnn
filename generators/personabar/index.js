@@ -63,6 +63,17 @@ module.exports = class extends DnnGeneratorBase {
           { name: 'Content', value: 'Content' },
           { name: 'Settings', value: 'Settings' }
         ]
+      },
+      {
+        when: !this.options.menuLinkName,
+        type: 'input',
+        name: 'menuLinkName',
+        message: 'How do you want your menu link to display?:',
+        default: 'My Link',
+        store: true,
+        validate: str => {
+          return str.length > 0;
+        }
       }
     ];
 
@@ -106,9 +117,10 @@ module.exports = class extends DnnGeneratorBase {
     );
 
     // Do all templated copies
-    this.fs.copy(
+    this.fs.copyTpl(
       this.templatePath('_PersonaBar/App_LocalResources/_Module.resx'),
-      this.destinationPath(moduleName + '/App_LocalResources/' + moduleName + '.resx')
+      this.destinationPath(moduleName + '/App_LocalResources/' + moduleName + '.resx'),
+      { menuLinkName: this.props.menuLinkName }
     );
     this.fs.copy(
       this.templatePath('_PersonaBar/css/_Module.css'),
