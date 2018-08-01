@@ -93,10 +93,7 @@ module.exports = class extends DnnGeneratorBase {
     // Do all regulare copies
     this.fs.copy(
       [
-        this.templatePath('_BuildScripts/**'),
-        this.templatePath('Properties/**'),
         this.templatePath('Providers/**'),
-        this.templatePath('Resources/**'),
         this.templatePath('tsconfig.json'),
         this.templatePath('packages.config'),
         this.templatePath('License.md'),
@@ -111,18 +108,20 @@ module.exports = class extends DnnGeneratorBase {
     // Do all templated copies
     this.fs.copy(
       this.templatePath('_PersonaBar/App_LocalResources/_Module.resx'),
-      this.destinationPath(
-        moduleName + '/_PersonaBar/App_LocalResources/' + moduleName + '.resx'
-      )
+      this.destinationPath(moduleName + '/App_LocalResources/' + moduleName + '.resx')
+    );
+    this.fs.copy(
+      this.templatePath('_PersonaBar/css/_Module.css'),
+      this.destinationPath(moduleName + '/css/' + moduleName + '.css')
     );
     this.fs.copyTpl(
       this.templatePath('_PersonaBar/scripts/_Module.js'),
-      this.destinationPath(moduleName + '/_PersonaBar/scripts/' + moduleName + '.js'),
+      this.destinationPath(moduleName + '/scripts/' + moduleName + '.js'),
       { moduleName: moduleName }
     );
     this.fs.copyTpl(
       this.templatePath('_PersonaBar/_Module.html'),
-      this.destinationPath(moduleName + '/_PersonaBar/' + moduleName + '.html'),
+      this.destinationPath(moduleName + '/' + moduleName + '.html'),
       { moduleName: moduleName }
     );
 
@@ -144,11 +143,21 @@ module.exports = class extends DnnGeneratorBase {
     );
 
     this.fs.copyTpl(
+      this.templatePath('_Project.csproj'),
+      this.destinationPath(moduleName + '/' + moduleName + '.csproj'),
+      {
+        namespace: namespace,
+        moduleName: moduleName,
+        projectGuid: this.props.projectGuid
+      }
+    );
+
+    this.fs.copyTpl(
       [
+        this.templatePath('_BuildScripts/**'),
+        this.templatePath('Properties/**'),
         this.templatePath('src/**'),
-        this.templatePath('Properties/AssemblyInfo.cs'),
         this.templatePath('MenuControllers/**'),
-        this.templatePath('_Project.csproj'),
         this.templatePath('package.json'),
         this.templatePath('gulpfile.js')
       ],
@@ -170,9 +179,10 @@ module.exports = class extends DnnGeneratorBase {
   }
 
   install() {
-    this.spawnCommandSync(
-      'npm config set registry https://www.myget.org/F/dnn-software-public/npm/'
-    );
+    this.log(chalk.white('Adding DNN NPM MyGet Registry'));
+    this.spawnCommandSync('npm config set registry', [
+      'https://www.myget.org/F/dnn-software-public/npm/'
+    ]);
     this._defaultInstall();
   }
 };
