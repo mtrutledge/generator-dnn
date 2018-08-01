@@ -15,7 +15,7 @@ module.exports = {
     // Output the bundled JS to Resources/js/app.js
     output: {
         filename: '[name]-bundle.js',
-        path: path.resolve('_PersonaBar/scripts/bundles')
+        path: path.resolve('scripts/bundles')
     },
     resolve: {
         // Look for modules in .ts(x) files first, then .js(x)
