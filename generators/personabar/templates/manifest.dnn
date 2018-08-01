@@ -24,7 +24,7 @@
             <identifier><%= namespace %>.<%= moduleName %></identifier>
             <moduleName><%= moduleName %></moduleName>
             <controller><%= namespace %>.<%= moduleName %>.PersonaBar.MenuControllers.AdminMenuController, <%= namespace %>.<%= moduleName %>.PersonaBar</controller>
-            <resourceKey>nav_MenuText</resourceKey>
+            <resourceKey>nav_<%= moduleName %></resourceKey>
             <path><%= moduleName %></path>
             <mobileSupport>true</mobileSupport>
             <parent><%= parentMenu %></parent>
@@ -53,6 +53,14 @@
               <name>Resources.zip</name>
             </resourceFile>
           </resourceFiles>
+        </component>
+        <component type="Assembly">
+          <assemblies>
+              <assembly>
+                  <name><%= namespace %>.<%= moduleName %>.dll</name>
+                  <path>bin</path>
+              </assembly>
+          </assemblies>
         </component>
       </components>
     </package>
