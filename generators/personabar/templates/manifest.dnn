@@ -2,7 +2,7 @@
 <dotnetnuke type="Package" version="6.0">
   <packages>
     <package name="<%= moduleName %>" type="PersonaBar" version="1.0.0.0">
-      <friendlyName><%= moduleName %></friendlyName>
+      <friendlyName><%= namespace %>.<%= moduleName %></friendlyName>
       <description><%= description %></description>
       <iconFile>~/Images/icon-personabarapp-32px.png</iconFile>
       <owner>
