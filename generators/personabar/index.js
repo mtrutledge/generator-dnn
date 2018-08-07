@@ -133,7 +133,10 @@ module.exports = class extends DnnGeneratorBase {
     this.fs.copyTpl(
       this.templatePath('_PersonaBar/scripts/_Module.js'),
       this.destinationPath(moduleName + '/scripts/' + moduleName + '.js'),
-      { moduleName: moduleName }
+      {
+        namespace: namespace,
+        moduleName: moduleName
+      }
     );
     this.fs.copyTpl(
       this.templatePath('_PersonaBar/_Module.html'),
