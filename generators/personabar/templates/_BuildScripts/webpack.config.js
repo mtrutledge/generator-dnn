@@ -1,38 +1,48 @@
-﻿var webpack = require('webpack');
+﻿const webpack = require("webpack");
 var path = require('path');
-var WebpackNotifierPlugin = require('webpack-notifier');
+var packageJson = require('../package.json')
+const isProduction = process.env.NODE_ENV === "production";
+const languages = {
+    "en": null
+};
+
 const webpackExternals = require("dnn-webpack-externals");
 
-var moduleCompanyName = "<%= namespace %>"; 
-var moduleProjName = "<%= moduleName %>"; 
-
 module.exports = {
-    devtool: 'eval',
-    // This will be our app's entry point (webpack will look for it in the 'src' directory due to the modulesDirectory setting below). Feel free to change as desired.
     entry: {
-        app: 'app.tsx'
+        app: "./src/app.jsx"
     },
-    // Output the bundled JS to Resources/js/app.js
     output: {
-        filename: '[name]-bundle.js',
+        filename: "[name]-bundle.js",
         path: path.resolve('scripts/bundles')
     },
     resolve: {
-        // Look for modules in .ts(x) files first, then .js(x)
-        extensions: ['.ts', '.tsx', '.js', '.jsx'],
-        // Add 'src' to our modulesDirectories, as all our app code will live in there, so Webpack should look in there for modules
-        modules: ['src', 'node_modules'],
+        extensions: ["", ".js", ".json", ".jsx"],
+        modules: ['src']
     },
     module: {
         loaders: [
-          // .ts(x) files should first pass through the Typescript loader, and then through babel
-          { test: /\.tsx?$/, loaders: ['babel-loader', 'ts-loader'] }
+            { test: /\.(js|jsx)$/, exclude: /node_modules/, loaders: ["react-hot-loader", "babel-loader"] },
+            { test: /\.less$/, loader: "style-loader!css-loader!less-loader" },
+            { test: /\.(ttf|woff)$/, loader: "url-loader?limit=8192" }
+        ],
+        preLoaders: [
+            { test: /\.(js|jsx)$/, exclude: /node_modules/, loader: "eslint-loader" }
         ]
     },
-    externals: webpackExternals,
-    plugins: [
-      new webpack.optimize.UglifyJsPlugin(),
-      new webpack.optimize.DedupePlugin(),
-      new WebpackNotifierPlugin({ alwaysNotify: true }), // Set up the notifier plugin - you can remove this (or set alwaysNotify false) if desired
-    ]
+	externals: webpackExternals,
+    plugins: isProduction ? [
+        new webpack.optimize.UglifyJsPlugin(),
+        new webpack.optimize.DedupePlugin(),
+        new webpack.DefinePlugin({
+            VERSION: JSON.stringify(packageJson.version),
+            "process.env": {
+                "NODE_ENV": JSON.stringify("production")
+            }
+        })
+    ] : [
+            new webpack.DefinePlugin({
+                VERSION: JSON.stringify(packageJson.version)
+            })
+        ]
 };

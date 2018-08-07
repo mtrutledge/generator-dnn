@@ -7,6 +7,7 @@ gulp.task('build-client', function(cb){
 
     webpack( require('./_BuildScripts/webpack.config.js'), function(err, stats) {
 		if(err) throw new gutil.PluginError("webpack:build", err);
+        gutil.log("[webpack]", stats.toString());
 		cb();
     });
 });

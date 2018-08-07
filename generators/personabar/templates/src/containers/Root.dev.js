@@ -1,12 +1,12 @@
-import * as React from "react";
-import App from "../components/App";
+import React, {Component} from "react";
+import Module from "../components/Module";
 import DevTools from "./DevTools";
 
-class Root extends React.Component<any, any> {
+class Root extends Component {
     render() {
         return (
             <div>
-                <App />
+                <Module />
                 <DevTools />
             </div>
         );

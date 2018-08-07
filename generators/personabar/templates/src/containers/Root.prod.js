@@ -1,11 +1,11 @@
 import React, {Component} from "react";
-import App from "../components/App";
+import Module from "../components/Module";
 
 class Root extends Component {
     render() {
         return (
             <div>
-                <App />
+                <Module />
             </div>
         );
     }
