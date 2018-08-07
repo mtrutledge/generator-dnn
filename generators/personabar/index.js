@@ -121,7 +121,10 @@ module.exports = class extends DnnGeneratorBase {
     this.fs.copyTpl(
       this.templatePath('_PersonaBar/App_LocalResources/_Module.resx'),
       this.destinationPath(moduleName + '/App_LocalResources/' + moduleName + '.resx'),
-      { menuLinkName: this.props.menuLinkName }
+      {
+        moduleName: moduleName,
+        menuLinkName: this.props.menuLinkName
+      }
     );
     this.fs.copy(
       this.templatePath('_PersonaBar/css/_Module.css'),
