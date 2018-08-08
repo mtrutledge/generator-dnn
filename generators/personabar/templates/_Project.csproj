@@ -1,5 +1,6 @@
 ﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.Net.Compilers.2.8.2\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.8.2\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -45,25 +46,12 @@
   <ItemGroup>
     <Reference Include="Dnn.PersonaBar.Library, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dnn.PersonaBar.Library.1.5.0.193\lib\net45\Dnn.PersonaBar.Library.dll</HintPath>
-      <Private>True</Private>
     </Reference>
-    <Reference Include="DotNetNuke, Version=9.1.1.129, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DotNetNuke.Core.9.1.1.129\lib\net40\DotNetNuke.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetNuke.Web, Version=9.1.1.129, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DotNetNuke.Web.9.1.1.129\lib\net40\DotNetNuke.Web.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="DotNetNuke.Web.Client, Version=9.1.1.129, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DotNetNuke.Web.Client.9.1.1.129\lib\net40\DotNetNuke.Web.Client.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="DotNetNuke.WebUtility, Version=4.2.1.783, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DotNetNuke.Web.9.1.1.129\lib\net40\DotNetNuke.WebUtility.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="DotNetNuke, Version=9.2.0.366, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetNuke.Core.9.2.0.366\lib\net40\DotNetNuke.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ApplicationBlocks.Data, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DotNetNuke.Core.9.1.1.129\lib\net40\Microsoft.ApplicationBlocks.Data.dll</HintPath>
+      <HintPath>..\packages\DotNetNuke.Core.9.2.0.366\lib\net40\Microsoft.ApplicationBlocks.Data.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
@@ -88,48 +76,49 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
   </ItemGroup>
-    <ItemGroup>
-    <Content Include="App_LocalResources\<%= moduleName %>.resx" />
+  <ItemGroup>
+    <Content Include=".eslintrc.js" />
+    <Content Include=".eslintskipwords.js" />
     <Content Include="css\<%= moduleName %>.css" />
     <Content Include="gulpfile.js" />
-    <Content Include="src\app.tsx" />
-    <Content Include="src\components\Hello.tsx" />
-    <Content Include="src\components\StartButton.tsx" />
-    <Content Include="src\components\Timer.tsx" />
-    <Content Include="src\components\TimerApp.tsx" />
-    <Content Include="src\components\TimerInput.tsx" />
     <Content Include="<%= moduleName %>.html" />
-    <Content Include="scripts\bundles\<%= moduleName %>-bundle.js" />
+    <Content Include="scripts\bundles\app-bundle.js" />
     <Content Include="scripts\<%= moduleName %>.js" />
-    <Content Include="src\components\App.tsx" />
-    <Content Include="src\containers\DevTools.tsx" />
-    <Content Include="src\containers\Root.dev.tsx" />
-    <Content Include="src\containers\Root.tsx" />
-    <Content Include="src\containers\Root.prod.tsx" />
-    <Content Include="src\reducers\rootReducer.tsx" />
-    <Content Include="src\store\configureStore.tsx" />
-    <Content Include="src\utils\index.tsx" />
-    <Content Include="_BuildScripts\webpack.config.js" />
+    <Content Include="src\components\Module.jsx" />
+    <Content Include="src\containers\DevTools.js" />
+    <Content Include="src\containers\Root.dev.js" />
+    <Content Include="src\containers\Root.js" />
+    <Content Include="src\containers\Root.prod.js" />
+    <Content Include="src\app.jsx" />
+    <Content Include="src\reducers\rootReducer.js" />
+    <Content Include="src\store\configureStore.js" />
+    <Content Include="src\utils\index.jsx" />
     <Content Include="Web.config" />
+    <Content Include="_BuildScripts\gulp\build.js" />
+    <Content Include="_BuildScripts\gulp\dnn-package.js" />
+    <Content Include="_BuildScripts\webpack.config.js" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MenuControllers\AdminMenuController.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="<%= moduleName %>.dnn" />
-    <Content Include="License.md" />
     <Content Include=".babelrc" />
+    <Content Include=".eslintignore" />
+    <Content Include="jsconfig.json" />
     <Content Include="package.json" />
     <None Include="packages.config" />
-    <Content Include="ReleaseNotes.md" />
-    <Content Include="tsconfig.json" />
+    <Content Include="Providers\DataProviders\SqlDataProvider\01.00.00.SqlDataProvider" />
+    <Content Include="Providers\DataProviders\SqlDataProvider\Uninstall.SqlDataProvider" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\<%= moduleName %>.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -144,9 +133,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>59599</DevelopmentServerPort>
+          <DevelopmentServerPort>50578</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:59599/</IISUrl>
+          <IISUrl>http://localhost:50578/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
@@ -160,7 +149,8 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.8.2\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.8.2\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
