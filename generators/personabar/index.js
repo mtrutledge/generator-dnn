@@ -106,7 +106,10 @@ module.exports = class extends DnnGeneratorBase {
       [
         this.templatePath('Providers/**'),
         this.templatePath('.babelrc'),
-        this.templatePath('tsconfig.json'),
+        this.templatePath('.eslintignore'),
+        this.templatePath('.eslintrc.js'),
+        this.templatePath('.eslintskipwords.js'),
+        this.templatePath('jsconfig.json'),
         this.templatePath('packages.config'),
         this.templatePath('License.md'),
         this.templatePath('ReleaseNotes.md'),
