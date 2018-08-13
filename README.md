@@ -27,6 +27,12 @@ yo dnn
  * Yeoman can be too opinionated at times but is easily convinced not to be.
  * Feel free to [learn more about Yeoman](http://yeoman.io/).
 
+## More Documentation
+
+Want to learn more or how to build the gnerator code locally?
+
+[Project Documentation](https://mtrutledge.github.io/generator-dnn/)
+
 ## License
 
 MIT © [Matt Rutledge]()
