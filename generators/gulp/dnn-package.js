@@ -27,6 +27,8 @@ gulp.task('packageInstall', ['build'], function() {
         '**/*.svg',
         '!/**/web.config',
         '!/**/gulpfile.js',
+        '!/**/{_BuildScripts,_BuildScripts/**}',
+        '!/**/{_Packages,_Packages/**}',
         '!/**/{bin,bin/**}',
         '!/**/{obj,obj/**}',
         '!/**/{packages,packages/**}',
@@ -45,7 +47,13 @@ gulp.task('packageInstall', ['build'], function() {
         '**/<%= namespace%>.<%= moduleName %>.dll',
         '**/<%= moduleName %>.dnn',
         '**/*.SqlDataProvider',
+        '!/**/gulpfile.js',
+        '!/**/{_BuildScripts,_BuildScripts/**}',
+        '!/**/{_Packages,_Packages/**}',
+        '!/**/{bin,bin/**}',
         '!/**/{obj,obj/**}',
+        '!/**/{packages,packages/**}',
+        '!/**/{node_modules,node_modules/**}',
         '!/**/{_PublishedWebsites,_PublishedWebsites/**}'
       ]),
       gulp

@@ -1,5 +1,5 @@
 # generator-dnn [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
-> Scaffolds DNN Modules, Persona Bar, Skin projects
+> Scaffolds DNN / DotNetNuke Modules, Persona Bar, Skin projects
 
 ## Installation
 
