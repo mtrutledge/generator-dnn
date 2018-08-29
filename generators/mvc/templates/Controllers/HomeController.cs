@@ -13,7 +13,6 @@ using DotNetNuke.Web.Mvc.Framework.ActionFilters;
 
 namespace <%= namespace%>.Modules.<%= moduleName %>.Controllers
 {
-    [DnnModuleAuthorize(AccessLevel = SecurityAccessLevel.Edit)]
     [DnnHandleError]
     public class HomeController : DnnController
     {
