@@ -50,6 +50,9 @@
     <Reference Include="DotNetNuke.Web, Version=9.2.0.366, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetNuke.Web.9.2.0.366\lib\net40\DotNetNuke.Web.dll</HintPath>
     </Reference>
+    <Reference Include="DotNetNuke.Web.Client, Version=9.2.0.366, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetNuke.Web.Client.9.2.0.366\lib\net40\DotNetNuke.Web.Client.dll</HintPath>
+    </Reference>
     <Reference Include="DotNetNuke.Web.Mvc, Version=9.2.0.366, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetNuke.Web.Mvc.9.2.0.366\lib\net45\DotNetNuke.Web.Mvc.dll</HintPath>
     </Reference>
