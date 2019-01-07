@@ -35,6 +35,7 @@
     "chalk": "^2.4.2",
     "dotnet-solution": "^0.2.0",
     "pascal-case": "^2.0.1",
+    "update-notifier": "^2.5.0",
     "uuid-v4": "^0.1.0",
     "yeoman-generator": "^3.2.0",
     "yosay": "^2.0.2"

@@ -2,12 +2,21 @@
 const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const yosay = require('yosay');
+const updateNotifier = require('update-notifier');
+const pkg = require('../../package.json');
+
+updateNotifier({
+  pkg
+}).notify({
+  message: 'Run yo and select Update Generators to get the latest'
+});
 
 module.exports = class extends Generator {
   prompting() {
     // Have Yeoman greet the user.
     this.log(yosay('Welcome to the ' + chalk.red('DNN') + ' project generator!'));
     this.log(chalk.white('This scaffolds the project in your current directory.'));
+
 
     const prompts = [
       {
