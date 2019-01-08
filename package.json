@@ -8,47 +8,51 @@
     "email": "mtrutledge@gmail.com",
     "url": "https://github.com/mtrutledge"
   },
-  "files": ["generators"],
+  "files": [
+    "generators"
+  ],
   "main": "generators/index.js",
-  "keywords": ["yeoman-generator", "dnn", "dotnetnuke", "evoq"],
+  "keywords": [
+    "yeoman-generator",
+    "dnn",
+    "dotnetnuke",
+    "evoq"
+  ],
   "devDependencies": {
-    "eslint": "^4.19.1",
-    "eslint-config-prettier": "^2.4.0",
-    "eslint-config-xo": "^0.22.1",
-    "eslint-plugin-prettier": "^2.6.0",
-    "husky": "^0.14.3",
-    "jest": "^22.4.3",
-    "jest-cli": "^22.4.3",
-    "lint-staged": "^7.1.0",
+    "eslint": "^5.12.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-config-xo": "^0.25.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "jest": "^23.6.0",
+    "jest-cli": "^23.6.0",
     "nsp": "^3.2.1",
-    "prettier": "^1.12.1",
+    "prettier": "^1.15.3",
     "yeoman-assert": "^3.1.1",
-    "yeoman-test": "^1.7.0",
-    "yo": "^2.0.2"
+    "yeoman-test": "^1.9.1",
+    "yo": "^2.0.5"
   },
   "dependencies": {
-    "chalk": "^2.4.1",
+    "chalk": "^2.4.2",
     "dotnet-solution": "^0.2.0",
     "pascal-case": "^2.0.1",
+    "update-notifier": "^2.5.0",
     "uuid-v4": "^0.1.0",
-    "yeoman-generator": "^2.0.5",
+    "yeoman-generator": "^3.2.0",
     "yosay": "^2.0.2"
   },
   "jest": {
     "testEnvironment": "node"
   },
   "scripts": {
-    "precommit": "lint-staged",
     "test": "jest",
     "preversion": "npm test",
     "postversion": "git push && git push --tags"
   },
-  "lint-staged": {
-    "*.js": ["eslint --fix", "git add"],
-    "*.json": ["prettier --write", "git add"]
-  },
   "eslintConfig": {
-    "extends": ["xo", "prettier"],
+    "extends": [
+      "xo",
+      "prettier"
+    ],
     "env": {
       "jest": true,
       "node": true
@@ -63,7 +67,9 @@
         }
       ]
     },
-    "plugins": ["prettier"]
+    "plugins": [
+      "prettier"
+    ]
   },
   "repository": "mtrutledge/generator-dnn",
   "license": "MIT"

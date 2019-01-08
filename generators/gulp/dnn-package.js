@@ -5,7 +5,7 @@ var markdown = require('gulp-markdown');
 var rename = require('gulp-rename');
 var es = require('event-stream');
 
-gulp.task('packageInstall', ['build'], function() {
+gulp.task('packageInstall', function() {
   var packageName = config.dnnModule.fullName + '_' + config.version;
 
   var resourceZip = gulp
@@ -25,15 +25,15 @@ gulp.task('packageInstall', ['build'], function() {
         '**/*.gif',
         '**/*.jpg',
         '**/*.svg',
-        '!/**/web.config',
-        '!/**/gulpfile.js',
-        '!/**/{_BuildScripts,_BuildScripts/**}',
-        '!/**/{_Packages,_Packages/**}',
-        '!/**/{bin,bin/**}',
-        '!/**/{obj,obj/**}',
-        '!/**/{packages,packages/**}',
-        '!/**/{node_modules,node_modules/**}',
-        '!/**/{_PublishedWebsites,_PublishedWebsites/**}'
+        '!**/web.config',
+        '!**/gulpfile.js',
+        '!**/{_BuildScripts,_BuildScripts/**}',
+        '!**/{_Packages,_Packages/**}',
+        '!**/{bin,bin/**}',
+        '!**/{obj,obj/**}',
+        '!**/{packages,packages/**}',
+        '!**/{node_modules,node_modules/**}',
+        '!**/{_PublishedWebsites,_PublishedWebsites/**}'
       ],
       {
         base: '.'
@@ -47,21 +47,20 @@ gulp.task('packageInstall', ['build'], function() {
         '**/<%= namespace%>.<%= moduleName %>.dll',
         '**/<%= moduleName %>.dnn',
         '**/*.SqlDataProvider',
-        '!/**/gulpfile.js',
-        '!/**/{_BuildScripts,_BuildScripts/**}',
-        '!/**/{_Packages,_Packages/**}',
-        '!/**/{bin,bin/**}',
-        '!/**/{obj,obj/**}',
-        '!/**/{packages,packages/**}',
-        '!/**/{node_modules,node_modules/**}',
-        '!/**/{_PublishedWebsites,_PublishedWebsites/**}'
+        '!**/gulpfile.js',
+        '!**/{_BuildScripts,_BuildScripts/**}',
+        '!**/{_Packages,_Packages/**}',
+        '!**/{obj,obj/**}',
+        '!**/{packages,packages/**}',
+        '!**/{node_modules,node_modules/**}',
+        '!**/{_PublishedWebsites,_PublishedWebsites/**}'
       ]),
       gulp
-        .src(config.dnnModule.pathToSupplementaryFiles + '/License.md')
+        .src(config.dnnModule.pathToSupplementaryFiles + 'License.md')
         .pipe(markdown())
         .pipe(rename('License.txt')),
       gulp
-        .src(config.dnnModule.pathToSupplementaryFiles + '/ReleaseNotes.md')
+        .src(config.dnnModule.pathToSupplementaryFiles + 'ReleaseNotes.md')
         .pipe(markdown())
         .pipe(rename('ReleaseNotes.txt')),
       resourceZip
@@ -70,20 +69,20 @@ gulp.task('packageInstall', ['build'], function() {
     .pipe(gulp.dest(config.dnnModule.packagesPath));
 });
 
-gulp.task('packageSource', ['build'], function() {
+gulp.task('packageSource', function() {
   var packageName = config.dnnModule.fullName + '_' + config.version;
 
   var resourceZip = gulp
     .src(
       [
         '**/*.*',
-        '!/**/{License.txt,ReleaseNotes.txt, *-lock.json}',
-        '!/**/{_Packages,_Packages/**}',
-        '!/**/{bin,bin/**}',
-        '!/**/{obj,obj/**}',
-        '!/**/{packages,packages/**}',
-        '!/**/{node_modules,node_modules/**}',
-        '!/**/{_PublishedWebsites,_PublishedWebsites/**}'
+        '!**/{License.txt,ReleaseNotes.txt, *-lock.json}',
+        '!**/{_Packages,_Packages/**}',
+        '!**/{bin,bin/**}',
+        '!**/{obj,obj/**}',
+        '!**/{packages,packages/**}',
+        '!**/{node_modules,node_modules/**}',
+        '!**/{_PublishedWebsites,_PublishedWebsites/**}'
       ],
       {
         base: '.'
@@ -97,15 +96,15 @@ gulp.task('packageSource', ['build'], function() {
         '**/<%= namespace %>.<%= moduleName %>.dll',
         '**/<%= moduleName %>.dnn',
         '**/*.SqlDataProvider',
-        '!/**/{obj,obj/**}',
-        '!/**/{_PublishedWebsites,_PublishedWebsites/**}'
+        '!**/{obj,obj/**}',
+        '!**/{_PublishedWebsites,_PublishedWebsites/**}'
       ]),
       gulp
-        .src(config.dnnModule.pathToSupplementaryFiles + '/License.md')
+        .src(config.dnnModule.pathToSupplementaryFiles + 'License.md')
         .pipe(markdown())
         .pipe(rename('License.txt')),
       gulp
-        .src(config.dnnModule.pathToSupplementaryFiles + '/ReleaseNotes.md')
+        .src(config.dnnModule.pathToSupplementaryFiles + 'ReleaseNotes.md')
         .pipe(markdown())
         .pipe(rename('ReleaseNotes.txt')),
       resourceZip
@@ -114,6 +113,4 @@ gulp.task('packageSource', ['build'], function() {
     .pipe(gulp.dest(config.dnnModule.packagesPath));
 });
 
-gulp.task('package', ['packageInstall', 'packageSource'], function() {
-  return null;
-});
+gulp.task('package', gulp.parallel(['packageInstall', 'packageSource']));

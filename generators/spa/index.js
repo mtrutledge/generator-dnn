@@ -358,16 +358,15 @@ module.exports = class extends Generator {
   install() {
     if (!this.options.noinstall) {
       process.chdir(this.props.moduleName);
-      this.installDependencies({ npm: true, bower: false, yarn: false }).then(() => {
-        this.log(chalk.white('Installed SPA Module npm Dependencies.'));
-        this.log(chalk.white('Running NuGet.'));
-        this.spawnCommand('gulp', ['nuget']);
-        process.chdir('../');
-      });
+      this.installDependencies({ npm: true, bower: false, yarn: false });
     }
   }
 
   end() {
+    this.log(chalk.white('Installed SPA Module npm Dependencies.'));
+    this.log(chalk.white('Running NuGet.'));
+    this.spawnCommand('gulp', ['nuget']);
+    process.chdir('../');
     this.log(chalk.white('All Ready!'));
   }
 };
