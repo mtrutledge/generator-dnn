@@ -14,7 +14,7 @@ updateNotifier({
 module.exports = class extends Generator {
   prompting() {
     // Have Yeoman greet the user.
-    this.log(yosay('Welcome to the ' + chalk.red('DNN') + ' project generator!'));
+    this.log(yosay('Welcome to the ' + chalk.green('DNN') + ' project generator!'));
     this.log(chalk.white('This scaffolds the project in your current directory.'));
 
 

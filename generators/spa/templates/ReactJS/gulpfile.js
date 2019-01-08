@@ -11,6 +11,7 @@ gulp.task('build-client', function(cb){
     });
 });
 
-gulp.task('default', ['build-client', 'build', 'package'], function() { 
+gulp.task('default', gulp.series(['nuget', 'assemblyInfo', 'build-client', 'build', 'package'], function(done) { 
+    done();
     return null;
-});
+}));
