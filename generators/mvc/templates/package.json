@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@types/node": "^10.12.18",
-    "event-stream": "^4.0.1",
+    "event-stream": "3.3.4",
     "gulp": "^4.0.0",
     "gulp-clean-css": "^4.0.0",
     "gulp-dotnet-assembly-info": "^0.1.12",

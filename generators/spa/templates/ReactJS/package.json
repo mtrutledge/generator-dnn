@@ -48,7 +48,7 @@
     "@types/react-dom": "^16.0.3",
     "babel-loader": "^8.0.5",
     "babel-polyfill": "6.26.0",
-    "event-stream": "^4.0.1",
+    "event-stream": "3.3.4",
     "gulp": "^4.0.0",
     "gulp-clean-css": "^4.0.0",
     "gulp-dotnet-assembly-info": "^0.1.12",
