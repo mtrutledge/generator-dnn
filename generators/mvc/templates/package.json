@@ -37,20 +37,20 @@
     "dnn-pack": "gulp package"
   },
   "devDependencies": {
-    "@types/node": "^7.0.13",
-    "event-stream": "^3.3.4",
-    "gulp": "^3.9.1",
-    "gulp-clean-css": "^3.9.0",
+    "@types/node": "^10.12.18",
+    "event-stream": "3.3.4",
+    "gulp": "^4.0.0",
+    "gulp-clean-css": "^4.0.0",
     "gulp-dotnet-assembly-info": "^0.1.12",
     "gulp-filter": "^5.0.1",
-    "gulp-markdown": "^1.2.0",
+    "gulp-markdown": "^3.0.0",
     "gulp-msbuild": "^0.5.4",
-    "gulp-nuget-restore": "^0.6.0",
+    "gulp-nuget-restore": "^0.7.0",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
     "gulp-zip": "^4.0.0",
     "path": "^0.12.7",
-    "require-dir": "^0.3.2"
+    "require-dir": "^1.2.0"
   }
 }
