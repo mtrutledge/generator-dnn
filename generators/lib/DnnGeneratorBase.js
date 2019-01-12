@@ -4,6 +4,7 @@ const chalk = require('chalk');
 const uuid = require('uuid-v4');
 const pascalCase = require('pascal-case');
 const sln = require('dotnet-solution');
+const which = require('which');
 
 module.exports = class DnnGeneratorBase extends Generator {
   constructor(args, opts) {
@@ -98,13 +99,9 @@ module.exports = class DnnGeneratorBase extends Generator {
 
   _defaultInstall() {
     if (!this.options.noinstall) {
+      let hasYarn = which.sync('yarn', { nothrow: true }) !== undefined;
       process.chdir(this.props.moduleName);
-      this.installDependencies({ npm: true, bower: false, yarn: false }).then(() => {
-        this.log(chalk.white('Installed npm Dependencies.'));
-        this.log(chalk.white('Running NuGet.'));
-        this.spawnCommand('gulp', ['nuget']);
-        process.chdir('../');
-      });
+      this.installDependencies({ npm: !hasYarn, bower: false, yarn: hasYarn });
     }
   }
 };

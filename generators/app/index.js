@@ -51,7 +51,6 @@ module.exports = class extends Generator {
     };
 
     this.composeWith(require.resolve(`../${this.props.projType}`), options);
-    // This.composeWith(require.resolve('generator-fountain-gulp/generators/app'), options);
   }
 
   writing() {}
