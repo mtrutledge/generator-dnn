@@ -119,10 +119,7 @@ module.exports = class extends DnnGeneratorBase {
         this.templatePath('common/jsconfig.json'),
         this.templatePath('common/packages.config'),
         this.templatePath('common/License.md'),
-        this.templatePath('common/ReleaseNotes.md'),
-        this.templatePath('common/web.config'),
-        this.templatePath('common/web.Debug.config'),
-        this.templatePath('common/web.Release.config')
+        this.templatePath('common/ReleaseNotes.md')
       ],
       this.destinationPath(moduleName + '/')
     );

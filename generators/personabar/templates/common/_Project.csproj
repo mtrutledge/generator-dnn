@@ -93,7 +93,6 @@
     <Content Include="src\reducers\rootReducer.js" />
     <Content Include="src\store\configureStore.js" />
     <Content Include="src\utils\index.jsx" />
-    <Content Include="Web.config" />
     <Content Include="_BuildScripts\gulp\build.js" />
     <Content Include="_BuildScripts\gulp\dnn-package.js" />
     <Content Include="_BuildScripts\webpack.config.js" />
@@ -110,12 +109,6 @@
     <None Include="packages.config" />
     <Content Include="Providers\DataProviders\SqlDataProvider\01.00.00.SqlDataProvider" />
     <Content Include="Providers\DataProviders\SqlDataProvider\Uninstall.SqlDataProvider" />
-    <None Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_LocalResources\<%= moduleName %>.resx" />
