@@ -6,6 +6,13 @@ module.exports = class extends DnnGeneratorBase {
   prompting() {
     const prompts = [
       {
+        when: !this.options.spaType,
+        type: 'list',
+        name: 'pbType',
+        message: 'What language do you want your Persona Bar Module to use?',
+        choices: [{ name: 'ReactJS', value: 'ReactJS' }]
+      },
+      {
         when: !this.options.company,
         type: 'input',
         name: 'company',
@@ -99,30 +106,32 @@ module.exports = class extends DnnGeneratorBase {
     let solutionGuid = this.props.solutionGuid;
 
     // Copy gulp build files and other common files
-    this._copyCommon(namespace, moduleName);
+    this._copyCommon(namespace, this.props.pbType + moduleName);
 
     // Do all regulare copies
     this.fs.copy(
       [
-        this.templatePath('Providers/**'),
-        this.templatePath('.babelrc'),
-        this.templatePath('.eslintignore'),
-        this.templatePath('.eslintrc.js'),
-        this.templatePath('.eslintskipwords.js'),
-        this.templatePath('jsconfig.json'),
-        this.templatePath('packages.config'),
-        this.templatePath('License.md'),
-        this.templatePath('ReleaseNotes.md'),
-        this.templatePath('web.config'),
-        this.templatePath('web.Debug.config'),
-        this.templatePath('web.Release.config')
+        this.templatePath(this.props.pbType + '/Providers/**'),
+        this.templatePath(this.props.pbType + '/.babelrc'),
+        this.templatePath(this.props.pbType + '/.eslintignore'),
+        this.templatePath(this.props.pbType + '/.eslintrc.js'),
+        this.templatePath(this.props.pbType + '/.eslintskipwords.js'),
+        this.templatePath(this.props.pbType + '/jsconfig.json'),
+        this.templatePath(this.props.pbType + '/packages.config'),
+        this.templatePath(this.props.pbType + '/License.md'),
+        this.templatePath(this.props.pbType + '/ReleaseNotes.md'),
+        this.templatePath(this.props.pbType + '/web.config'),
+        this.templatePath(this.props.pbType + '/web.Debug.config'),
+        this.templatePath(this.props.pbType + '/web.Release.config')
       ],
       this.destinationPath(moduleName + '/')
     );
 
     // Do all templated copies
     this.fs.copyTpl(
-      this.templatePath('_PersonaBar/App_LocalResources/_Module.resx'),
+      this.templatePath(
+        this.props.pbType + '/_PersonaBar/App_LocalResources/_Module.resx'
+      ),
       this.destinationPath(moduleName + '/App_LocalResources/' + moduleName + '.resx'),
       {
         moduleName: moduleName,
@@ -130,11 +139,11 @@ module.exports = class extends DnnGeneratorBase {
       }
     );
     this.fs.copy(
-      this.templatePath('_PersonaBar/css/_Module.css'),
+      this.templatePath(this.props.pbType + '/_PersonaBar/css/_Module.css'),
       this.destinationPath(moduleName + '/css/' + moduleName + '.css')
     );
     this.fs.copyTpl(
-      this.templatePath('_PersonaBar/scripts/_Module.js'),
+      this.templatePath(this.props.pbType + '/_PersonaBar/scripts/_Module.js'),
       this.destinationPath(moduleName + '/scripts/' + moduleName + '.js'),
       {
         namespace: namespace,
@@ -142,13 +151,13 @@ module.exports = class extends DnnGeneratorBase {
       }
     );
     this.fs.copyTpl(
-      this.templatePath('_PersonaBar/_Module.html'),
+      this.templatePath(this.props.pbType + '/_PersonaBar/_Module.html'),
       this.destinationPath(moduleName + '/' + moduleName + '.html'),
       { moduleName: moduleName }
     );
 
     this.fs.copyTpl(
-      this.templatePath('manifest.dnn'),
+      this.templatePath(this.props.pbType + '/manifest.dnn'),
       this.destinationPath(moduleName + '/' + moduleName + '.dnn'),
       {
         namespace: namespace,
@@ -165,7 +174,7 @@ module.exports = class extends DnnGeneratorBase {
     );
 
     this.fs.copyTpl(
-      this.templatePath('_Project.csproj'),
+      this.templatePath(this.props.pbType + '/_Project.csproj'),
       this.destinationPath(moduleName + '/' + moduleName + '.csproj'),
       {
         namespace: namespace,
@@ -176,12 +185,12 @@ module.exports = class extends DnnGeneratorBase {
 
     this.fs.copyTpl(
       [
-        this.templatePath('_BuildScripts/**'),
-        this.templatePath('Properties/**'),
-        this.templatePath('src/**'),
-        this.templatePath('MenuControllers/**'),
-        this.templatePath('package.json'),
-        this.templatePath('gulpfile.js')
+        this.templatePath(this.props.pbType + '/_BuildScripts/**'),
+        this.templatePath(this.props.pbType + '/Properties/**'),
+        this.templatePath(this.props.pbType + '/src/**'),
+        this.templatePath(this.props.pbType + '/MenuControllers/**'),
+        this.templatePath(this.props.pbType + '/package.json'),
+        this.templatePath(this.props.pbType + '/gulpfile.js')
       ],
       this.destinationPath(moduleName + '/'),
       {
