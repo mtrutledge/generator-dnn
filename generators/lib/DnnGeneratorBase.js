@@ -3,7 +3,6 @@ const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const uuid = require('uuid-v4');
 const pascalCase = require('pascal-case');
-const sln = require('dotnet-solution');
 const which = require('which');
 
 module.exports = class DnnGeneratorBase extends Generator {

@@ -35,11 +35,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "gulp",
-    "build-client": "gulp build-client"
-  },
-  "devDependencies": {
-  },
-  "dependencies": {
+    "build": "yarn run build-client&&dotnet build",
+    "build-client": "set NODE_ENV=production&&webpack -p --config _BuildScripts/webpack.config.js"
   }
 }

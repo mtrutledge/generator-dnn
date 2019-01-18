@@ -95,35 +95,29 @@ module.exports = class extends DnnGeneratorBase {
   }
 
   _writeBabelRc() {
-    this.fs.extendJSON(
-      this.destinationPath(this.props.moduleName + '/.babelrc'),
-      JSON.stringify({
-        presets: ['@babel/preset-env', '@babel/preset-react'],
-        plugins: [
-          '@babel/plugin-transform-object-assign',
-          '@babel/plugin-proposal-object-rest-spread'
-        ],
-        env: {
-          production: {
-            plugins: ['transform-react-remove-prop-types']
-          }
+    this.fs.extendJSON(this.destinationPath(this.props.moduleName + '/.babelrc'), {
+      presets: ['@babel/preset-env', '@babel/preset-react'],
+      plugins: [
+        '@babel/plugin-transform-object-assign',
+        '@babel/plugin-proposal-object-rest-spread'
+      ],
+      env: {
+        production: {
+          plugins: ['transform-react-remove-prop-types']
         }
-      })
-    );
+      }
+    });
   }
 
   _writeJsConfig() {
-    this.fs.extendJSON(
-      this.destinationPath(this.props.moduleName + '/jsconfig.json'),
-      JSON.stringify({
-        compilerOptions: {
-          target: 'es6',
-          module: 'commonjs',
-          allowSyntheticDefaultImports: true
-        },
-        exclude: ['node_modules']
-      })
-    );
+    this.fs.extendJSON(this.destinationPath(this.props.moduleName + '/jsconfig.json'), {
+      compilerOptions: {
+        target: 'es6',
+        module: 'commonjs',
+        allowSyntheticDefaultImports: true
+      },
+      exclude: ['node_modules']
+    });
   }
 
   writing() {
@@ -254,6 +248,10 @@ module.exports = class extends DnnGeneratorBase {
         'css-loader': '^2.0.1',
         // eslint-disable-next-line prettier/prettier
         'dotenv': '^6.2.0',
+        // eslint-disable-next-line prettier/prettier
+        'eslint': '^5.8.0',
+        'eslint-loader': '^2.1.1',
+        'eslint-plugin-react': '^7.11.1',
         'html-webpack-plugin': '^3.2.0',
         // eslint-disable-next-line prettier/prettier
         'marked': '^0.5.2',
