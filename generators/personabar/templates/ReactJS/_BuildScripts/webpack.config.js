@@ -5,8 +5,12 @@ var path = require("path");
 var packageJson = require("../package.json");
 const isProduction = process.env.NODE_ENV === "production";
 const webpackExternals = require("@dnnsoftware/dnn-react-common/WebpackExternals");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+    devtool: isProduction ? false : "inline-source-map",
+    mode: isProduction ? "production" : "development",
     entry: {
         app: "./src/app.jsx"
     },
@@ -46,3 +50,27 @@ module.exports = {
         })
     ]
 };
+
+
+if(isProduction) {
+    module.exports.plugins.push(
+        new CopyWebpackPlugin([
+            { from: "./<%= moduleName %>.dnn", to: "../../<%= moduleName %>.dnn" },
+            { from: "./src/Resources", to: "../../Resources", ignore: [ "*.scss" ] }
+        ]),
+        new HtmlWebpackPlugin({
+            inject: false,
+            title: "License",
+            template: path.resolve(__dirname, "./src/_templates/Markdown.html"),
+            filename: "../../License.txt",
+            bodyHTML: marked(fs.readFileSync( path.resolve(__dirname, "./src/License.md"), "utf8")) 
+        }),
+        new HtmlWebpackPlugin({
+            inject: false,
+            title: "Release Notes",
+            template: path.resolve(__dirname, "./src/_templates/Markdown.html"),
+            filename: "../../ReleaseNotes.txt",
+            bodyHTML: marked(fs.readFileSync( path.resolve(__dirname, "./src/ReleaseNotes.md"), "utf8")) 
+        })
+    );
+}
