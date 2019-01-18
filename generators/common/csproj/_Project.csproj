@@ -20,6 +20,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dnn.PersonaBar.Library" Version="1.5.0.193" />    
     <PackageReference Include="DotNetNuke.Core" Version="9.2.1.533" />
     <PackageReference Include="DotNetNuke.Web" Version="9.2.1.533" />
     <PackageReference Include="DotNetNuke.Web.Client" Version="9.2.1.533" />

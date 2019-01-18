@@ -1,6 +1,5 @@
 import React, {Component} from "react";
-import PersonaBarPageHeader from "dnn-persona-bar-page-header";
-import PersonaBarPage from "dnn-persona-bar-page";
+import {PersonaBarPageHeader, PersonaBarPage} from "@dnnsoftware/dnn-react-common";
 
 class App extends Component {
     render() {

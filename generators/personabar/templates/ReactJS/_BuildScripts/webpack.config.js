@@ -1,39 +1,39 @@
-﻿const webpack = require("webpack");
-var path = require('path');
-var packageJson = require('../package.json')
+﻿/* eslint-disable no-undef */
+/* eslint-disable no-var */
+const webpack = require("webpack");
+var path = require("path");
+var packageJson = require("../package.json");
 const isProduction = process.env.NODE_ENV === "production";
-const languages = {
-    "en": null
-};
-
-const webpackExternals = require("dnn-webpack-externals");
+const webpackExternals = require("@dnnsoftware/dnn-react-common/WebpackExternals");
 
 module.exports = {
     entry: {
         app: "./src/app.jsx"
     },
+    optimization: {
+        minimize: isProduction
+    },
     output: {
         filename: "[name]-bundle.js",
-        path: path.resolve('scripts/bundles')
+        path: path.resolve("dist/scripts/bundles")
     },
     resolve: {
-        extensions: ["", ".js", ".json", ".jsx"],
-        modules: ['src']
+        extensions: [".js", ".json", ".jsx"],
+        modules: ["node_modules","src"]
     },
     module: {
-        loaders: [
-            { test: /\.(js|jsx)$/, exclude: /node_modules/, loaders: ["react-hot-loader", "babel-loader"] },
-            { test: /\.less$/, loader: "style-loader!css-loader!less-loader" },
-            { test: /\.(ttf|woff)$/, loader: "url-loader?limit=8192" }
-        ],
-        preLoaders: [
-            { test: /\.(js|jsx)$/, exclude: /node_modules/, loader: "eslint-loader" }
+        rules: [
+            { test: /\.(js|jsx)$/, enforce: "pre", exclude: /node_modules/, loader: "eslint-loader", options: { fix: true } },
+            { test: /\.(js|jsx)$/ , exclude: /node_modules/, loader: "babel-loader" },
+            { test: /\.(less|css)$/, loader: "style-loader!css-loader!less-loader" },
+            { test: /\.(ttf|woff)$/, loader: "url-loader?limit=8192" },
+            { test: /\.(gif|png)$/, loader: "url-loader?mimetype=image/png" },
+            { test: /\.woff(2)?(\?v=[0-9].[0-9].[0-9])?$/, loader: "url-loader?mimetype=application/font-woff" },
+            { test: /\.(ttf|eot|svg)(\?v=[0-9].[0-9].[0-9])?$/, loader: "file-loader?name=[name].[ext]" },
         ]
     },
-	externals: webpackExternals,
+    externals: webpackExternals,
     plugins: isProduction ? [
-        new webpack.optimize.UglifyJsPlugin(),
-        new webpack.optimize.DedupePlugin(),
         new webpack.DefinePlugin({
             VERSION: JSON.stringify(packageJson.version),
             "process.env": {
@@ -41,8 +41,8 @@ module.exports = {
             }
         })
     ] : [
-            new webpack.DefinePlugin({
-                VERSION: JSON.stringify(packageJson.version)
-            })
-        ]
+        new webpack.DefinePlugin({
+            VERSION: JSON.stringify(packageJson.version)
+        })
+    ]
 };
