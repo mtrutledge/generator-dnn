@@ -23,49 +23,25 @@ module.exports = class DnnGeneratorBase extends Generator {
   }
 
   _createSolutionFromTemplate() {
-    this.log(chalk.white('Creating sln from template.'));
-    let namespace = this.props.company;
-    let moduleName = this.props.moduleName;
-    let projectGuid = this.props.projectGuid;
-    let solutionGuid = this.props.solutionGuid;
-
-    this.fs.copyTpl(
-      this.templatePath('_Template.sln'),
-      this.destinationPath(namespace + '.sln'),
-      {
-        moduleName: moduleName,
-        projectGuid: projectGuid,
-        solutionGuid: solutionGuid
-      }
-    );
+    this.log(chalk.white('Creating sln.'));
+    return this.spawnCommandSync('dotnet', [
+      'new',
+      'sln',
+      '-n',
+      this.props.company,
+      '-o',
+      this.destinationRoot()
+    ]);
   }
 
   _addProjectToSolution() {
-    this.log(chalk.white('Adding project to existing sln.'));
-    let namespace = this.props.company;
-    let moduleName = this.props.moduleName;
-    let projectGuid = this.props.projectGuid;
-    let slnFileName = this.destinationPath(namespace + '.sln');
-
-    // Create a reader, and build a solution from the lines
-    const reader = new sln.SolutionReader();
-    const sourceLines = this.fs
-      .read(slnFileName)
-      .toString()
-      .split(/\r?\n/);
-    const solution = reader.fromLines(sourceLines);
-
-    solution.addProject({
-      id: projectGuid, // This is the same id as in the csproj
-      name: moduleName,
-      path: moduleName + '\\' + moduleName + '.csproj', // Relative to the solution location
-      parent: moduleName // The name or id of a folder to parent it to
-    });
-
-    // Create a writer and write back to the same file
-    const writer = new sln.SolutionWriter();
-    const lines = writer.write(solution);
-    this.fs.write(slnFileName, lines.join('\r\n'));
+    this.log(chalk.white('Adding project to sln.'));
+    this.spawnCommandSync('dotnet', [
+      'sln',
+      this.destinationPath(this.props.company + '.sln'),
+      'add',
+      this.destinationPath(`${this.props.moduleName}/${this.props.moduleName}.csproj`)
+    ]);
   }
 
   _writeSolution() {
@@ -76,14 +52,10 @@ module.exports = class DnnGeneratorBase extends Generator {
         'Looking for sln [' + slnFileName + ']. Result: ' + this.fs.exists(slnFileName)
       )
     );
-    if (this.fs.exists(slnFileName)) {
-      this.log(chalk.white('Existing sln file found.'));
-      this._addProjectToSolution();
-    } else {
-      // File does not exist
-      this.log(chalk.white('No sln file found.'));
+    if (this.fs.exists(slnFileName) === false) {
       this._createSolutionFromTemplate();
     }
+    this._addProjectToSolution();
   }
 
   _copyCommon(namespace, moduleName) {

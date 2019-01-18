@@ -53,7 +53,9 @@ module.exports = class extends Generator {
     this.composeWith(require.resolve(`../${this.props.projType}`), options);
   }
 
-  writing() {}
+  writing() {
+    //this.fs.extendJSON(this.destinationPath('package.json'), pkgJson);
+  }
 
   install() {
     // This.installDependencies({ npm: true, bower: false, yarn: false });
