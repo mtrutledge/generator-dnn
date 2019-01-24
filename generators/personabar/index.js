@@ -140,12 +140,13 @@ module.exports = class extends DnnGeneratorBase {
       parentMenu: this.props.parentMenu
     };
 
-    // Set new root: this.destinationRoot('new/destination/');
-
-    // Copy gulp build files and other common files
-    this._copyCommon(namespace, moduleName);
-
     // Do all regular copies
+    this.fs.copyTpl(
+      this.templatePath('../../common/build/*.*'),
+      this.destinationPath(moduleName + '/_BuildScripts/'),
+      template
+    );
+
     this.fs.copyTpl(
       this.templatePath('../../common/csproj/Providers/**'),
       this.destinationPath(moduleName + '/'),
@@ -182,8 +183,8 @@ module.exports = class extends DnnGeneratorBase {
       template
     );
     this.fs.copyTpl(
-      this.templatePath('common/src/_Module.html'),
-      this.destinationPath(moduleName + '/src/' + moduleName + '.html'),
+      this.templatePath('common/src/View.html'),
+      this.destinationPath(moduleName + '/src/View.html'),
       template
     );
 
