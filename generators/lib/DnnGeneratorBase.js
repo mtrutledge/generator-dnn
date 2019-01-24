@@ -13,6 +13,10 @@ module.exports = class DnnGeneratorBase extends Generator {
     this.option('noinstall');
   }
 
+  _hasYarn() {
+    return which.sync('yarn', { nothrow: true }) !== undefined;
+  }
+
   _generateGuid() {
     return uuid();
   }
@@ -70,7 +74,7 @@ module.exports = class DnnGeneratorBase extends Generator {
 
   _defaultInstall() {
     if (!this.options.noinstall) {
-      let hasYarn = which.sync('yarn', { nothrow: true }) !== undefined;
+      let hasYarn = this._hasYarn();
       process.chdir(this.props.moduleName);
       this.installDependencies({ npm: !hasYarn, bower: false, yarn: hasYarn });
     }
