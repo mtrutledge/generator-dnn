@@ -252,6 +252,7 @@ module.exports = class extends DnnGeneratorBase {
         'eslint': '^5.8.0',
         'eslint-loader': '^2.1.1',
         'eslint-plugin-react': '^7.11.1',
+        'eslint-plugin-spellcheck': '^0.0.11',
         'html-webpack-plugin': '^3.2.0',
         // eslint-disable-next-line prettier/prettier
         'marked': '^0.5.2',
