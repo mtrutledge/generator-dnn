@@ -219,10 +219,7 @@ module.exports = class extends DnnGeneratorBase {
     );
 
     this.fs.copyTpl(
-      [
-        this.templatePath('common/MenuControllers/**'),
-        this.templatePath('common/gulpfile.js')
-      ],
+      [this.templatePath('common/MenuControllers/**')],
       this.destinationPath(moduleName + '/'),
       template
     );
