@@ -27,18 +27,7 @@ module.exports = class extends Generator {
         choices: [
           { name: 'MVC Module', value: 'mvc' },
           { name: 'SPA Module', value: 'spa' },
-          {
-            name: chalk.gray('Persona Bar'),
-            value: 'personabar',
-            disabled: chalk.gray('Coming Soon')
-          },
-          {
-            name: chalk.gray('Theme'),
-            value: 'theme',
-            disabled: chalk.gray(
-              'For the best starter DNN theme use nvQuickTheme (https://www.nvquicktheme.com)'
-            )
-          }
+          { name: 'Persona Bar', value: 'personabar' }
         ]
       }
     ];
@@ -55,10 +44,11 @@ module.exports = class extends Generator {
     };
 
     this.composeWith(require.resolve(`../${this.props.projType}`), options);
-    // This.composeWith(require.resolve('generator-fountain-gulp/generators/app'), options);
   }
 
-  writing() {}
+  writing() {
+    //this.fs.extendJSON(this.destinationPath('package.json'), pkgJson);
+  }
 
   install() {
     // This.installDependencies({ npm: true, bower: false, yarn: false });

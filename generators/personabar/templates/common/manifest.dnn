@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dotnetnuke type="Package" version="6.0">
+  <packages>
+    <package name="<%= moduleName %>" type="PersonaBar" version="1.0.0.0">
+      <friendlyName><%= namespace %>.<%= moduleName %></friendlyName>
+      <description><%= description %></description>
+      <iconFile>~/Images/icon-personabarapp-32px.png</iconFile>
+      <owner>
+        <name><%= namespace %></name>
+        <organization><%= namespace %></organization>
+        <url><%= companyUrl %></url>
+        <email><![CDATA[<a href="mailto:<%= emailAddy %>"><%= emailAddy %></a>]]></email>
+      </owner>
+      <license src="License.txt"></license>
+      <releaseNotes src="ReleaseNotes.txt"></releaseNotes>
+      <azureCompatible>true</azureCompatible>
+      <dependencies>
+        <dependency type="CoreVersion">08.00.00</dependency>
+        <dependency type="ManagedPackage" version="01.00.00">Dnn.PersonaBar.UI</dependency>
+      </dependencies>
+      <components>
+        <component type="PersonaBarMenu">
+          <menu>
+            <identifier><%= namespace %>.<%= moduleName %></identifier>
+            <moduleName><%= moduleName %></moduleName>
+            <controller><%= namespace %>.<%= moduleName %>.PersonaBar.MenuControllers.AdminMenuController, <%= namespace %>.<%= moduleName %>.PersonaBar</controller>
+            <resourceKey>nav_<%= moduleName %></resourceKey>
+            <path><%= moduleName %></path>
+            <mobileSupport>true</mobileSupport>
+            <parent><%= parentMenu %></parent>
+            <order>2</order>
+          </menu>
+        </component>
+        <component type="Script">
+          <scripts>
+            <basePath>DesktopModules\<%= namespace %>\<%= moduleName %></basePath>
+            <script type="Install">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>01.00.00.SqlDataProvider</name>
+              <version>01.00.00</version>
+            </script>
+            <script type="UnInstall">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>Uninstall.SqlDataProvider</name>
+              <version>01.00.00</version>
+            </script>
+          </scripts>
+        </component>
+        <component type="ResourceFile">
+          <resourceFiles>
+            <basePath>DesktopModules/Admin/Dnn.PersonaBar/Modules/<%= namespace %>.<%= moduleName %></basePath>
+            <resourceFile>
+              <name>Resources.zip</name>
+            </resourceFile>
+          </resourceFiles>
+        </component>
+        <component type="Assembly">
+          <assemblies>
+              <assembly>
+                  <name><%= namespace %>.<%= moduleName %>.dll</name>
+                  <path>bin</path>
+              </assembly>
+          </assemblies>
+        </component>
+      </components>
+    </package>
+  </packages>
+</dotnetnuke>
