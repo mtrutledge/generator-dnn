@@ -149,7 +149,7 @@ module.exports = class extends DnnGeneratorBase {
 
     this.fs.copyTpl(
       this.templatePath('../../common/csproj/Providers/**'),
-      this.destinationPath(moduleName + '/'),
+      this.destinationPath(moduleName + '/Providers'),
       template
     );
 
@@ -171,20 +171,24 @@ module.exports = class extends DnnGeneratorBase {
       this.destinationPath(moduleName + '/src/'),
       template
     );
-
     this.fs.copyTpl(
       this.templatePath('../../common/csproj/App_LocalResources/_Module.resx'),
       this.destinationPath(moduleName + '/App_LocalResources/' + moduleName + '.resx'),
       template
     );
     this.fs.copyTpl(
+      this.templatePath('common/src/Resources/css/_Module.css'),
+      this.destinationPath(moduleName + '/src/css/' + moduleName + '.css'),
+      template
+    );
+    this.fs.copyTpl(
       this.templatePath('common/src/Resources/scripts/_Module.js'),
-      this.destinationPath(moduleName + '/src/Resources/scripts/' + moduleName + '.js'),
+      this.destinationPath(moduleName + '/src/scripts/' + moduleName + '.js'),
       template
     );
     this.fs.copyTpl(
       this.templatePath('common/src/View.html'),
-      this.destinationPath(moduleName + '/src/View.html'),
+      this.destinationPath(moduleName + '/src/' + moduleName + '.html'),
       template
     );
 

@@ -27,14 +27,7 @@ module.exports = class extends Generator {
         choices: [
           { name: 'MVC Module', value: 'mvc' },
           { name: 'SPA Module', value: 'spa' },
-          { name: 'Persona Bar', value: 'personabar' },
-          {
-            name: chalk.gray('Theme'),
-            value: 'theme',
-            disabled: chalk.gray(
-              'For the best starter DNN theme use nvQuickTheme (https://www.nvquicktheme.com)'
-            )
-          }
+          { name: 'Persona Bar', value: 'personabar' }
         ]
       }
     ];

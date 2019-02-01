@@ -51,15 +51,18 @@ module.exports = (env, argv) => {
             }),
             new CopyWebpackPlugin([
                 { from: "./<%= moduleName %>.dnn", to: "../../<%= moduleName %>.dnn" },
+                { from: "./App_LocalResources", to: "../../App_LocalResources" },
                 { from: "./src/Resources", to: "../../Resources", ignore: [ "*.scss" ] },
+                { from: "./src/scripts", to: "../../scripts" },
+                { from: "./src/css", to: "../../css" },
                 { from: "./bin/*.*", to: "../../", ignore: [ "Dnn*", "DotNetNuke*", "System*", "Microsoft*", "Newtonsoft*", "*.deps.json" ] },
-                { from: "./DataProviders/**/*.*", to: "../../" }
+                { from: "./Providers/**/*.*", to: "../../" }
             ]),
             new HtmlWebpackPlugin({
                 inject: false,
                 environment: process.env.NODE_ENV,
-                template: path.resolve("./src/View.html"),
-                filename: "../../View.html"
+                template: path.resolve("./src/<%= moduleName %>.html"),
+                filename: "../../<%= moduleName %>.html"
             }),
             new HtmlWebpackPlugin({
                 inject: false,

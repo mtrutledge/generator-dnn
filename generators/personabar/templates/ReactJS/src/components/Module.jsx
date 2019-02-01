@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {PersonaBarPageHeader, PersonaBarPage} from "@dnnsoftware/dnn-react-common";
+import {PersonaBarPageHeader, PersonaBarPage, PersonaBarPageBody } from "@dnnsoftware/dnn-react-common";
 
 class App extends Component {
     render() {
@@ -8,6 +8,11 @@ class App extends Component {
                 <PersonaBarPage isOpen="true">
                     <PersonaBarPageHeader title="Hello World">
                     </PersonaBarPageHeader>
+                    <PersonaBarPageBody>
+                        <div>
+                            <h1>Page Body</h1>
+                        </div>
+                    </PersonaBarPageBody>
                 </PersonaBarPage>
             </div>
         );

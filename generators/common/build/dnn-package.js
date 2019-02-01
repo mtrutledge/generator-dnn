@@ -16,9 +16,7 @@ function createResourcesArchive(){
       });
     ws.on("close", function() { console.log(archive.pointer() + ' total bytes'); console.log("Created Resources"); createInstaller(); });
     
-    
-    archive.directory(path.resolve('dist/Resources/'), "Resources");
-    archive.glob("*.{cshtml,ascx,asmx,htm,html}", { cwd: "dist" }, { prefix: "" });
+    archive.glob("**/*.{cshtml,ascx,asmx,htm,html,js,css,resx,png,gif,svg,jpg}", { cwd: "dist" }, { prefix: "" });
 
     archive.finalize();
     return ws;
@@ -62,7 +60,7 @@ function createInstaller() {
     });
 
     archive.glob("bin/*.*", { cwd: "dist", ignore: [outputPath] });
-    archive.glob("DataProviders/**/*.*", { cwd: "dist", ignore: [outputPath] });
+    archive.glob("Providers/**/*.*", { cwd: "dist", ignore: [outputPath] });
     archive.glob("*.{txt,dnn}", { cwd: "dist", ignore: [outputPath] });
     archive.file(path.resolve("dist/Resources.zip"), { name: "Resources.zip" });
 

@@ -2,7 +2,7 @@
 define(['jquery'],
     function ($) {
         function loadScript() {
-            var url = "Modules/<%= namespace %>.<%= moduleName %>/scripts/bundles/app-bundle.js";
+            var url = "Modules/<%= namespace %>.<%= moduleName %>/Resources/scripts/app-bundle.js";
             $.ajax({
                 dataType: "script",
                 cache: true,
