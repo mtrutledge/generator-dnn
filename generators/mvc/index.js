@@ -1,11 +1,8 @@
 'use strict';
-const Generator = require('yeoman-generator');
+const DnnGeneratorBase = require('../lib/DnnGeneratorBase');
 const chalk = require('chalk');
-const uuid = require('uuid-v4');
-const pascalCase = require('pascal-case');
-const sln = require('dotnet-solution');
 
-module.exports = class extends Generator {
+module.exports = class extends DnnGeneratorBase {
   constructor(args, opts) {
     super(args, opts);
 
@@ -69,10 +66,8 @@ module.exports = class extends Generator {
     return this.prompt(prompts).then(props => {
       // To access props later use this.props.someAnswer;
       props.currentDate = new Date();
-      props.projectGuid = uuid();
-      props.solutionGuid = uuid();
-      props.namespace = pascalCase(props.company);
-      props.moduleName = pascalCase(props.name);
+      props.namespace = this._pascalCaseName(props.company);
+      props.moduleName = this._pascalCaseName(props.name);
 
       this.props = props;
     });
@@ -83,123 +78,86 @@ module.exports = class extends Generator {
 
     let namespace = this.props.namespace;
     let moduleName = this.props.moduleName;
+    let currentDate = this.props.currentDate;
 
-    this.fs.copy(
+    let template = {
+      namespace: namespace,
+      moduleName: moduleName,
+      moduleFriendlyName: this.props.name,
+      description: this.props.description,
+      companyUrl: this.props.companyUrl,
+      emailAddy: this.props.emailAddy,
+      currentYear: currentDate.getFullYear(),
+      version: '1.0.0',
+      menuLinkName: this.props.menuLinkName,
+      parentMenu: this.props.parentMenu
+    };
+
+    this.fs.copyTpl(
+      this.templatePath('../../common/build/*.*'),
+      this.destinationPath(moduleName + '/_BuildScripts'),
+      template
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('../../common/csproj/Providers/**'),
+      this.destinationPath(moduleName + '/Providers'),
+      template
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('../../common/csproj/NuGet.config'),
+      this.destinationPath(moduleName + '/NuGet.config'),
+      template
+    );
+
+    // Do all templated copies
+    this.fs.copyTpl(
+      this.templatePath('../../common/src/**'),
+      this.destinationPath(moduleName + '/src/'),
+      template
+    );
+
+    this.fs.copyTpl(
       this.templatePath('App_LocalResources/**'),
-      this.destinationPath(moduleName + '/App_LocalResources/')
+      this.destinationPath(moduleName + '/App_LocalResources/'),
+      template
     );
-    this.fs.copy(
+
+    this.fs.copyTpl(
       this.templatePath('_BuildScripts/**'),
-      this.destinationPath(moduleName + '/_BuildScripts/')
+      this.destinationPath(moduleName + '/_BuildScripts/'),
+      template
     );
-    this.fs.copy(
+
+    this.fs.copyTpl(
       this.templatePath('Components/**'),
-      this.destinationPath(moduleName + '/Components/')
+      this.destinationPath(moduleName + '/Components/'),
+      template
     );
-    this.fs.copy(
+
+    this.fs.copyTpl(
       this.templatePath('Controllers/**'),
-      this.destinationPath(moduleName + '/Controllers/')
+      this.destinationPath(moduleName + '/Controllers/'),
+      template
     );
-    this.fs.copy(
+
+    this.fs.copyTpl(
       this.templatePath('Models/**'),
-      this.destinationPath(moduleName + '/Models/')
+      this.destinationPath(moduleName + '/Models/'),
+      template
     );
-    this.fs.copy(
-      this.templatePath('Providers/**'),
-      this.destinationPath(moduleName + '/Providers/')
+
+    this.fs.copyTpl(
+      this.templatePath('src/**'),
+      this.destinationPath(moduleName + '/src/'),
+      template
     );
-    this.fs.copy(
-      this.templatePath('Resources/**'),
-      this.destinationPath(moduleName + '/Resources/')
-    );
-    this.fs.copy(
+
+    this.fs.copyTpl(
       this.templatePath('Views/**'),
-      this.destinationPath(moduleName + '/Views/')
-    );
-    this.fs.copy(
-      this.templatePath('Properties/**'),
-      this.destinationPath(moduleName + '/Properties/')
-    );
-
-    this.fs.copyTpl(
-      this.templatePath('../../gulp/*.js'),
-      this.destinationPath(moduleName + '/_BuildScripts/gulp/'),
-      {
-        namespace: namespace,
-        moduleName: moduleName
-      }
-    );
-
-    this.fs.copyTpl(
-      this.templatePath('Components/FeatureController.cs'),
-      this.destinationPath(moduleName + '/Components/FeatureController.cs'),
-      {
-        namespace: namespace,
-        moduleName: moduleName
-      }
-    );
-
-    this.fs.copyTpl(
-      this.templatePath('Controllers/SettingsController.cs'),
-      this.destinationPath(moduleName + '/Controllers/SettingsController.cs'),
-      {
-        namespace: namespace,
-        moduleName: moduleName
-      }
-    );
-
-    this.fs.copyTpl(
-      this.templatePath('Controllers/HomeController.cs'),
-      this.destinationPath(moduleName + '/Controllers/HomeController.cs'),
-      {
-        namespace: namespace,
-        moduleName: moduleName
-      }
-    );
-
-    this.fs.copyTpl(
-      this.templatePath('Models/Settings.cs'),
-      this.destinationPath(moduleName + '/Models/Settings.cs'),
-      {
-        namespace: namespace,
-        moduleName: moduleName
-      }
-    );
-
-    this.fs.copyTpl(
-      this.templatePath('Views/_ViewStart.cshtml'),
-      this.destinationPath(moduleName + '/Views/_ViewStart.cshtml'),
-      {
-        namespace: namespace,
-        moduleName: moduleName
-      }
-    );
-
-    this.fs.copyTpl(
-      this.templatePath('Views/Settings/Settings.cshtml'),
-      this.destinationPath(moduleName + '/Views/Settings/Settings.cshtml'),
-      {
-        namespace: namespace,
-        moduleName: moduleName
-      }
-    );
-
-    this.fs.copyTpl(
-      this.templatePath('Views/Home/Edit.cshtml'),
-      this.destinationPath(moduleName + '/Views/Home/Edit.cshtml'),
-      {
-        namespace: namespace,
-        moduleName: moduleName
-      }
-    );
-
-    this.fs.copyTpl(
-      this.templatePath('Views/Home/Index.cshtml'),
-      this.destinationPath(moduleName + '/Views/Home/Index.cshtml'),
-      {
-        namespace: namespace,
-        moduleName: moduleName
-      }
+      this.destinationPath(moduleName + '/Views/'),
+      template
     );
 
     this.fs.copyTpl(
@@ -225,154 +183,46 @@ module.exports = class extends Generator {
     );
 
     this.fs.copyTpl(
-      this.templatePath('Properties/AssemblyInfo.cs'),
-      this.destinationPath(moduleName + '/Properties/AssemblyInfo.cs'),
-      {
-        namespace: namespace,
-        moduleName: moduleName,
-        currentYear: this.props.currentDate.getFullYear()
-      }
-    );
-
-    this.fs.copyTpl(
-      this.templatePath('_Project.csproj'),
+      this.templatePath('../../common/csproj/_Project.csproj'),
       this.destinationPath(moduleName + '/' + moduleName + '.csproj'),
-      {
-        namespace: namespace,
-        moduleName: moduleName,
-        projectGuid: this.props.projectGuid
-      }
+      template
     );
 
     this.fs.copyTpl(
       this.templatePath('package.json'),
       this.destinationPath(moduleName + '/package.json'),
-      {
-        namespace: namespace,
-        moduleName: moduleName,
-        description: this.props.description,
-        companyUrl: this.props.companyUrl,
-        emailAddy: this.props.emailAddy
+      template
+    );
+
+    const pkgJson = {
+      devDependencies: {
+        // eslint-disable-next-line prettier/prettier
+        'archiver': '^3.0.0',
+        'copy-webpack-plugin': '^4.6.0',
+        'html-webpack-plugin': '^3.2.0',
+        // eslint-disable-next-line prettier/prettier
+        'marked': '^0.5.2',
+        // eslint-disable-next-line prettier/prettier
+        'webpack': '^4.27.1',
+        'webpack-cli': '^3.1.2',
+        'webpack-dev-server': '^3.1.10',
+        'webpack-node-externals': '^1.7.2'
       }
-    );
+    };
 
-    this.fs.copyTpl(
-      this.templatePath('gulpfile.js'),
-      this.destinationPath(moduleName + '/gulpfile.js'),
-      {
-        namespace: namespace,
-        moduleName: moduleName
-      }
-    );
-
-    this.fs.copy(
-      this.templatePath('packages.config'),
-      this.destinationPath(moduleName + '/packages.config')
-    );
-
-    this.fs.copy(
-      this.templatePath('License.md'),
-      this.destinationPath(moduleName + '/License.md')
-    );
-
-    this.fs.copy(
-      this.templatePath('ReleaseNotes.md'),
-      this.destinationPath(moduleName + '/ReleaseNotes.md')
-    );
-
-    this.fs.copy(
-      this.templatePath('web.config'),
-      this.destinationPath(moduleName + '/web.config')
-    );
-
-    this.fs.copy(
-      this.templatePath('web.Debug.config'),
-      this.destinationPath(moduleName + '/web.Debug.config')
-    );
-
-    this.fs.copy(
-      this.templatePath('web.Release.config'),
-      this.destinationPath(moduleName + '/web.Release.config')
-    );
-
-    this._writeSolution();
-  }
-
-  _createSolutionFromTemplate() {
-    this.log(chalk.white('Creating sln from template.'));
-    let namespace = this.props.company;
-    let moduleName = this.props.moduleName;
-    let projectGuid = this.props.projectGuid;
-    let solutionGuid = this.props.solutionGuid;
-
-    this.fs.copyTpl(
-      this.templatePath('_Template.sln'),
-      this.destinationPath(namespace + '.sln'),
-      {
-        moduleName: moduleName,
-        projectGuid: projectGuid,
-        solutionGuid: solutionGuid
-      }
-    );
-  }
-
-  _addProjectToSolution() {
-    this.log(chalk.white('Adding project to existing sln.'));
-    let namespace = this.props.company;
-    let moduleName = this.props.moduleName;
-    let projectGuid = this.props.projectGuid;
-    let slnFileName = this.destinationPath(namespace + '.sln');
-
-    // Create a reader, and build a solution from the lines
-    const reader = new sln.SolutionReader();
-    const sourceLines = this.fs
-      .read(slnFileName)
-      .toString()
-      .split(/\r?\n/);
-    const solution = reader.fromLines(sourceLines);
-
-    solution.addProject({
-      id: projectGuid, // This is the same id as in the csproj
-      name: moduleName,
-      path: moduleName + '\\' + moduleName + '.csproj', // Relative to the solution location
-      parent: moduleName // The name or id of a folder to parent it to
-    });
-
-    // Create a writer and write back to the same file
-    const writer = new sln.SolutionWriter();
-    const lines = writer.write(solution);
-    this.fs.write(slnFileName, lines.join('\r\n'));
-  }
-
-  _writeSolution() {
-    let namespace = this.props.company;
-    let slnFileName = this.destinationPath(namespace + '.sln');
-    this.log(
-      chalk.white(
-        'Looking for sln [' + slnFileName + ']. Result: ' + this.fs.exists(slnFileName)
-      )
-    );
-    if (this.fs.exists(slnFileName)) {
-      this.log(chalk.white('Existing sln file found.'));
-      this._addProjectToSolution();
-    } else {
-      // File does not exist
-      this.log(chalk.white('No sln file found.'));
-      this._createSolutionFromTemplate();
-    }
+    // Extend package.json file in destination path
+    this.fs.extendJSON(this.destinationPath(moduleName + '/package.json'), pkgJson);
   }
 
   install() {
-    if (!this.options.noinstall) {
-      process.chdir(this.props.moduleName);
-      this.installDependencies({ npm: true, bower: false, yarn: false });
-    }
+    this._writeSolution();
+    this._defaultInstall();
   }
 
   end() {
     this.log(chalk.white('Installed MVC Module npm Dependencies.'));
-    this.log(chalk.white('Running NuGet.'));
-    this.spawnCommand('gulp', ['nuget']);
+    this.log(chalk.white('Running dotnet restore.'));
+    this.spawnCommand('dotnet', ['restore']);
     process.chdir('../');
     this.log(chalk.white('All Ready!'));
   }

@@ -1,11 +1,8 @@
 'use strict';
-const Generator = require('yeoman-generator');
+const DnnGeneratorBase = require('../lib/DnnGeneratorBase');
 const chalk = require('chalk');
-const uuid = require('uuid-v4');
-const pascalCase = require('pascal-case');
-const sln = require('dotnet-solution');
 
-module.exports = class extends Generator {
+module.exports = class extends DnnGeneratorBase {
   prompting() {
     const prompts = [
       {
@@ -25,6 +22,18 @@ module.exports = class extends Generator {
             value: 'VueJS',
             disabled: chalk.gray('Coming Soon')
           }
+        ]
+      },
+      {
+        when: function(response) {
+          return response.spaType === 'ReactJS';
+        },
+        type: 'list',
+        name: 'langType',
+        message: 'What Script Language do you want to use?',
+        choices: [
+          { name: 'TypeScript (tsx)', value: 'tsx' },
+          { name: 'ECMAScript (jsx)', value: 'jsx' }
         ]
       },
       {
@@ -81,291 +90,214 @@ module.exports = class extends Generator {
     return this.prompt(prompts).then(props => {
       // To access props later use this.props.someAnswer;
       props.currentDate = new Date();
-      props.projectGuid = uuid();
-      props.solutionGuid = uuid();
-      props.namespace = pascalCase(props.company);
-      props.moduleName = pascalCase(props.name);
+      props.namespace = this._pascalCaseName(props.company);
+      props.moduleName = this._pascalCaseName(props.name);
 
       this.props = props;
     });
   }
 
   writing() {
-    this.log(chalk.white('Creating SPA Module.'));
+    this.log(
+      chalk.white(`Creating ${this.props.spaType} ${this.props.langType} SPA Module.`)
+    );
 
-    let namespace = this.props.company;
+    let spaPath = `${this.props.spaType}/${this.props.langType}`;
+
+    let namespace = this.props.namespace;
     let moduleName = this.props.moduleName;
     let currentDate = this.props.currentDate;
-    let projectGuid = this.props.projectGuid;
 
-    this.fs.copy(
-      this.templatePath(this.props.spaType + '/App_LocalResources/**'),
-      this.destinationPath(moduleName + '/App_LocalResources/')
-    );
+    let template = {
+      namespace: namespace,
+      moduleName: moduleName,
+      moduleFriendlyName: this.props.name,
+      description: this.props.description,
+      companyUrl: this.props.companyUrl,
+      emailAddy: this.props.emailAddy,
+      currentYear: currentDate.getFullYear(),
+      version: '1.0.0',
+      menuLinkName: this.props.menuLinkName,
+      parentMenu: this.props.parentMenu
+    };
 
-    this.fs.copy(
-      this.templatePath(this.props.spaType + '/_BuildScripts/**'),
-      this.destinationPath(moduleName + '/_BuildScripts/')
-    );
-    this.fs.copy(
-      this.templatePath(this.props.spaType + '/Components/**'),
-      this.destinationPath(moduleName + '/Components/')
-    );
-    this.fs.copy(
-      this.templatePath(this.props.spaType + '/Controllers/**'),
-      this.destinationPath(moduleName + '/Controllers/')
-    );
-    this.fs.copy(
-      this.templatePath(this.props.spaType + '/Providers/**'),
-      this.destinationPath(moduleName + '/Providers/')
-    );
-    this.fs.copy(
-      this.templatePath(this.props.spaType + '/Resources/**'),
-      this.destinationPath(moduleName + '/Resources/')
-    );
-    this.fs.copy(
-      this.templatePath(this.props.spaType + '/tsconfig.json'),
-      this.destinationPath(moduleName + '/tsconfig.json')
-    );
-    this.fs.copy(
-      this.templatePath(this.props.spaType + '/Properties/**'),
-      this.destinationPath(moduleName + '/Properties/')
+    this.fs.copyTpl(
+      this.templatePath('../../common/build/*.*'),
+      this.destinationPath(moduleName + '/_BuildScripts'),
+      template
     );
 
     this.fs.copyTpl(
-      this.templatePath('../../gulp/*.js'),
-      this.destinationPath(moduleName + '/_BuildScripts/gulp/'),
-      {
-        namespace: namespace,
-        moduleName: moduleName
-      }
+      this.templatePath(spaPath + '/_BuildScripts/**'),
+      this.destinationPath(moduleName + '/_BuildScripts/'),
+      template
     );
 
     this.fs.copyTpl(
-      this.templatePath(this.props.spaType + '/Components/FeatureController.cs'),
-      this.destinationPath(moduleName + '/Components/FeatureController.cs'),
-      {
-        namespace: namespace,
-        moduleName: moduleName
-      }
+      this.templatePath('../../common/csproj/Providers/**'),
+      this.destinationPath(moduleName + '/Providers'),
+      template
     );
 
     this.fs.copyTpl(
-      this.templatePath(this.props.spaType + '/Controllers/DataController.cs'),
-      this.destinationPath(moduleName + '/Controllers/DataController.cs'),
-      {
-        namespace: namespace,
-        moduleName: moduleName
-      }
+      this.templatePath('../../common/csproj/NuGet.config'),
+      this.destinationPath(moduleName + '/NuGet.config'),
+      template
     );
 
     this.fs.copyTpl(
-      this.templatePath(this.props.spaType + '/src/**'),
+      this.templatePath('common/App_LocalResources/**'),
+      this.destinationPath(moduleName + '/App_LocalResources/'),
+      template
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('common/Components/**'),
+      this.destinationPath(moduleName + '/Components/'),
+      template
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('common/Controllers/**'),
+      this.destinationPath(moduleName + '/Controllers/'),
+      template
+    );
+
+    // Do all templated copies
+    this.fs.copyTpl(
+      this.templatePath('../../common/src/**'),
       this.destinationPath(moduleName + '/src/'),
-      {
-        namespace: namespace,
-        moduleName: moduleName
-      }
+      template
     );
 
     this.fs.copyTpl(
-      this.templatePath(this.props.spaType + '/RouteConfig.cs'),
+      this.templatePath('common/src/**'),
+      this.destinationPath(moduleName + '/src/'),
+      template
+    );
+
+    this.fs.copyTpl(
+      this.templatePath(spaPath + '/**/*.*'),
+      this.destinationPath(moduleName + '/.'),
+      template
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('common/RouteConfig.cs'),
       this.destinationPath(moduleName + '/RouteConfig.cs'),
-      {
-        namespace: namespace,
-        moduleName: moduleName
-      }
+      template
     );
 
     this.fs.copyTpl(
-      this.templatePath(this.props.spaType + '/Edit.html'),
-      this.destinationPath(moduleName + '/Edit.html'),
-      {
-        namespace: namespace,
-        moduleName: moduleName
-      }
-    );
-
-    this.fs.copyTpl(
-      this.templatePath(this.props.spaType + '/Settings.html'),
-      this.destinationPath(moduleName + '/Settings.html'),
-      {
-        namespace: namespace,
-        moduleName: moduleName
-      }
-    );
-
-    this.fs.copyTpl(
-      this.templatePath(this.props.spaType + '/View.html'),
-      this.destinationPath(moduleName + '/View.html'),
-      {
-        namespace: namespace,
-        moduleName: moduleName
-      }
-    );
-
-    this.fs.copyTpl(
-      this.templatePath(this.props.spaType + '/manifest.dnn'),
+      this.templatePath('common/manifest.dnn'),
       this.destinationPath(moduleName + '/' + moduleName + '.dnn'),
-      {
-        namespace: namespace,
-        moduleName: moduleName,
-        moduleFriendlyName: this.props.name,
-        description: this.props.description,
-        companyUrl: this.props.companyUrl,
-        emailAddy: this.props.emailAddy
-      }
+      template
     );
 
     this.fs.copyTpl(
-      this.templatePath(this.props.spaType + '/Properties/AssemblyInfo.cs'),
-      this.destinationPath(moduleName + '/Properties/AssemblyInfo.cs'),
-      {
-        namespace: namespace,
-        moduleName: moduleName,
-        currentYear: currentDate.getFullYear()
-      }
-    );
-
-    this.fs.copyTpl(
-      this.templatePath(this.props.spaType + '/_Project.csproj'),
+      this.templatePath('../../common/csproj/_Project.csproj'),
       this.destinationPath(moduleName + '/' + moduleName + '.csproj'),
-      {
-        namespace: namespace,
-        moduleName: moduleName,
-        projectGuid: projectGuid
-      }
+      template
     );
 
     this.fs.copyTpl(
-      this.templatePath(this.props.spaType + '/package.json'),
+      this.templatePath('common/package.json'),
       this.destinationPath(moduleName + '/package.json'),
-      {
-        namespace: namespace,
-        moduleName: moduleName,
-        description: this.props.description,
-        companyUrl: this.props.companyUrl,
-        emailAddy: this.props.emailAddy
+      template
+    );
+
+    this._writeBabelRc();
+
+    const pkgJson = {
+      devDependencies: {
+        '@babel/core': '^7.2.2',
+        '@babel/plugin-proposal-class-properties': '^7.2.1',
+        '@babel/plugin-proposal-object-rest-spread': '^7.2.0',
+        '@babel/plugin-transform-object-assign': '^7.2.0',
+        '@babel/polyfill': '^7.2.5',
+        '@babel/preset-env': '^7.2.0',
+        '@babel/preset-react': '^7.0.0',
+        // eslint-disable-next-line prettier/prettier
+        'archiver': '^3.0.0',
+        'babel-loader': '^8.0.4',
+        'babel-plugin-transform-react-remove-prop-types': '^0.4.21',
+        'copy-webpack-plugin': '^4.6.0',
+        'css-loader': '^2.0.1',
+        // eslint-disable-next-line prettier/prettier
+        'dotenv': '^6.2.0',
+        'html-webpack-plugin': '^3.2.0',
+        // eslint-disable-next-line prettier/prettier
+        'marked': '^0.5.2',
+        'node-sass': '^4.11.0',
+        'sass-loader': '^7.1.0',
+        'style-loader': '^0.23.1',
+        // eslint-disable-next-line prettier/prettier
+        'webpack': '^4.27.1',
+        'webpack-cli': '^3.1.2',
+        'webpack-dev-server': '^3.1.10',
+        'webpack-node-externals': '^1.7.2'
+      },
+      dependencies: {
+        'prop-types': '^15.6.2',
+        // eslint-disable-next-line prettier/prettier
+        'react': '^16.6.3',
+        'react-dom': '^16.6.3'
       }
-    );
+    };
 
-    this.fs.copyTpl(
-      this.templatePath(this.props.spaType + '/gulpfile.js'),
-      this.destinationPath(moduleName + '/gulpfile.js'),
-      {
-        namespace: namespace,
-        moduleName: moduleName
-      }
-    );
+    if (this.props.langType === 'jsx') {
+      this._writeJsConfig();
 
-    this.fs.copy(
-      this.templatePath(this.props.spaType + '/.babelrc'),
-      this.destinationPath(moduleName + '/.babelrc')
-    );
+      this.fs.copyTpl(
+        this.templatePath(spaPath + '/.eslintrc.js'),
+        this.destinationPath(moduleName + '/.eslintrc.js'),
+        template
+      );
 
-    this.fs.copy(
-      this.templatePath(this.props.spaType + '/packages.config'),
-      this.destinationPath(moduleName + '/packages.config')
-    );
-
-    this.fs.copy(
-      this.templatePath(this.props.spaType + '/License.md'),
-      this.destinationPath(moduleName + '/License.md')
-    );
-
-    this.fs.copy(
-      this.templatePath(this.props.spaType + '/ReleaseNotes.md'),
-      this.destinationPath(moduleName + '/ReleaseNotes.md')
-    );
-
-    this.fs.copy(
-      this.templatePath(this.props.spaType + '/web.config'),
-      this.destinationPath(moduleName + '/web.config')
-    );
-
-    this.fs.copy(
-      this.templatePath(this.props.spaType + '/web.Debug.config'),
-      this.destinationPath(moduleName + '/web.Debug.config')
-    );
-
-    this.fs.copy(
-      this.templatePath(this.props.spaType + '/web.Release.config'),
-      this.destinationPath(moduleName + '/web.Release.config')
-    );
-
-    this._writeSolution();
-  }
-
-  _createSolutionFromTemplate() {
-    this.log(chalk.white('Creating sln from template.'));
-    let namespace = this.props.company;
-    let moduleName = this.props.moduleName;
-    let projectGuid = this.props.projectGuid;
-    let solutionGuid = this.props.solutionGuid;
-
-    this.fs.copyTpl(
-      this.templatePath(this.props.spaType + '/_Template.sln'),
-      this.destinationPath(namespace + '.sln'),
-      {
-        moduleName: moduleName,
-        projectGuid: projectGuid,
-        solutionGuid: solutionGuid
-      }
-    );
-  }
-
-  _addProjectToSolution() {
-    this.log(chalk.white('Adding project to existing sln.'));
-    let namespace = this.props.company;
-    let moduleName = this.props.moduleName;
-    let projectGuid = this.props.projectGuid;
-    let slnFileName = this.destinationPath(namespace + '.sln');
-
-    // Create a reader, and build a solution from the lines
-    const reader = new sln.SolutionReader();
-    const sourceLines = this.fs
-      .read(slnFileName)
-      .toString()
-      .split(/\r?\n/);
-    const solution = reader.fromLines(sourceLines);
-
-    solution.addProject({
-      id: projectGuid, // This is the same id as in the csproj
-      name: moduleName,
-      path: moduleName + '\\' + moduleName + '.csproj', // Relative to the solution location
-      parent: moduleName // The name or id of a folder to parent it to
-    });
-
-    // Create a writer and write back to the same file
-    const writer = new sln.SolutionWriter();
-    const lines = writer.write(solution);
-    this.fs.write(slnFileName, lines.join('\r\n'));
-  }
-
-  _writeSolution() {
-    let namespace = this.props.company;
-    let slnFileName = this.destinationPath(namespace + '.sln');
-    if (this.fs.exists(slnFileName)) {
-      this.log(chalk.white('Existing sln file found.'));
-      this._addProjectToSolution();
+      pkgJson.devDependencies = {
+        ...pkgJson.devDependencies,
+        // eslint-disable-next-line prettier/prettier
+        'eslint': '^5.8.0',
+        'eslint-loader': '^2.1.1',
+        'eslint-plugin-react': '^7.11.1',
+        'react-hot-loader': '^4.3.12'
+      };
     } else {
-      // File does not exist
-      this.log(chalk.white('No sln file found.'));
-      this._createSolutionFromTemplate();
+      this._writeTsConfig();
+
+      this.fs.copyTpl(
+        this.templatePath(spaPath + '/tslint.json'),
+        this.destinationPath(moduleName + '/tslint.json'),
+        template
+      );
+
+      pkgJson.devDependencies = {
+        ...pkgJson.devDependencies,
+        '@types/react': '^16.0.34',
+        '@types/react-dom': '^16.0.3',
+        'ts-loader': '^5.3.3',
+        // eslint-disable-next-line prettier/prettier
+        'tslint': '^5.12.1',
+        'tslint-loader': '^3.5.4',
+        'tslint-react': '^3.6.0',
+        // eslint-disable-next-line prettier/prettier
+        'typescript': '^3.2.2',
+      };
     }
+
+    // Extend package.json file in destination path
+    this.fs.extendJSON(this.destinationPath(moduleName + '/package.json'), pkgJson);
   }
 
   install() {
-    if (!this.options.noinstall) {
-      process.chdir(this.props.moduleName);
-      this.installDependencies({ npm: true, bower: false, yarn: false });
-    }
+    this._writeSolution();
+    this._defaultInstall();
   }
 
   end() {
-    this.log(chalk.white('Installed SPA Module npm Dependencies.'));
-    this.log(chalk.white('Running NuGet.'));
-    this.spawnCommand('gulp', ['nuget']);
+    this.log(chalk.white('Installed Dependencies.'));
+    this.log(chalk.white('Running dotnet restore.'));
+    this.spawnCommand('dotnet', ['restore']);
     process.chdir('../');
     this.log(chalk.white('All Ready!'));
   }

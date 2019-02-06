@@ -94,32 +94,6 @@ module.exports = class extends DnnGeneratorBase {
     });
   }
 
-  _writeBabelRc() {
-    this.fs.extendJSON(this.destinationPath(this.props.moduleName + '/.babelrc'), {
-      presets: ['@babel/preset-env', '@babel/preset-react'],
-      plugins: [
-        '@babel/plugin-transform-object-assign',
-        '@babel/plugin-proposal-object-rest-spread'
-      ],
-      env: {
-        production: {
-          plugins: ['transform-react-remove-prop-types']
-        }
-      }
-    });
-  }
-
-  _writeJsConfig() {
-    this.fs.extendJSON(this.destinationPath(this.props.moduleName + '/jsconfig.json'), {
-      compilerOptions: {
-        target: 'es6',
-        module: 'commonjs',
-        allowSyntheticDefaultImports: true
-      },
-      exclude: ['node_modules']
-    });
-  }
-
   writing() {
     this.log(chalk.white('Creating Persona Bar Module.'));
 
