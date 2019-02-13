@@ -118,12 +118,20 @@ module.exports = class extends DnnGeneratorBase {
       currentYear: currentDate.getFullYear(),
       version: '1.0.0',
       menuLinkName: this.props.menuLinkName,
-      parentMenu: this.props.parentMenu
+      parentMenu: this.props.parentMenu,
+      localhost: this.options.dnnHost,
+      dnnRoot: this.options.dnnRoot
     };
 
     this.fs.copyTpl(
       this.templatePath('../../common/build/*.*'),
       this.destinationPath(moduleName + '/_BuildScripts'),
+      template
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('common/_BuildScripts/**'),
+      this.destinationPath(moduleName + '/_BuildScripts/'),
       template
     );
 
@@ -221,10 +229,14 @@ module.exports = class extends DnnGeneratorBase {
         'archiver': '^3.0.0',
         'babel-loader': '^8.0.4',
         'babel-plugin-transform-react-remove-prop-types': '^0.4.21',
+        'browser-sync': '^2.26.3',
+        // eslint-disable-next-line prettier/prettier
+        'chokidar': '^2.1.1',
         'copy-webpack-plugin': '^4.6.0',
         'css-loader': '^2.0.1',
         // eslint-disable-next-line prettier/prettier
         'dotenv': '^6.2.0',
+        'fs-extra': '^7.0.1',
         'html-webpack-plugin': '^3.2.0',
         // eslint-disable-next-line prettier/prettier
         'marked': '^0.5.2',
