@@ -43,7 +43,6 @@ const assemblyWatcher = chokidar.watch(srcDir, {
 });
 
 assemblyWatcher.on('add', path => {
-  console.log(relative(path));
   copy(srcDir, relative(path), destAssemblyDir)
     .then(() => console.log({ relative: relative(path), type: 'add' }))
     .catch(reason => console.log(reason));
