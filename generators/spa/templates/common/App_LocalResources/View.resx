@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Hello.Text" xml:space="preserve">
+    <value>Hello, I am a React Module</value>
+  </data>
   <data name="SampleItem.Text" xml:space="preserve">
     <value>Sample Resource File Text</value>
   </data>
