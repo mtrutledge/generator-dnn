@@ -6,7 +6,7 @@ const chokidar = require('chokidar');
 
 function copy(srcDir, srcRelativePath, destDir) {
   const fullSrcPath = path.join(srcDir, srcRelativePath);
-  const fullDestPath = path.join(destDir, path.basename(srcRelativePath));
+  const fullDestPath = path.join(destDir, srcRelativePath);
 
   return fs
     .ensureDir(path.dirname(fullSrcPath))
@@ -18,15 +18,14 @@ const relative = srcFullPath => path.relative(srcDir, srcFullPath);
 let srcDir = 'dist/**';
 let destAssemblyDir = `${pkg.dnn.dnnRoot}/bin/`;
 // eslint-disable-next-line prettier/prettier
-let destModuleDir = `${pkg.dnn.dnnRoot}/DesktopModules/<%= namespace %>/<%= moduleName %>/`;
+let destModuleDir = `${pkg.dnn.dnnRoot}/DesktopModules/<%= namespace %>/<%= moduleName %>/Resources`;
 
 const moduleWatcher = chokidar.watch(srcDir, {
   ignoreInitial: true,
-  ignored: ['*.sql', '*.pdb', '*.dll']
+  ignored: ['**/*.{pdb,dll,js,sql,dnn}']
 });
 
 moduleWatcher.on('add', path => {
-  console.log(relative(path));
   copy(srcDir, relative(path), destModuleDir)
     .then(() => console.log({ relative: relative(path), type: 'add' }))
     .catch(reason => console.log(reason));
