@@ -18,8 +18,9 @@
     <ApplicationIcon />
     <OutputType>Library</OutputType>
     <StartupObject />
+    <DebugType>Portable</DebugType>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="Dnn.PersonaBar.Library" Version="1.5.0.193" />    
     <PackageReference Include="DotNetNuke.Core" Version="9.2.1.533" />
