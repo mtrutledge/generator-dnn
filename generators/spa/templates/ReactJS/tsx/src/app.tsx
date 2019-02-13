@@ -6,7 +6,7 @@ import resx from "localization";
 ReactDOM.render(
 	<div className="row">
 		<div className="col-xs-12">
-			<Hello name="I am a react module!" />
+			<Hello name={resx.get("Hello")} />
 		</div>
 	</div>,
   document.getElementById("<%= namespace.toLowerCase() %><%= moduleName %>")
