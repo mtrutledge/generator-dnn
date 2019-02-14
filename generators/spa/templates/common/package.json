@@ -42,6 +42,10 @@
     "build": "dotnet build -f net462 -r win-x64&&yarn run build-client",
     "build-client": "set NODE_ENV=production&&webpack -p --config _BuildScripts/webpack.config.js",
     "package": "node _BuildScripts/dnn-package.js",
-    "start": "dotnet watch build -f net462 -r win-x64 & webpack --mode=development --watch --config _BuildScripts/webpack.config.js & node _BuildScripts/bs.js & node _BuildScripts/watch.js"
+    "start": "concurrently \"npm:watch-*\"",
+    "watch-dotnet": "dotnet watch build -f net462 -r win-x64",
+    "watch-webpack": "webpack --mode=development --watch --config _BuildScripts/webpack.config.js",
+    "watch-bs": "node _BuildScripts/bs.js",
+    "watch-js": "node _BuildScripts/watch.js"
   }
 }

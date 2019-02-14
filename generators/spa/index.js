@@ -232,6 +232,8 @@ module.exports = class extends DnnGeneratorBase {
         'browser-sync': '^2.26.3',
         // eslint-disable-next-line prettier/prettier
         'chokidar': '^2.1.1',
+        // eslint-disable-next-line prettier/prettier
+        'concurrently': '^4.1.0',
         'copy-webpack-plugin': '^4.6.0',
         'css-loader': '^2.0.1',
         // eslint-disable-next-line prettier/prettier
