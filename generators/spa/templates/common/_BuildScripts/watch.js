@@ -15,7 +15,8 @@ function copy(srcDir, srcRelativePath, destDir) {
 
 const relative = srcFullPath => path.relative(srcDir, srcFullPath);
 
-let srcDir = 'dist/**';
+const srcDir = "dist/**";
+const binDir = './bin';
 let destAssemblyDir = `${pkg.dnn.dnnRoot}/bin/`;
 // eslint-disable-next-line prettier/prettier
 let destModuleDir = `${pkg.dnn.dnnRoot}/DesktopModules/<%= namespace %>/<%= moduleName %>/Resources`;
@@ -42,14 +43,19 @@ const assemblyWatcher = chokidar.watch(srcDir, {
   ignored: ['!**/*.dll', '!**/*.pdb', '**']
 });
 
-assemblyWatcher.on('add', path => {
-  copy(srcDir, relative(path), destAssemblyDir)
-    .then(() => console.log({ relative: relative(path), type: 'add' }))
-    .catch(reason => console.log(reason));
+const assemblyWatcher = chokidar.watch(`${binDir}/*.{dll,pdb}`, {
+  ignoreInitial: true,
+  ignored: ['Dnn*', 'DotNetNuke*', 'System*', 'Microsoft*', 'Newtonsoft*', '*.deps.json']
 });
 
-assemblyWatcher.on('change', path => {
-  copy(srcDir, relative(path), destAssemblyDir)
-    .then(() => console.log({ relative: relative(path), type: 'change' }))
-    .catch(reason => console.log(reason));
+assemblyWatcher.on("add", file => {
+  copy(binDir,  path.relative(binDir, file), destAssemblyDir)
+      .then(() => console.log({ src: 'Assembly Watcher', relative: path.relative(binDir, file), type: "add" }))
+      .catch(reason => console.log(reason));
+});
+
+assemblyWatcher.on("change", file => {
+  copy(binDir,  path.relative(binDir, file), destAssemblyDir)
+      .then(() => console.log({ src: 'Assembly Watcher', relative: path.relative(binDir, file), type: "change" }))
+      .catch(reason => console.log(reason));
 });
