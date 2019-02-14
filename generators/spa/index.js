@@ -301,6 +301,25 @@ module.exports = class extends DnnGeneratorBase {
 
     // Extend package.json file in destination path
     this.fs.extendJSON(this.destinationPath(moduleName + '/package.json'), pkgJson);
+
+    this.fs.extendJSON(this.destinationPath('.vscode/launch.json'), {
+      // Use IntelliSense to learn about possible attributes.
+      // Hover to view descriptions of existing attributes.
+      // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+      version: '0.2.0',
+      configurations: [
+        {
+          type: 'chrome',
+          request: 'launch',
+          name: 'Launch Chrome against ' + moduleName,
+          url: 'http://localhost:3000',
+          // eslint-disable-next-line no-template-curly-in-string
+          webRoot: '${workspaceRoot}/' + moduleName,
+          sourceMaps: true,
+          trace: true
+        }
+      ]
+    });
   }
 
   install() {
