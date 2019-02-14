@@ -4,7 +4,7 @@ const path = require("path");
 let browserSync = require("browser-sync").create();
 
 browserSync.init({
-    browser: "google chrome",
+    open: false,
     proxy: pkg.dnn.localhost,
     files: ["dist/**"],
     serveStatic: ["dist"],
