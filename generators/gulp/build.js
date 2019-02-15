@@ -33,7 +33,7 @@ gulp.task('assemblyInfo', function() {
     .pipe(gulp.dest('.'));
 });
 
-gulp.task('build', ['nuget', 'assemblyInfo'], function() {
+gulp.task('build', function() {
   return gulp.src('./<%= moduleName %>.csproj').pipe(
     msbuild({
       toolsVersion: 'auto',

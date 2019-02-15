@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <AssemblyName><%= namespace %>.<%= moduleName %></AssemblyName>
+    <TargetFramework>net462</TargetFramework>
+    <OutputPath>bin</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <Authors><%= namespace %></Authors>
+    <Company><%= namespace %></Company>
+    <Product><%= moduleName %></Product>
+    <Copyright><%= currentYear%></Copyright>
+    <PackageId><%= moduleName %></PackageId>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Description><%= description %></Description>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <ApplicationIcon />
+    <OutputType>Library</OutputType>
+    <StartupObject />
+    <DebugType>Portable</DebugType>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Dnn.PersonaBar.Library" Version="1.5.0.193" />    
+    <PackageReference Include="DotNetNuke.Core" Version="9.2.1.533" />
+    <PackageReference Include="DotNetNuke.Web" Version="9.2.1.533" />
+    <PackageReference Include="DotNetNuke.Web.Client" Version="9.2.1.533" />
+    <PackageReference Include="DotNetNuke.Web.Mvc" Version="9.2.1.533" />
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.3" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.3" />
+    <PackageReference Include="Microsoft.AspNet.Razor" Version="3.2.3" />
+    <PackageReference Include="Microsoft.AspNet.WebPages" Version="3.2.3" />
+    <PackageReference Include="Microsoft.Web.Infrastructure" Version="1.0.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web" />
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net462' ">
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <FrameworkPathOverride>$(NuGetPackageRoot)microsoft.targetingpack.netframework.v4.6.2\1.0.1\lib\net462\</FrameworkPathOverride>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
+    <PackageReference Include="Microsoft.TargetingPack.NETFramework.v4.6.2" Version="1.0.1" ExcludeAssets="All" PrivateAssets="All" />
+  </ItemGroup>
+</Project>

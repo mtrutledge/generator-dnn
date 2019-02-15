@@ -1,6 +1,7 @@
 {
   "name": "<%= moduleName %>",
-  "version": "01.00.00",
+  "version": "<%= version %>",
+  "private": true,
   "description": "<%= description %>",
   "dnnModule": {
     "fullName": "<%= namespace %>.<%= moduleName %>",
