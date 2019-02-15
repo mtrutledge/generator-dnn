@@ -3,11 +3,11 @@
 
 ## Installation
 
-First, install [Yeoman](http://yeoman.io) and generator-dnn using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
+First, install [Yeoman](http://yeoman.io) and generator-dnn using [yarn](https://yarnpkg.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
 
 ```bash
-npm install -g yo
-npm install -g generator-dnn
+yarn global add yo
+yarn global add generator-dnn
 ```
 
 Then generate your new project:
