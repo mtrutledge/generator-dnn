@@ -1,6 +1,7 @@
 'use strict';
 const DnnGeneratorBase = require('../lib/DnnGeneratorBase');
 const chalk = require('chalk');
+const fs = require('fs');
 
 module.exports = class extends DnnGeneratorBase {
   prompting() {
@@ -118,12 +119,20 @@ module.exports = class extends DnnGeneratorBase {
       currentYear: currentDate.getFullYear(),
       version: '1.0.0',
       menuLinkName: this.props.menuLinkName,
-      parentMenu: this.props.parentMenu
+      parentMenu: this.props.parentMenu,
+      localhost: this.options.dnnHost,
+      dnnRoot: this.options.dnnRoot
     };
 
     this.fs.copyTpl(
       this.templatePath('../../common/build/*.*'),
       this.destinationPath(moduleName + '/_BuildScripts'),
+      template
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('common/_BuildScripts/**'),
+      this.destinationPath(moduleName + '/_BuildScripts/'),
       template
     );
 
@@ -221,10 +230,16 @@ module.exports = class extends DnnGeneratorBase {
         'archiver': '^3.0.0',
         'babel-loader': '^8.0.4',
         'babel-plugin-transform-react-remove-prop-types': '^0.4.21',
+        'browser-sync': '^2.26.3',
+        // eslint-disable-next-line prettier/prettier
+        'chokidar': '^2.1.1',
+        // eslint-disable-next-line prettier/prettier
+        'concurrently': '^4.1.0',
         'copy-webpack-plugin': '^4.6.0',
         'css-loader': '^2.0.1',
         // eslint-disable-next-line prettier/prettier
         'dotenv': '^6.2.0',
+        'fs-extra': '^7.0.1',
         'html-webpack-plugin': '^3.2.0',
         // eslint-disable-next-line prettier/prettier
         'marked': '^0.5.2',
@@ -287,6 +302,35 @@ module.exports = class extends DnnGeneratorBase {
 
     // Extend package.json file in destination path
     this.fs.extendJSON(this.destinationPath(moduleName + '/package.json'), pkgJson);
+
+    let launchJsonConfig = {
+      type: 'chrome',
+      request: 'launch',
+      name: 'Launch Chrome against ' + moduleName,
+      url: 'http://localhost:3000',
+      // eslint-disable-next-line no-template-curly-in-string
+      webRoot: '${workspaceRoot}/' + moduleName,
+      sourceMaps: true,
+      trace: true
+    };
+
+    // For some reason json extend is throwing  a conflict. Use FS to do this outside of yeoman to avoid conflict message to user.
+    let launchJsonPath = this.destinationPath('.vscode/launch.json');
+    if (fs.existsSync(launchJsonPath)) {
+      // eslint-disable-next-line handle-callback-err
+      fs.readFile(launchJsonPath, function(err, data) {
+        let json = JSON.parse(data);
+        json.configurations.push(launchJsonConfig);
+        fs.writeFileSync(launchJsonPath, JSON.stringify(json, null, 2));
+      });
+    } else {
+      let launchJson = {
+        version: '0.2.0',
+        configurations: []
+      };
+      launchJson.configurations.push(launchJsonConfig);
+      this.fs.extendJSON(launchJsonPath, launchJson);
+    }
   }
 
   install() {

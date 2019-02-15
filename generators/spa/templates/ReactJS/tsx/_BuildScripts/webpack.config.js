@@ -92,6 +92,31 @@ module.exports = (env, argv) => {
         ] : [
             new webpack.DefinePlugin({
                 VERSION: JSON.stringify(packageJson.version)
+            }),
+            new CopyWebpackPlugin([
+                { from: "./<%= moduleName %>.dnn", to: "../../<%= moduleName %>.dnn" },
+                { from: "./App_LocalResources", to: "../../App_LocalResources" },
+                { from: "./src/Resources", to: "../../Resources", ignore: [ "*.scss" ] },
+                { from: "./bin/*.*", to: "../../", ignore: [ "Dnn*", "DotNetNuke*", "System*", "Microsoft*", "Newtonsoft*", "*.deps.json" ] },
+                { from: "./Providers/**/*.*", to: "../../" }
+            ]),
+            new HtmlWebpackPlugin({
+                inject: false,
+                environment: process.env.NODE_ENV,
+                template: path.resolve("./src/View.html"),
+                filename: "../../View.html"
+            }),
+            new HtmlWebpackPlugin({
+                inject: false,
+                environment: process.env.NODE_ENV,
+                template: path.resolve("./src/Edit.html"),
+                filename: "../../Edit.html"
+            }),
+            new HtmlWebpackPlugin({
+                inject: false,
+                environment: process.env.NODE_ENV,
+                template: path.resolve("./src/Settings.html"),
+                filename: "../../Settings.html"
             })
         ]
     };
