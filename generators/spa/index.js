@@ -325,7 +325,7 @@ module.exports = class extends DnnGeneratorBase {
       fs.readFile(launchJsonPath, function(err, data) {
         let currentJson = JSON.parse(data);
         let json = Object.assign(launchJson, currentJson);
-        fs.writeFileSync(launchJsonPath, JSON.stringify(json));
+        fs.writeFileSync(launchJsonPath, JSON.stringify(json, null, 2));
       });
     } else {
       this.fs.extendJSON(launchJsonPath, launchJson);
