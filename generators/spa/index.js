@@ -1,6 +1,7 @@
 'use strict';
 const DnnGeneratorBase = require('../lib/DnnGeneratorBase');
 const chalk = require('chalk');
+const fs = require('fs');
 
 module.exports = class extends DnnGeneratorBase {
   prompting() {
@@ -302,11 +303,7 @@ module.exports = class extends DnnGeneratorBase {
     // Extend package.json file in destination path
     this.fs.extendJSON(this.destinationPath(moduleName + '/package.json'), pkgJson);
 
-    this.fs.extendJSON(this.destinationPath('.vscode/launch.json'), {
-      // Use IntelliSense to learn about possible attributes.
-      // Hover to view descriptions of existing attributes.
-      // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-      version: '0.2.0',
+    let launchJson = {
       configurations: [
         {
           type: 'chrome',
@@ -319,7 +316,20 @@ module.exports = class extends DnnGeneratorBase {
           trace: true
         }
       ]
-    });
+    };
+
+    // For some reason json extend is throwing  a conflict. Use FS to do this outside of yeoman to avoid conflict message to user.
+    let launchJsonPath = this.destinationPath('.vscode/launch.json');
+    if (fs.existsSync(launchJsonPath)) {
+      // eslint-disable-next-line handle-callback-err
+      fs.readFile(launchJsonPath, function(err, data) {
+        let currentJson = JSON.parse(data);
+        let json = Object.assign(launchJson, currentJson);
+        fs.writeFileSync(launchJsonPath, JSON.stringify(json));
+      });
+    } else {
+      this.fs.extendJSON(launchJsonPath, launchJson);
+    }
   }
 
   install() {
