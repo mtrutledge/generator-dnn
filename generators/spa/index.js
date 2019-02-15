@@ -303,19 +303,15 @@ module.exports = class extends DnnGeneratorBase {
     // Extend package.json file in destination path
     this.fs.extendJSON(this.destinationPath(moduleName + '/package.json'), pkgJson);
 
-    let launchJson = {
-      configurations: [
-        {
-          type: 'chrome',
-          request: 'launch',
-          name: 'Launch Chrome against ' + moduleName,
-          url: 'http://localhost:3000',
-          // eslint-disable-next-line no-template-curly-in-string
-          webRoot: '${workspaceRoot}/' + moduleName,
-          sourceMaps: true,
-          trace: true
-        }
-      ]
+    let launchJsonConfig = {
+      type: 'chrome',
+      request: 'launch',
+      name: 'Launch Chrome against ' + moduleName,
+      url: 'http://localhost:3000',
+      // eslint-disable-next-line no-template-curly-in-string
+      webRoot: '${workspaceRoot}/' + moduleName,
+      sourceMaps: true,
+      trace: true
     };
 
     // For some reason json extend is throwing  a conflict. Use FS to do this outside of yeoman to avoid conflict message to user.
@@ -323,11 +319,16 @@ module.exports = class extends DnnGeneratorBase {
     if (fs.existsSync(launchJsonPath)) {
       // eslint-disable-next-line handle-callback-err
       fs.readFile(launchJsonPath, function(err, data) {
-        let currentJson = JSON.parse(data);
-        let json = Object.assign({}, launchJson, currentJson);
+        let json = JSON.parse(data);
+        json.configurations.push(launchJsonConfig);
         fs.writeFileSync(launchJsonPath, JSON.stringify(json, null, 2));
       });
     } else {
+      let launchJson = {
+        version: '0.2.0',
+        configurations: []
+      };
+      launchJson.configurations.push(launchJsonConfig);
       this.fs.extendJSON(launchJsonPath, launchJson);
     }
   }
