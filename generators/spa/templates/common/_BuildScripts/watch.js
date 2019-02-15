@@ -38,11 +38,6 @@ moduleWatcher.on('change', path => {
     .catch(reason => console.log(reason));
 });
 
-const assemblyWatcher = chokidar.watch(srcDir, {
-  ignoreInitial: true,
-  ignored: ['!**/*.dll', '!**/*.pdb', '**']
-});
-
 const assemblyWatcher = chokidar.watch(`${binDir}/*.{dll,pdb}`, {
   ignoreInitial: true,
   ignored: ['Dnn*', 'DotNetNuke*', 'System*', 'Microsoft*', 'Newtonsoft*', '*.deps.json']
